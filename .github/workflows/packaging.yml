@@ -1,6 +1,11 @@
 name: Package and Release
 on:
   workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
 jobs:
   package-and-release:
     runs-on: ubuntu-latest
