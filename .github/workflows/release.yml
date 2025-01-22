@@ -23,7 +23,14 @@ jobs:
       - name: Get current version and increment
         id: get_version
         run: |
-          CURRENT_VERSION=$(grep -oP '(?<=## Version: ).*' PeaversTalents.toc)
+          # Extract version and ensure it's a complete version number (x.y.z)
+          CURRENT_VERSION=$(grep -oP '(?<=## Version: )\d+\.\d+\.\d+' PeaversTalents.toc)
+
+          if [ -z "$CURRENT_VERSION" ] || ! [[ "$CURRENT_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Error: Invalid version format found in TOC file. Must be in format x.y.z"
+            exit 1
+          fi
+
           echo "Current version: $CURRENT_VERSION"
           IFS='.' read -ra VERSION_PARTS <<< "$CURRENT_VERSION"
           MAJOR="${VERSION_PARTS[0]}"
@@ -36,7 +43,20 @@ jobs:
 
       - name: Update TOC version
         run: |
+          # Verify the new version is properly formatted
+          if ! [[ "${{ steps.get_version.outputs.new_version }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Error: New version is not properly formatted"
+            exit 1
+          fi
+
           sed -i "s/^## Version: .*$/## Version: ${{ steps.get_version.outputs.new_version }}/" PeaversTalents.toc
+
+          # Verify the update was successful and complete
+          NEW_VERSION_IN_FILE=$(grep -oP '(?<=## Version: )\d+\.\d+\.\d+' PeaversTalents.toc)
+          if [ "$NEW_VERSION_IN_FILE" != "${{ steps.get_version.outputs.new_version }}" ]; then
+            echo "Error: Version update failed or resulted in incorrect format"
+            exit 1
+          fi
 
       - name: Commit TOC changes
         run: |
