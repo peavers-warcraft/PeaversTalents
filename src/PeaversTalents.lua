@@ -24,24 +24,19 @@ local eventFrame = CreateFrame("Frame")
 eventFrame:RegisterEvent("ADDON_LOADED")
 eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 
----Gets the current talent strings for M+ and Raid builds
 local function GetCurrentTalentStrings()
     local _, playerClass, _, specName = Utils.GetPlayerInfo()
 
-    -- Convert class/spec names to match DB format
-    local className = Utils.ToLowercaseAndReplaceWhitespace(playerClass)
+	-- Convert class/spec names to match DB format
+	local className = Utils.ToLowercaseAndReplaceWhitespace(playerClass)
     local specKey = Utils.ToLowercaseAndReplaceWhitespace(specName)
 
     -- Get the talent strings from our database
     local classData = TalentDB[className]
-    if not classData then
-        return nil, nil
-    end
+    if not classData then return nil, nil end
 
     local specData = classData[specKey]
-    if not specData then
-        return nil, nil
-    end
+    if not specData then return nil, nil end
 
     local mplus = specData["MythicPlus"]
     local raid = specData["Raiding"]
@@ -52,7 +47,6 @@ local function GetCurrentTalentStrings()
             mplus.hps and (", HPS: " .. mplus.hps) or "",
             mplus.keystone and (", Key: " .. mplus.keystone) or ""
     )
-
     local raidDesc = raid and string.format("DPS: %s%s",
             raid.dps or "",
             raid.hps and (", HPS: " .. raid.hps) or ""
@@ -67,9 +61,9 @@ local function GetCurrentTalentStrings()
     }
 end
 
----Creates an EditBox with standard styling
-local function CreateStyledEditBox(parent, point)
-    local editBox = CreateFrame("EditBox", nil, parent, "InputBoxTemplate")
+---Creates an EditBox with standard styling and a specific name
+local function CreateStyledEditBox(parent, name, point)
+    local editBox = CreateFrame("EditBox", name, parent, "InputBoxTemplate")
     editBox:SetSize(EDITBOX_WIDTH, EDITBOX_HEIGHT)
     editBox:SetPoint(unpack(point))
     editBox:SetAutoFocus(false)
@@ -124,20 +118,24 @@ local function CreateExportDialog()
     mplusLabel:SetPoint("TOPLEFT", SIDE_PADDING, -35)
     mplusLabel:SetText("Mythic+")
 
-    local mplusDesc = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    mplusDesc:SetPoint("TOPLEFT", mplusLabel, "BOTTOMLEFT", 0, -LABEL_PADDING)
+    dialog.mplusDesc = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    dialog.mplusDesc:SetPoint("TOPLEFT", mplusLabel, "BOTTOMLEFT", 0, -LABEL_PADDING)
 
-    local mplusEdit = CreateStyledEditBox(dialog, { "TOPLEFT", mplusDesc, "BOTTOMLEFT", 0, -5 })
+    -- Create EditBox with specific name
+    dialog.mplusEdit = CreateStyledEditBox(dialog, "TalentExportDialog_MplusEdit",
+        { "TOPLEFT", dialog.mplusDesc, "BOTTOMLEFT", 0, -5 })
 
     -- Create Raid section
     local raidLabel = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
-    raidLabel:SetPoint("TOPLEFT", mplusEdit, "BOTTOMLEFT", 0, -SECTION_PADDING)
+    raidLabel:SetPoint("TOPLEFT", dialog.mplusEdit, "BOTTOMLEFT", 0, -SECTION_PADDING)
     raidLabel:SetText("Raid")
 
-    local raidDesc = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    raidDesc:SetPoint("TOPLEFT", raidLabel, "BOTTOMLEFT", 0, -LABEL_PADDING)
+    dialog.raidDesc = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    dialog.raidDesc:SetPoint("TOPLEFT", raidLabel, "BOTTOMLEFT", 0, -LABEL_PADDING)
 
-    local raidEdit = CreateStyledEditBox(dialog, { "TOPLEFT", raidDesc, "BOTTOMLEFT", 0, -5 })
+    -- Create EditBox with specific name
+    dialog.raidEdit = CreateStyledEditBox(dialog, "TalentExportDialog_RaidEdit",
+        { "TOPLEFT", dialog.raidDesc, "BOTTOMLEFT", 0, -5 })
 
     -- Make dialog movable
     dialog:SetMovable(true)
@@ -146,11 +144,23 @@ local function CreateExportDialog()
     dialog:SetScript("OnDragStart", dialog.StartMoving)
     dialog:SetScript("OnDragStop", dialog.StopMovingOrSizing)
 
-    -- Store references for updating
-    dialog.mplusEdit = mplusEdit
-    dialog.raidEdit = raidEdit
-    dialog.mplusDesc = mplusDesc
-    dialog.raidDesc = raidDesc
+    -- Handle ESC key
+    tinsert(UISpecialFrames, dialog:GetName())
+
+    -- Handle dialog showing/hiding
+    dialog:SetScript("OnShow", function()
+        if talentFrame and not dialog.hideHooked then
+            talentFrame:HookScript("OnHide", function()
+                dialog:Hide()
+            end)
+            dialog.hideHooked = true
+        end
+    end)
+
+    dialog:SetScript("OnHide", function()
+        dialog:ClearAllPoints()
+        dialog:SetPoint("CENTER")
+    end)
 
     return dialog
 end
@@ -161,10 +171,13 @@ function addon.ShowExportDialog()
 
     -- Update the strings
     local mplusData, raidData = GetCurrentTalentStrings()
-    dialog.mplusEdit:SetText(mplusData and mplusData.string or "No M+ build available for your spec")
-    dialog.raidEdit:SetText(raidData and raidData.string or "No raid build available for your spec")
-    dialog.mplusDesc:SetText(mplusData and mplusData.desc or "")
-    dialog.raidDesc:SetText(raidData and raidData.desc or "")
+
+    if dialog.mplusEdit and dialog.raidEdit then
+        dialog.mplusEdit:SetText(mplusData and mplusData.string or "No M+ build available for your spec")
+        dialog.raidEdit:SetText(raidData and raidData.string or "No raid build available for your spec")
+        dialog.mplusDesc:SetText(mplusData and mplusData.desc or "")
+        dialog.raidDesc:SetText(raidData and raidData.desc or "")
+    end
 
     dialog:Show()
 end

@@ -4,6 +4,7 @@
 ## Author: Peavers
 ## Version: 1.0.5
 ## X-Curse-Project-ID: 1184820
+## IconTexture: Interface\AddOns\PeaversTalents\src\Media\Icon.tga
 
 src/PeaversTalents.lua
 src/Misc/Utils.lua
