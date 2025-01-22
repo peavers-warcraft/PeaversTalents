@@ -23,18 +23,15 @@ jobs:
         id: get_version
         run: |
           CURRENT_VERSION=$(grep -oP '(?<=## Version: ).*' PeaversTalents.toc)
+          echo "Current version: $CURRENT_VERSION"
           IFS='.' read -ra VERSION_PARTS <<< "$CURRENT_VERSION"
-          # Add error checking
-          if [ ${#VERSION_PARTS[@]} -ne 3 ]; then
-            echo "Error: Version must have 3 parts (x.y.z)"
-            exit 1
-          fi
           MAJOR="${VERSION_PARTS[0]}"
           MINOR="${VERSION_PARTS[1]}"
           PATCH="${VERSION_PARTS[2]}"
           NEW_PATCH=$((PATCH + 1))
-          NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
+          NEW_VERSION="${MAJOR}.${MINOR}.${NEW_PATCH}"
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New version will be: $NEW_VERSION"
 
       - name: Update TOC version
         run: |
