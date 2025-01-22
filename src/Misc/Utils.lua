@@ -9,10 +9,6 @@ local CLASS_NAME_MAPPINGS = {
 }
 
 ---Gets formatted player information
----@return string fullPlayerName The full player name with realm
----@return string playerClass The player's class name
----@return number playerClassID The player's class ID
----@return string specName The current specialization name
 Utils.GetPlayerInfo = function()
     local playerName, playerRealm = UnitFullName("player")
     playerRealm = playerRealm or GetRealmName()
@@ -26,8 +22,6 @@ Utils.GetPlayerInfo = function()
 end
 
 ---Formats a class name to match the database format
----@param className string The raw class name
----@return string The formatted class name
 Utils.FormatClassName = function(className)
     local lowercaseName = Utils.ToLowercaseAndReplaceWhitespace(className)
     return CLASS_NAME_MAPPINGS[lowercaseName] or lowercaseName
