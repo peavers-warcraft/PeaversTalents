@@ -11,9 +11,6 @@ permissions:
 jobs:
   update-version-and-tag:
     runs-on: ubuntu-latest
-    outputs:
-      new_version: ${{ steps.get_version.outputs.new_version }}
-      new_tag: ${{ steps.create_tag.outputs.new_tag }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -36,7 +33,8 @@ jobs:
 
       - name: Update TOC version
         run: |
-          sed -i "s/^## Version: .*$/## Version: ${{ steps.get_version.outputs.new_version }}/" PeaversTalents.toc
+          NEW_VERSION=$(echo "${{ steps.get_version.outputs.new_version }}")
+          sed -i "s/^## Version: .*$/## Version: $NEW_VERSION/" PeaversTalents.toc
 
       - name: Commit TOC changes
         run: |
@@ -49,7 +47,8 @@ jobs:
       - name: Create and push tag
         id: create_tag
         run: |
-          NEW_TAG="PeaversTalents-${{ steps.get_version.outputs.new_version }}"
+          NEW_VERSION=$(echo "${{ steps.get_version.outputs.new_version }}")
+          NEW_TAG="PeaversTalents-${NEW_VERSION}"
           git tag $NEW_TAG
           git push origin $NEW_TAG
           echo "new_tag=$NEW_TAG" >> $GITHUB_OUTPUT
