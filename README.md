@@ -3,7 +3,7 @@
 [![version](https://img.shields.io/github/v/release/peavers/peavers-talents)](https://github.com/peavers/peavers-talents/releases)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/peavers/peavers-talents)](https://github.com/peavers/peavers-talents/commits/master)
 [![last commit](https://img.shields.io/github/last-commit/peavers/peavers-talents)](https://github.com/enderneko/peavers/peavers-talents/master)
-[![Curseforge](https://img.shields.io/curseforge/dt/1046194?label=CurseForge&color=F16436)](https://www.curseforge.com/wow/addons/peaversui)
+[![Curseforge](https://img.shields.io/curseforge/dt/1184820?label=CurseForge&color=F16436)](https://www.curseforge.com/wow/addons/peaverstalents)
 
 PeaversTalents is an always upto date talent string importer, updated daily with the best talent builds for Mythic+ and
 Raid content based on builds from https://www.wowcompare.io
