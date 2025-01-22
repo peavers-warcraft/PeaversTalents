@@ -11,6 +11,9 @@ permissions:
 jobs:
   update-version-and-tag:
     runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.get_version.outputs.new_version }}
+      new_tag: ${{ steps.create_tag.outputs.new_tag }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -20,21 +23,12 @@ jobs:
       - name: Get current version and increment
         id: get_version
         run: |
-          # Extract current version
-          CURRENT_VERSION=$(grep -oP '(?<=## Version: )\d+\.\d+\.\d+' PeaversTalents.toc)
-          if [ -z "$CURRENT_VERSION" ]; then
-            echo "Error: Current version not found in TOC file."
-            exit 1
-          fi
+          CURRENT_VERSION=$(grep -oP '(?<=## Version: ).*' PeaversTalents.toc)
           echo "Current version: $CURRENT_VERSION"
-
-          # Split version into components
           IFS='.' read -ra VERSION_PARTS <<< "$CURRENT_VERSION"
           MAJOR="${VERSION_PARTS[0]}"
           MINOR="${VERSION_PARTS[1]}"
           PATCH="${VERSION_PARTS[2]}"
-
-          # Increment PATCH version
           NEW_PATCH=$((PATCH + 1))
           NEW_VERSION="${MAJOR}.${MINOR}.${NEW_PATCH}"
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
@@ -42,8 +36,7 @@ jobs:
 
       - name: Update TOC version
         run: |
-          NEW_VERSION="${{ steps.get_version.outputs.new_version }}"
-          sed -i "s/^## Version: .*$/## Version: $NEW_VERSION/" PeaversTalents.toc
+          sed -i "s/^## Version: .*$/## Version: ${{ steps.get_version.outputs.new_version }}/" PeaversTalents.toc
 
       - name: Commit TOC changes
         run: |
@@ -56,18 +49,9 @@ jobs:
       - name: Create and push tag
         id: create_tag
         run: |
-          NEW_VERSION="${{ steps.get_version.outputs.new_version }}"
-          if [ -z "$NEW_VERSION" ]; then
-            echo "Error: New version is empty. Exiting."
-            exit 1
-          fi
-          NEW_TAG="PeaversTalents-${NEW_VERSION}"
-          if git tag -l | grep -q "^${NEW_TAG}$"; then
-            echo "Error: Tag $NEW_TAG already exists. Exiting."
-            exit 1
-          fi
-          git tag "$NEW_TAG"
-          git push origin "$NEW_TAG"
+          NEW_TAG="PeaversTalents-${{ steps.get_version.outputs.new_version }}"
+          git tag $NEW_TAG
+          git push origin $NEW_TAG
           echo "new_tag=$NEW_TAG" >> $GITHUB_OUTPUT
 
       - name: Trigger packaging workflow
