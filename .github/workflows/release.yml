@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - master
+
+permissions:
+  contents: write
+
 jobs:
   update-version-and-tag:
     runs-on: ubuntu-latest
