@@ -2,3 +2,4 @@
 *.iml
 /.luarc.json
 /PeaversUI.iml
+.DS_Store
