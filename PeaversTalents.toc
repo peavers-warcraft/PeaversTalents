@@ -1,8 +1,8 @@
 ## Interface: 110000,110002
 ## Title: PeaversTalents
-## Notes: A central addon to set talents to latest from wowcompare.io.
+## Notes: A simple addon to set talents to latest from wowcompare.io.
 ## Author: Peavers
-## Version: 1.0.283
+## Version: 1.0.0
 ## X-Curse-Project-ID: 1184820
 
 src/PeaversTalents.lua
