@@ -24,18 +24,19 @@ local eventFrame = CreateFrame("Frame")
 eventFrame:RegisterEvent("ADDON_LOADED")
 eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 
+
 local function GetCurrentTalentStrings()
-    local _, playerClass, _, specName = Utils.GetPlayerInfo()
+    local _, _, playerClassID = Utils.GetPlayerInfo()
 
-	-- Convert class/spec names to match DB format
-	local className = Utils.ToLowercaseAndReplaceWhitespace(playerClass)
-    local specKey = Utils.ToLowercaseAndReplaceWhitespace(specName)
+    -- Get current spec ID
+    local specID = GetSpecialization() and GetSpecializationInfo(GetSpecialization())
+    if not specID then return nil, nil end
 
-    -- Get the talent strings from our database
-    local classData = TalentDB[className]
+    -- Get the talent strings from our database using class ID and spec ID
+    local classData = TalentDB[playerClassID]
     if not classData then return nil, nil end
 
-    local specData = classData[specKey]
+    local specData = classData.specs[specID]
     if not specData then return nil, nil end
 
     local mplus = specData["MythicPlus"]
@@ -60,7 +61,6 @@ local function GetCurrentTalentStrings()
         desc = raidDesc
     }
 end
-
 ---Creates an EditBox with standard styling and a specific name
 local function CreateStyledEditBox(parent, name, point)
     local editBox = CreateFrame("EditBox", name, parent, "InputBoxTemplate")
