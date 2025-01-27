@@ -2,7 +2,7 @@
 ## Title: PeaversTalents
 ## Notes: A simple addon to set talents to latest from wowcompare.io.
 ## Author: Peavers
-## Version: 1.0.15
+## Version: 1.0.16
 ## X-Curse-Project-ID: 1184820
 ## IconTexture: Interface\AddOns\PeaversTalents\src\Media\Icon.tga
 
