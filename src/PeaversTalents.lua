@@ -228,16 +228,7 @@ local function CreateExportDialog()
 	dialog.mplusEdit:SetPoint("LEFT", dialog.mplusDropdown, "RIGHT", 10, 2)
 	dialog.mplusEdit:SetAutoFocus(false)
 	dialog.mplusEdit:SetFontObject(ChatFontNormal)
-	-- Make read only
-	dialog.mplusEdit:SetScript("OnMouseDown", function(self, button)
-		if button == "LeftButton" then
-			dialog.raidEdit:SetCursorPosition(0)
-			dialog.raidEdit:HighlightText(0, 0)
-			self:HighlightText()
-		end
-	end)
 	dialog.mplusEdit:EnableMouse(true)
-	dialog.mplusEdit:SetEnabled(false)
 
 	-- Raid Section
 	local raidLabel = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
@@ -260,17 +251,7 @@ local function CreateExportDialog()
 	dialog.raidEdit:SetPoint("LEFT", dialog.raidDropdown, "RIGHT", 10, 2)
 	dialog.raidEdit:SetAutoFocus(false)
 	dialog.raidEdit:SetFontObject(ChatFontNormal)
-
-	-- Make read only
-	dialog.raidEdit:SetScript("OnMouseDown", function(self, button)
-		if button == "LeftButton" then
-			dialog.mplusEdit:SetCursorPosition(0)
-			dialog.mplusEdit:HighlightText(0, 0)
-			self:HighlightText()
-		end
-	end)
 	dialog.raidEdit:EnableMouse(true)
-	dialog.raidEdit:SetEnabled(false)
 
 	local instructionsText = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 	instructionsText:SetPoint("BOTTOM", dialog, "BOTTOM", 0, 15)
