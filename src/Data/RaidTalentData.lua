@@ -1,5 +1,5 @@
-local addonName, addon = ...
-addon.raidTalents = addon.raidTalents or {}
+local addonName, addonTable = ...
+addonTable.raidTalents = addonTable.raidTalents or {}
 
 local talentData = {
 	[1] = {  -- Warrior
@@ -35,7 +35,7 @@ local talentData = {
 				},
 				["the-silken-court"] = {
 					label = "The Silken Court",
-					talentString = "CcEAAAAAAAAAAAAAAAAAAAAAAAAzYmZMjZmNLLLzMAAAAYw0wMDbDzAzYMzMYmhBGmhBAAAAAAAPwYWmZmBYJwYZbgFwAmhJwghN",
+					talentString = "CcEAAAAAAAAAAAAAAAAAAAAAAAAzYmZMjZmNLLLzMAAAAYw0wMDbzYGYYMzMYmhBGmhBAAAAAAAPwYWmZmBYJwYZbgFwAmhJwghN",
 				},
 				["ulgrax"] = {
 					label = "Ulgrax",
@@ -441,7 +441,7 @@ local talentData = {
 				},
 				["ansurek"] = {
 					label = "Ansurek",
-					talentString = "CUQAAAAAAAAAAAAAAAAAAAAAAAAM2mBAAAAAgZZMWmGzYmxwYMDzMzMjxsNMzYbbmZmZmZAjlZbAAAAYGMAGzmhBGYWYhWsBD",
+					talentString = "CUQAAAAAAAAAAAAAAAAAAAAAAAAM2mBAAAAAgZZMWmGzYmxwYMDzMzMjxsNMzYbbmZMzMjBjlZbAAAAYGMAGzmhBGYWYhWsBD",
 				},
 				["broodtwister-ovinax"] = {
 					label = "Broodtwister Ovi'nax",
@@ -601,11 +601,11 @@ local talentData = {
 				},
 				["ansurek"] = {
 					label = "Ansurek",
-					talentString = "CoPAAAAAAAAAAAAAAAAAAAAAAghBzYMjxMDzYmZmmZMjZGzYAAAAAwMzMzMzMzsZmZMAAAYmZmZAAAAGYgZMassBYbAbAMD2A",
+					talentString = "CoPAAAAAAAAAAAAAAAAAAAAAAghBzYMjZGDzYmZmmZMjZGzYAAAAAwMzMzMzMzsZmZMAAAYmZmZAAAAGYgZMassBYbAbAMD2A",
 				},
 				["broodtwister-ovinax"] = {
 					label = "Broodtwister Ovi'nax",
-					talentString = "CoPAAAAAAAAAAAAAAAAAAAAAAghZYGjZMzMDzYmZmmZMMzYGDAAAAAmZmZmZmxsZmZMAAADzMzMAAAAGYgZMassBYbAbAMD2A",
+					talentString = "CoPAAAAAAAAAAAAAAAAAAAAAAghZYGjZMzMjlZMzMTzwwMjZMAAAAAYmZmZmZGzmZmxAAAMMzMzAAAAYgBmxoxyGgtBsBwMYD",
 				},
 				["horror"] = {
 					label = "Horror",
@@ -643,7 +643,7 @@ local talentData = {
 				},
 				["broodtwister-ovinax"] = {
 					label = "Broodtwister Ovi'nax",
-					talentString = "CsPAAAAAAAAAAAAAAAAAAAAAAMAYGjZMmZYGmZmZmZmxMZGDjBMzMMjZmZmZmZZmBAAAAAAAAAAAYssNwAWALDTgxCmZMmBA",
+					talentString = "CsPAAAAAAAAAAAAAAAAAAAAAAMAYGjZMGDzYmZmZmxMzMZGDjBMzMMjZmZmZmZZmBAAAAAAAAAAAYssNwAWALDTgxCmZMmBA",
 				},
 				["horror"] = {
 					label = "Horror",
@@ -819,7 +819,7 @@ local talentData = {
 				},
 				["the-silken-court"] = {
 					label = "The Silken Court",
-					talentString = "CgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAjZmZWmx2YmxMLzyMLGWwCsAzYTjlBwMwGDWGjtZmZmMbLmZmGzgZBLzMGMGmlxAAYYA",
+					talentString = "CgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAjZmZWmx2YmxMLzyMLGWGWgFYGbasMAmB2YwCzsNzMzkZbhZmGzgZxYxYGMGmlxAAYYA",
 				},
 				["ulgrax"] = {
 					label = "Ulgrax",
@@ -1089,7 +1089,7 @@ local talentData = {
 				},
 				["rashanan"] = {
 					label = "Rasha'nan",
-					talentString = "CwQAAAAAAAAAAAAAAAAAAAAAAAAAAAGjxMMsMjtZmZGDAAAAAAwyCGxMDMDjNGsNzMDzyYmx2sYab5B2mtZmhZBAA2AAAAmtZpZmZWYGsA",
+					talentString = "CwQAAAAAAAAAAAAAAAAAAAAAAAAAAAGjxMMsMjtZmZGDAAAAAAwyCGxMDMDjNGsMzMDzyYmx2sYab5B2mtZmhZBAA2AAAAmtZpZmZWYGsA",
 				},
 				["sikran"] = {
 					label = "Sikran",
@@ -1309,7 +1309,7 @@ local talentData = {
 				},
 				["broodtwister-ovinax"] = {
 					label = "Broodtwister Ovi'nax",
-					talentString = "CkGAAAAAAAAAAAAAAAAAAAAAAsNmZGLbzMzMWMb4BYstZWWGzAAAAAAAAAAAAYbwwMmhRmBMzwMjhZabmBAAAAAAAADYZZsgpZmlBAAAwCzMDgB",
+					talentString = "CkGAAAAAAAAAAAAAAAAAAAAAAsNmZGLbjZmxiZDPAjtNzyyYGAAAAAAAAAAAAbDwMMMamBMzMmZmhZabMAAAAAAAAYALLjFMNzsMAAAAWYmZAmB",
 				},
 				["horror"] = {
 					label = "Horror",
@@ -1507,7 +1507,7 @@ local talentData = {
 				},
 				["broodtwister-ovinax"] = {
 					label = "Broodtwister Ovi'nax",
-					talentString = "CEcBAAAAAAAAAAAAAAAAAAAAAwMmZbmZmxyAzsMzMGmZDAAAAAMAAYmBMGjpGmZGAAAAMjZwMzyYmBGbzYwCsMGGbDgZQshZG",
+					talentString = "CEcBAAAAAAAAAAAAAAAAAAAAAwMmZbmZmxyAzsMzMGmZDAAAAAAAAzMgHwYM1wMzAAAAgZMz2YmZZMzAjtZMYBWGDjtBwMI2wMD",
 				},
 				["horror"] = {
 					label = "Horror",
@@ -1537,5 +1537,4 @@ local talentData = {
 		},
 	},
 }
-
-addon.raidTalents = talentData
+addonTable.raidTalents = talentData
