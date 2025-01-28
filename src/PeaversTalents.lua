@@ -17,6 +17,7 @@ local IMPORT_BUTTON_WIDTH = 100
 local IMPORT_BUTTON_HEIGHT = 22
 local LABEL_PADDING = 2
 local SIDE_PADDING = 15
+local SECTION_SPACING = 20
 
 -- Local references
 local talentFrame
@@ -44,12 +45,12 @@ local function GetAvailableDungeons(classID, specID)
 	Debug("Getting dungeons for", classID, specID)
 
 	local dungeons = {}
-	if not addon.talentData or not classID or not specID then
-		Debug("Missing required data:", not addon.talentData, not classID, not specID)
+	if not addon.dungeonTalents or not classID or not specID then
+		Debug("Missing required data:", not addon.dungeonTalents, not classID, not specID)
 		return dungeons
 	end
 
-	local classTable = addon.talentData[classID]
+	local classTable = addon.dungeonTalents[classID]
 	if not classTable or not classTable.specs then
 		Debug("No class table or specs found")
 		return dungeons
@@ -61,38 +62,59 @@ local function GetAvailableDungeons(classID, specID)
 		return dungeons
 	end
 
-	if specTable["all-dungeons"] then
-		table.insert(dungeons, {
-			key = "all-dungeons",
-			data = specTable["all-dungeons"],
-		})
-	end
-
-	-- Then add all other dungeons in a separate table for sorting
-	local otherDungeons = {}
 	for dungeonKey, dungeonData in pairs(specTable) do
-		if dungeonKey ~= "all-dungeons" then
-			table.insert(otherDungeons, {
+		if dungeonKey ~= "specs" then
+			table.insert(dungeons, {
 				key = dungeonKey,
 				data = dungeonData,
 			})
 		end
 	end
 
-	-- Sort other dungeons by label
-	table.sort(otherDungeons, function(a, b)
+	-- Sort dungeons by label
+	table.sort(dungeons, function(a, b)
 		return (a.data.label or a.key) < (b.data.label or b.key)
 	end)
-
-	-- Add sorted dungeons to main table
-	for _, dungeon in ipairs(otherDungeons) do
-		table.insert(dungeons, dungeon)
-	end
 
 	return dungeons
 end
 
--- Initialize the dropdown menu
+local function GetAvailableRaidBosses(classID, specID)
+	Debug("Getting raid bosses for", classID, specID)
+
+	local bosses = {}
+	if not addon.raidTalents or not classID or not specID then
+		Debug("Missing required data:", not addon.raidTalents, not classID, not specID)
+		return bosses
+	end
+
+	local classTable = addon.raidTalents[classID]
+	if not classTable or not classTable.specs then
+		Debug("No class table or specs found")
+		return bosses
+	end
+
+	local specTable = classTable.specs[specID]
+	if not specTable then
+		Debug("No spec table found")
+		return bosses
+	end
+
+	for bossKey, bossData in pairs(specTable) do
+		table.insert(bosses, {
+			key = bossKey,
+			data = bossData,
+		})
+	end
+
+	-- Sort raid bosses by label
+	table.sort(bosses, function(a, b)
+		return (a.data.label or a.key) < (b.data.label or b.key)
+	end)
+
+	return bosses
+end
+
 local function InitializeDungeonDropdown(self, level)
 	local info = UIDropDownMenu_CreateInfo()
 	info.func = function(button)
@@ -101,15 +123,15 @@ local function InitializeDungeonDropdown(self, level)
 
 		Debug("Selected dungeon:", dungeonKey)
 
-		if addon.talentData[classID] and
-			addon.talentData[classID].specs and
-			addon.talentData[classID].specs[specID] then
-			local dungeonData = addon.talentData[classID].specs[specID][dungeonKey]
+		if addon.dungeonTalents[classID] and
+			addon.dungeonTalents[classID].specs and
+			addon.dungeonTalents[classID].specs[specID] then
+			local dungeonData = addon.dungeonTalents[classID].specs[specID][dungeonKey]  -- Removed .activities
 			if dungeonData then
 				addon.exportDialog.mplusEdit:SetText(dungeonData.talentString or "")
 				addon.exportDialog.mplusEdit:SetCursorPosition(0)
 				UIDropDownMenu_SetText(addon.exportDialog.mplusDropdown, dungeonData.label or dungeonKey)
-				Debug("Set talent string:", dungeonData.talentString)
+				Debug("Set dungeon talent string:", dungeonData.talentString)
 			end
 		end
 	end
@@ -122,7 +144,38 @@ local function InitializeDungeonDropdown(self, level)
 		info.value = entry.key
 		info.checked = (UIDropDownMenu_GetText(self) == info.text)
 		UIDropDownMenu_AddButton(info, level)
-		Debug("Added dropdown option:", info.text)
+	end
+end
+
+local function InitializeRaidDropdown(self, level)
+	local info = UIDropDownMenu_CreateInfo()
+	info.func = function(button)
+		local bossKey = button.value
+		local classID, specID = GetPlayerClassAndSpec()
+
+		Debug("Selected raid boss:", bossKey)
+
+		if addon.raidTalents[classID] and
+			addon.raidTalents[classID].specs and
+			addon.raidTalents[classID].specs[specID] then
+			local bossData = addon.raidTalents[classID].specs[specID][bossKey]
+			if bossData then
+				addon.exportDialog.raidEdit:SetText(bossData.talentString or "")
+				addon.exportDialog.raidEdit:SetCursorPosition(0)
+				UIDropDownMenu_SetText(addon.exportDialog.raidDropdown, bossData.label or bossKey)
+				Debug("Set raid talent string:", bossData.talentString)
+			end
+		end
+	end
+
+	local classID, specID = GetPlayerClassAndSpec()
+	local bosses = GetAvailableRaidBosses(classID, specID)
+
+	for _, entry in ipairs(bosses) do
+		info.text = entry.data.label or entry.key
+		info.value = entry.key
+		info.checked = (UIDropDownMenu_GetText(self) == info.text)
+		UIDropDownMenu_AddButton(info, level)
 	end
 end
 
@@ -154,7 +207,7 @@ local function CreateExportDialog()
 		dialog:Hide()
 	end)
 
-	-- Mythic+ Label
+	-- Mythic+ Section
 	local mplusLabel = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
 	mplusLabel:SetPoint("TOPLEFT", SIDE_PADDING, -35)
 	mplusLabel:SetText("Mythic+")
@@ -163,18 +216,66 @@ local function CreateExportDialog()
 	dialog.mplusDesc = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 	dialog.mplusDesc:SetPoint("TOPLEFT", mplusLabel, "BOTTOMLEFT", 0, -LABEL_PADDING)
 
-	-- Create dropdown
+	-- Create dungeon dropdown
 	dialog.mplusDropdown = CreateFrame("Frame", "TalentExportDialog_MplusDropdown", dialog, "UIDropDownMenuTemplate")
 	dialog.mplusDropdown:SetPoint("TOPLEFT", dialog.mplusDesc, "BOTTOMLEFT", -15, -5)
 	UIDropDownMenu_SetWidth(dialog.mplusDropdown, 150)
 	UIDropDownMenu_Initialize(dialog.mplusDropdown, InitializeDungeonDropdown)
 
-	-- Create editbox
+	-- Create dungeon editbox
 	dialog.mplusEdit = CreateFrame("EditBox", "TalentExportDialog_MplusEdit", dialog, "InputBoxTemplate")
 	dialog.mplusEdit:SetSize(380, 32)
 	dialog.mplusEdit:SetPoint("LEFT", dialog.mplusDropdown, "RIGHT", 10, 2)
 	dialog.mplusEdit:SetAutoFocus(false)
 	dialog.mplusEdit:SetFontObject(ChatFontNormal)
+	-- Make read only
+	dialog.mplusEdit:SetScript("OnMouseDown", function(self, button)
+		if button == "LeftButton" then
+			dialog.raidEdit:SetCursorPosition(0)
+			dialog.raidEdit:HighlightText(0, 0)
+			self:HighlightText()
+		end
+	end)
+	dialog.mplusEdit:EnableMouse(true)
+	dialog.mplusEdit:SetEnabled(false)
+
+	-- Raid Section
+	local raidLabel = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
+	raidLabel:SetPoint("TOPLEFT", dialog.mplusEdit, "BOTTOMLEFT", -195, -SECTION_SPACING)
+	raidLabel:SetText("Raid")
+
+	-- Raid Description
+	dialog.raidDesc = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	dialog.raidDesc:SetPoint("TOPLEFT", raidLabel, "BOTTOMLEFT", 0, -LABEL_PADDING)
+
+	-- Create raid dropdown
+	dialog.raidDropdown = CreateFrame("Frame", "TalentExportDialog_RaidDropdown", dialog, "UIDropDownMenuTemplate")
+	dialog.raidDropdown:SetPoint("TOPLEFT", dialog.raidDesc, "BOTTOMLEFT", -15, -5)
+	UIDropDownMenu_SetWidth(dialog.raidDropdown, 150)
+	UIDropDownMenu_Initialize(dialog.raidDropdown, InitializeRaidDropdown)
+
+	-- Create raid editbox
+	dialog.raidEdit = CreateFrame("EditBox", "TalentExportDialog_RaidEdit", dialog, "InputBoxTemplate")
+	dialog.raidEdit:SetSize(380, 32)
+	dialog.raidEdit:SetPoint("LEFT", dialog.raidDropdown, "RIGHT", 10, 2)
+	dialog.raidEdit:SetAutoFocus(false)
+	dialog.raidEdit:SetFontObject(ChatFontNormal)
+
+	-- Make read only
+	dialog.raidEdit:SetScript("OnMouseDown", function(self, button)
+		if button == "LeftButton" then
+			dialog.mplusEdit:SetCursorPosition(0)
+			dialog.mplusEdit:HighlightText(0, 0)
+			self:HighlightText()
+		end
+	end)
+	dialog.raidEdit:EnableMouse(true)
+	dialog.raidEdit:SetEnabled(false)
+
+	local instructionsText = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	instructionsText:SetPoint("BOTTOM", dialog, "BOTTOM", 0, 15)
+	instructionsText:SetText("Select a build and click the editbox to copy the talent string. Builds updated daily.")
+	instructionsText:SetJustifyH("CENTER")
 
 	-- Make the frame movable
 	dialog:SetMovable(true)
@@ -191,18 +292,19 @@ local function CreateExportDialog()
 		local classID, specID = GetPlayerClassAndSpec()
 		Debug("Current class/spec:", classID, specID)
 
-		if addon.talentData[classID] and
-			addon.talentData[classID].specs and
-			addon.talentData[classID].specs[specID] then
-			Debug("Found talent data for class/spec")
+		-- Initialize dropdowns with first available option
+		local dungeons = GetAvailableDungeons(classID, specID)
+		if #dungeons > 0 then
+			local firstDungeon = dungeons[1]
+			dialog.mplusEdit:SetText(firstDungeon.data.talentString or "")
+			UIDropDownMenu_SetText(dialog.mplusDropdown, firstDungeon.data.label or firstDungeon.key)
+		end
 
-			local allDungeonsData = addon.talentData[classID].specs[specID]["all-dungeons"]
-			if allDungeonsData then
-				dialog.mplusEdit:SetText(allDungeonsData.talentString or "")
-				UIDropDownMenu_SetText(dialog.mplusDropdown, allDungeonsData.label or "All Dungeons")
-			end
-		else
-			Debug("No talent data found for class/spec")
+		local bosses = GetAvailableRaidBosses(classID, specID)
+		if #bosses > 0 then
+			local firstBoss = bosses[1]
+			dialog.raidEdit:SetText(firstBoss.data.talentString or "")
+			UIDropDownMenu_SetText(dialog.raidDropdown, firstBoss.data.label or firstBoss.key)
 		end
 
 		if not dialog.hideHooked and talentFrame then

@@ -5,7 +5,9 @@
 ## Version: 1.0.4
 ## X-Curse-Project-ID: 1184820
 
-src/Data/TalentData.lua
-src/PeaversTalents.lua
+src/Data/RaidTalentData.lua
+src/Data/DungeonTalentData.lua
+
 src/Misc/Utils.lua
+src/PeaversTalents.lua
 src/PeaversTalents.xml
