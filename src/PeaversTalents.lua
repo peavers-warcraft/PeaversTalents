@@ -255,7 +255,7 @@ local function CreateExportDialog()
 
 	local instructionsText = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 	instructionsText:SetPoint("BOTTOM", dialog, "BOTTOM", 0, 15)
-	instructionsText:SetText("Select a build and click the editbox to copy the talent string. Builds updated daily.")
+	instructionsText:SetText("Select a build to copy the latest talent string | Builds as of " .. addon.Utils.GetFormattedLocalTime(addon.dungeonTalents.updated))
 	instructionsText:SetJustifyH("CENTER")
 
 	-- Make the frame movable
