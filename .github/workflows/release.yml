@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - master
+    paths:
+      - '**.lua'
+      - '**.toc'
+      - '**.xml'
   workflow_dispatch:
     inputs:
       version_bump:
@@ -23,6 +27,8 @@ on:
 permissions:
   contents: write
   actions: write
+  pull-requests: write
+  checks: write
 
 jobs:
   prepare-release:
