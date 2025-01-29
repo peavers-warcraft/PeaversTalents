@@ -2,6 +2,8 @@ local addonName, addonTable = ...
 addonTable.raidTalents = addonTable.raidTalents or {}
 
 local talentData = {
+	updated = "2025-01-29 22:12:19",  -- UTC timestamp of last update
+
 	[1] = {  -- Warrior
 		specs = {
 			[71] = {
