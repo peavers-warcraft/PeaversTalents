@@ -2,14 +2,18 @@ name: Auto-merge Talent Updates
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [ opened, synchronize ]
     branches:
-      - 'feature/update-talent-database'
+      - 'master'
+
+permissions:
+  pull-requests: write
 
 jobs:
   auto-merge:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.head.ref == 'feature/update-talent-database'
+    if: |
+      github.event.pull_request.head.ref == 'feature/update-talent-database' && github.event.pull_request.user.login == github.repository_owner
 
     steps:
       - name: Auto-merge PR
