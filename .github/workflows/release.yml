@@ -7,8 +7,6 @@ on:
       - '**.lua'
       - '**.toc'
       - '**.xml'
-  pull_request:
-    types: [closed, synchronize]
   workflow_dispatch:
     inputs:
       version_bump:
@@ -53,12 +51,21 @@ jobs:
       - name: Check for relevant changes
         id: check
         run: |
+          set -x
+          echo "Checking for changes..."
+          echo "Changed files:"
+          git diff-tree --no-commit-id --name-only -r HEAD
+
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "workflow_dispatch detected, setting should_release=true"
             echo "should_release=true" >> $GITHUB_OUTPUT
           else
+            echo "Checking for .lua, .toc, or .xml files..."
             if git diff-tree --no-commit-id --name-only -r HEAD | grep -E '\.(lua|toc|xml)$'; then
+              echo "Found relevant changes, setting should_release=true"
               echo "should_release=true" >> $GITHUB_OUTPUT
             else
+              echo "No relevant changes found, setting should_release=false"
               echo "should_release=false" >> $GITHUB_OUTPUT
             fi
           fi
