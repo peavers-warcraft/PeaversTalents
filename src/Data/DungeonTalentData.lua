@@ -2,7 +2,7 @@ local addonName, addonTable = ...
 addonTable.dungeonTalents = addonTable.dungeonTalents or {}
 
 local talentData = {
-	updated = "2025-01-29 22:34:19", 
+	updated = "2025-01-29 22:41:33", 
 
 	[1] = {  -- Warrior
 		specs = {
