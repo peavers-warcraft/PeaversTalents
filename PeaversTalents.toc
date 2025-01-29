@@ -1,4 +1,4 @@
-## Interface: 110000,110002
+## Interface: 110007
 ## Title: PeaversTalents
 ## Notes: A simple addon to set talents to latest from wowcompare.io.
 ## Author: Peavers
