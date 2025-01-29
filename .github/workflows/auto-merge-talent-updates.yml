@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [ opened, synchronize ]
     branches:
-      - 'master'
+      - master
 
 permissions:
   contents: write
@@ -26,4 +26,4 @@ jobs:
           gh auth status
           gh pr merge "${{ github.event.pull_request.number }}" --merge --auto
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
