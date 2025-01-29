@@ -1,5 +1,4 @@
 name: Release Management
-
 on:
   push:
     branches:
@@ -8,6 +7,8 @@ on:
       - '**.lua'
       - '**.toc'
       - '**.xml'
+  pull_request:
+    types: [closed, synchronize]
   workflow_dispatch:
     inputs:
       version_bump:
@@ -42,6 +43,7 @@ jobs:
           echo "Event name: ${{ github.event_name }}"
           echo "Ref: ${{ github.ref }}"
           echo "SHA: ${{ github.sha }}"
+          echo "Actor: ${{ github.actor }}"
 
       - name: Checkout code
         uses: actions/checkout@v4
