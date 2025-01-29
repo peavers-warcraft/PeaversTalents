@@ -1,84 +1,158 @@
-name: Update Version and Tag
+name: Release Management
 on:
   push:
     branches:
       - master
+    paths:
+      - '**.lua'
+      - '**.toc'
+      - '**.xml'
   workflow_dispatch:
+    inputs:
+      version_bump:
+        description: 'Version bump type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      release_notes:
+        description: 'Release notes'
+        required: false
+        type: string
 
 permissions:
   contents: write
   actions: write
 
 jobs:
-  update-version-and-tag:
+  prepare-release:
     runs-on: ubuntu-latest
     outputs:
-      new_version: ${{ steps.get_version.outputs.new_version }}
-      new_tag: ${{ steps.create_tag.outputs.new_tag }}
+      new_version: ${{ steps.version.outputs.new_version }}
+      should_release: ${{ steps.check.outputs.should_release }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Get current version and increment
-        id: get_version
+      - name: Check for relevant changes
+        id: check
         run: |
-          # Extract version and ensure it's a complete version number (x.y.z)
+          # Only release if there are actual code changes or workflow was manually triggered
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "should_release=true" >> $GITHUB_OUTPUT
+          else
+            # Check if any relevant files were changed in the last commit
+            git diff-tree --no-commit-id --name-only -r HEAD | grep -E '\.(lua|toc|xml)$' || echo "No relevant changes"
+            if git diff-tree --no-commit-id --name-only -r HEAD | grep -E '\.(lua|toc|xml)$'; then
+              echo "should_release=true" >> $GITHUB_OUTPUT
+            else
+              echo "should_release=false" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Get current version
+        id: version
+        if: steps.check.outputs.should_release == 'true'
+        run: |
           CURRENT_VERSION=$(grep -oP '(?<=## Version: )\d+\.\d+\.\d+' PeaversTalents.toc)
 
-          if [ -z "$CURRENT_VERSION" ] || ! [[ "$CURRENT_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "Error: Invalid version format found in TOC file. Must be in format x.y.z"
+          # Validate current version
+          if [[ ! $CURRENT_VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Error: Invalid version format in TOC file"
             exit 1
           fi
 
+          # Split version
+          IFS='.' read -r major minor patch <<< "$CURRENT_VERSION"
+
+          # Determine version bump type
+          BUMP_TYPE="${{ github.event.inputs.version_bump }}"
+          if [[ "${{ github.event_name }}" != "workflow_dispatch" ]]; then
+            BUMP_TYPE="patch"
+          fi
+
+          # Calculate new version
+          case $BUMP_TYPE in
+            "major")
+              NEW_VERSION="$((major + 1)).0.0"
+              ;;
+            "minor")
+              NEW_VERSION="${major}.$((minor + 1)).0"
+              ;;
+            "patch"|*)
+              NEW_VERSION="${major}.${minor}.$((patch + 1))"
+              ;;
+          esac
+
+          echo "new_version=${NEW_VERSION}" >> $GITHUB_OUTPUT
           echo "Current version: $CURRENT_VERSION"
-          IFS='.' read -ra VERSION_PARTS <<< "$CURRENT_VERSION"
-          MAJOR="${VERSION_PARTS[0]}"
-          MINOR="${VERSION_PARTS[1]}"
-          PATCH="${VERSION_PARTS[2]}"
-          NEW_PATCH=$((PATCH + 1))
-          NEW_VERSION="${MAJOR}.${MINOR}.${NEW_PATCH}"
-          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
-          echo "New version will be: $NEW_VERSION"
+          echo "New version: $NEW_VERSION"
+
+  update-and-release:
+    needs: prepare-release
+    if: needs.prepare-release.outputs.should_release == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Update TOC version
         run: |
-          # Verify the new version is properly formatted
-          if ! [[ "${{ steps.get_version.outputs.new_version }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "Error: New version is not properly formatted"
+          NEW_VERSION="${{ needs.prepare-release.outputs.new_version }}"
+          sed -i "s/^## Version: .*$/## Version: ${NEW_VERSION}/" PeaversTalents.toc
+
+          # Verify update
+          if ! grep -q "## Version: ${NEW_VERSION}" PeaversTalents.toc; then
+            echo "Error: Failed to update version in TOC file"
             exit 1
           fi
 
-          sed -i "s/^## Version: .*$/## Version: ${{ steps.get_version.outputs.new_version }}/" PeaversTalents.toc
-
-          # Verify the update was successful and complete
-          NEW_VERSION_IN_FILE=$(grep -oP '(?<=## Version: )\d+\.\d+\.\d+' PeaversTalents.toc)
-          if [ "$NEW_VERSION_IN_FILE" != "${{ steps.get_version.outputs.new_version }}" ]; then
-            echo "Error: Version update failed or resulted in incorrect format"
-            exit 1
-          fi
-
-      - name: Commit TOC changes
+      - name: Generate changelog
+        id: changelog
         run: |
-          git config user.name "Chris Turner"
-          git config user.email "peavers@gmail.com"
+          # Start with manual release notes if provided
+          if [[ -n "${{ github.event.inputs.release_notes }}" ]]; then
+            echo "${{ github.event.inputs.release_notes }}" > CHANGELOG.md
+          else
+            # Get commits since last tag
+            echo "Changes in this release:" > CHANGELOG.md
+            git log $(git describe --tags --abbrev=0 2>/dev/null || echo HEAD~10)..HEAD --pretty=format:"- %s" >> CHANGELOG.md
+          fi
+
+          # Remove any automated commits from changelog
+          sed -i '/chore: Update TOC version/d' CHANGELOG.md
+
+          # Save changelog for release step
+          CHANGELOG=$(cat CHANGELOG.md)
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Commit changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
           git add PeaversTalents.toc
-          git commit -m "chore: Update TOC version to ${{ steps.get_version.outputs.new_version }}"
+          git commit -m "chore: Update TOC version to ${{ needs.prepare-release.outputs.new_version }}"
           git push
 
-      - name: Create and push tag
-        id: create_tag
+      - name: Create tag
         run: |
-          NEW_TAG="PeaversTalents-${{ steps.get_version.outputs.new_version }}"
-          git tag $NEW_TAG
-          git push origin $NEW_TAG
-          echo "new_tag=$NEW_TAG" >> $GITHUB_OUTPUT
+          TAG_NAME="PeaversTalents-${{ needs.prepare-release.outputs.new_version }}"
+          git tag -a "$TAG_NAME" -m "Release ${{ needs.prepare-release.outputs.new_version }}"
+          git push origin "$TAG_NAME"
 
-      - name: Trigger packaging workflow
-        run: |
-          curl -X POST \
-          -H "Accept: application/vnd.github.v3+json" \
-          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/repos/peavers/peavers-talents/actions/workflows/packaging.yml/dispatches \
-          -d '{"ref":"master"}'
+      - name: Package and upload to CurseForge
+        uses: BigWigsMods/packager@v2
+        env:
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TITLE: "PeaversTalents ${{ needs.prepare-release.outputs.new_version }}"
+          CHANGELOG: ${{ steps.changelog.outputs.changelog }}
+        with:
+          args: -g retail
