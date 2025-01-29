@@ -7,6 +7,7 @@ on:
       - 'master'
 
 permissions:
+  contents: write
   pull-requests: write
 
 jobs:
@@ -20,9 +21,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Auto-merge PR
+      - name: Enable auto-merge
         run: |
+          gh auth status
           gh pr merge "${{ github.event.pull_request.number }}" --merge --auto
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
