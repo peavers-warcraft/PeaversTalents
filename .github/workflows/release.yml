@@ -53,15 +53,15 @@ jobs:
         run: |
           set -x
           echo "Checking for changes..."
-          echo "Changed files:"
-          git diff-tree --no-commit-id --name-only -r HEAD
+          echo "Last few commits:"
+          git log -n 3 --oneline
 
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            echo "workflow_dispatch detected, setting should_release=true"
             echo "should_release=true" >> $GITHUB_OUTPUT
           else
-            echo "Checking for .lua, .toc, or .xml files..."
-            if git diff-tree --no-commit-id --name-only -r HEAD | grep -E '\.(lua|toc|xml)$'; then
+            # Check changes in the last non-merge commit
+            echo "Files changed in last non-merge commit:"
+            if git log --no-merges -n 1 --name-only --pretty=format:"" | grep -E '\.(lua|toc|xml)$'; then
               echo "Found relevant changes, setting should_release=true"
               echo "should_release=true" >> $GITHUB_OUTPUT
             else
