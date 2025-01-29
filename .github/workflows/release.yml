@@ -1,15 +1,7 @@
 name: Release Management
+
 on:
   push:
-    branches:
-      - master
-    paths:
-      - '**.lua'
-      - '**.toc'
-      - '**.xml'
-  pull_request:
-    types:
-      - closed
     branches:
       - master
     paths:
@@ -38,13 +30,17 @@ permissions:
 
 jobs:
   prepare-release:
-    # Only run if PR was merged or if it's a direct push or manual trigger
-    if: github.event_name != 'pull_request' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     outputs:
       new_version: ${{ steps.version.outputs.new_version }}
       should_release: ${{ steps.check.outputs.should_release }}
     steps:
+      - name: Debug event info
+        run: |
+          echo "Event name: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "SHA: ${{ github.sha }}"
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
@@ -53,12 +49,9 @@ jobs:
       - name: Check for relevant changes
         id: check
         run: |
-          # Only release if there are actual code changes or workflow was manually triggered
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             echo "should_release=true" >> $GITHUB_OUTPUT
           else
-            # Check if any relevant files were changed in the last commit
-            git diff-tree --no-commit-id --name-only -r HEAD | grep -E '\.(lua|toc|xml)$' || echo "No relevant changes"
             if git diff-tree --no-commit-id --name-only -r HEAD | grep -E '\.(lua|toc|xml)$'; then
               echo "should_release=true" >> $GITHUB_OUTPUT
             else
@@ -72,22 +65,18 @@ jobs:
         run: |
           CURRENT_VERSION=$(grep -oP '(?<=## Version: )\d+\.\d+\.\d+' PeaversTalents.toc)
 
-          # Validate current version
           if [[ ! $CURRENT_VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Error: Invalid version format in TOC file"
             exit 1
           fi
 
-          # Split version
           IFS='.' read -r major minor patch <<< "$CURRENT_VERSION"
 
-          # Determine version bump type
           BUMP_TYPE="${{ github.event.inputs.version_bump }}"
           if [[ "${{ github.event_name }}" != "workflow_dispatch" ]]; then
             BUMP_TYPE="patch"
           fi
 
-          # Calculate new version
           case $BUMP_TYPE in
             "major")
               NEW_VERSION="$((major + 1)).0.0"
@@ -117,7 +106,6 @@ jobs:
           NEW_VERSION="${{ needs.prepare-release.outputs.new_version }}"
           sed -i "s/^## Version: .*$/## Version: ${NEW_VERSION}/" PeaversTalents.toc
 
-          # Verify update
           if ! grep -q "## Version: ${NEW_VERSION}" PeaversTalents.toc; then
             echo "Error: Failed to update version in TOC file"
             exit 1
