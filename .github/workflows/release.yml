@@ -119,9 +119,23 @@ jobs:
           if [[ -n "${{ github.event.inputs.release_notes }}" ]]; then
             echo "${{ github.event.inputs.release_notes }}" > CHANGELOG.md
           else
-            # Get commits since last tag
-            echo "Changes in this release:" > CHANGELOG.md
-            git log $(git describe --tags --abbrev=0 2>/dev/null || echo HEAD~10)..HEAD --pretty=format:"- %s" >> CHANGELOG.md
+            # Check if we have any commits
+            if ! git rev-parse HEAD >/dev/null 2>&1; then
+              echo "No commits found in repository" > CHANGELOG.md
+            else
+              # Try to get the last tag, fallback gracefully if none exists
+              LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null)
+
+              if [[ -n "$LAST_TAG" ]]; then
+                # We have a previous tag, get commits since then
+                echo "Changes since $LAST_TAG:" > CHANGELOG.md
+                git log "$LAST_TAG..HEAD" --pretty=format:"- %s" >> CHANGELOG.md
+              else
+                # No tags exist, get the last 10 commits
+                echo "Recent changes:" > CHANGELOG.md
+                git log --max-count=10 --pretty=format:"- %s" >> CHANGELOG.md
+              fi
+            fi
           fi
 
           # Remove any automated commits from changelog
