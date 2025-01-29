@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - master
-    paths:
-      - '**.lua'
-      - '**.toc'
-      - '**.xml'
   workflow_dispatch:
     inputs:
       version_bump:
