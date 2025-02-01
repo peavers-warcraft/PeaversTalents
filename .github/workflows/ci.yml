@@ -1,0 +1,144 @@
+name: WoW Addon CI/CD
+
+# Trigger on pull_request events (for auto‑merge) and on push/dispatch (for version bump & release)
+on:
+  pull_request:
+    types: [ opened, synchronize ]
+    branches: [ master ]
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+    inputs:
+      version_bump:
+        description: 'Version bump type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+  checks: write
+
+jobs:
+  # ─────────────────────────────────────────────────────────────
+  # 1. Auto-merge: Rebases and auto-merges PRs that update talents
+  # ─────────────────────────────────────────────────────────────
+  auto-merge:
+    if: >
+      github.event_name == 'pull_request' &&
+      github.event.pull_request.head.ref == 'feature/update-talent-database' &&
+      github.event.pull_request.user.login == github.repository_owner
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Enable auto-merge (rebase)
+        run: |
+          gh auth status
+          gh pr merge "${{ github.event.pull_request.number }}" --rebase --auto
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+  # ─────────────────────────────────────────────────────────────
+  # 2. Version bump & release: When code is pushed to master (or manually triggered)
+  #    This job bumps the version (if relevant files changed), commits & tags,
+  #    pushes those changes, and then packages & uploads your addon.
+  # ─────────────────────────────────────────────────────────────
+  version_and_release:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code (with full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - name: Determine if version bump is needed
+        id: check_changes
+        run: |
+          # If this is a manual trigger, always bump the version
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "should_bump=true" >> "$GITHUB_OUTPUT"
+          else
+            # Otherwise, check if any Lua, TOC, or XML files changed in the latest commit.
+            if git diff-tree --no-commit-id --name-only -r HEAD | grep -E '\.(lua|toc|xml)$'; then
+              echo "should_bump=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "should_bump=false" >> "$GITHUB_OUTPUT"
+            fi
+          fi
+
+      - name: Bump version and create tag
+        if: steps.check_changes.outputs.should_bump == 'true'
+        id: bump
+        run: |
+          # Read current version from the TOC file
+          CURRENT_VERSION=$(grep -oP '(?<=## Version: )\d+\.\d+\.\d+' PeaversTalents.toc)
+          if [[ ! $CURRENT_VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Error: Invalid version format in TOC file"
+            exit 1
+          fi
+          IFS='.' read -r major minor patch <<< "$CURRENT_VERSION"
+
+          # Determine bump type: for workflow_dispatch use input, otherwise default to patch
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            BUMP_TYPE="${{ github.event.inputs.version_bump }}"
+          else
+            BUMP_TYPE="patch"
+          fi
+
+          # Compute the new version
+          case $BUMP_TYPE in
+            major)
+              NEW_VERSION="$((major + 1)).0.0"
+              ;;
+            minor)
+              NEW_VERSION="${major}.$((minor + 1)).0"
+              ;;
+            patch)
+              NEW_VERSION="${major}.${minor}.$((patch + 1))"
+              ;;
+            *)
+              NEW_VERSION="${major}.${minor}.$((patch + 1))"
+              ;;
+          esac
+
+          echo "Bumping version from $CURRENT_VERSION to $NEW_VERSION"
+
+          # Update the TOC file with the new version
+          sed -i "s/^## Version: .*$/## Version: ${NEW_VERSION}/" PeaversTalents.toc
+
+          # Configure git (ensure your commits are attributed correctly)
+          git config user.name "${{ github.repository_owner }}"
+          git config user.email "${{ github.repository_owner }}@users.noreply.github.com"
+
+          # Commit the version bump and tag it
+          git add PeaversTalents.toc
+          git commit -m "chore: Update TOC version to ${NEW_VERSION}"
+          git tag -a "PeaversTalents-${NEW_VERSION}" -m "Release ${NEW_VERSION}"
+
+          # Push commit and tag (you might consider using a bot account or a dedicated PAT)
+          git push origin HEAD:master
+          git push origin "PeaversTalents-${NEW_VERSION}"
+
+          # Expose the new version to later steps
+          echo "new_version=${NEW_VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Package and upload to CurseForge
+        # Only run if a version bump was performed (i.e. new tag created)
+        if: steps.check_changes.outputs.should_bump == 'true'
+        uses: BigWigsMods/packager@v2
+        env:
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TITLE: ${{ steps.bump.outputs.new_version }}
+        with:
+          args: -g retail
