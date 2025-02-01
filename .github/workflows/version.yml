@@ -1,0 +1,120 @@
+name: Version Management
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - '**.lua'
+      - '**.toc'
+      - '**.xml'
+  workflow_dispatch:
+    inputs:
+      version_bump:
+        description: 'Version bump type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      release_notes:
+        description: 'Release notes'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  actions: write
+  pull-requests: write
+  checks: write
+
+jobs:
+  prepare-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug event info
+        run: |
+          echo "Event name: ${{ github.event_name }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "SHA: ${{ github.sha }}"
+          echo "Actor: ${{ github.actor }}"
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check for relevant changes
+        id: check
+        run: |
+          set -x
+          echo "Checking for changes..."
+          echo "Last few commits:"
+          git log -n 3 --oneline
+
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "should_release=true" >> $GITHUB_OUTPUT
+          else
+            echo "Files changed in commit:"
+            if git diff-tree --no-commit-id --name-only -r HEAD | grep -E '\.(lua|toc|xml)$'; then
+              echo "Found relevant changes, setting should_release=true"
+              echo "should_release=true" >> $GITHUB_OUTPUT
+            else
+              echo "No relevant changes found, setting should_release=false"
+              echo "should_release=false" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Create version bump and tag
+        if: steps.check.outputs.should_release == 'true'
+        run: |
+          CURRENT_VERSION=$(grep -oP '(?<=## Version: )\d+\.\d+\.\d+' PeaversTalents.toc)
+
+          if [[ ! $CURRENT_VERSION =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Error: Invalid version format in TOC file"
+            exit 1
+          fi
+
+          IFS='.' read -r major minor patch <<< "$CURRENT_VERSION"
+
+          BUMP_TYPE="${{ github.event.inputs.version_bump }}"
+          if [[ "${{ github.event_name }}" != "workflow_dispatch" ]]; then
+            BUMP_TYPE="patch"
+          fi
+
+          case $BUMP_TYPE in
+            "major")
+              NEW_VERSION="$((major + 1)).0.0"
+              ;;
+            "minor")
+              NEW_VERSION="${major}.$((minor + 1)).0"
+              ;;
+            "patch"|*)
+              NEW_VERSION="${major}.${minor}.$((patch + 1))"
+              ;;
+          esac
+
+          echo "Current version: $CURRENT_VERSION"
+          echo "New version: $NEW_VERSION"
+
+          # Update TOC file
+          sed -i "s/^## Version: .*$/## Version: ${NEW_VERSION}/" PeaversTalents.toc
+
+          if ! grep -q "## Version: ${NEW_VERSION}" PeaversTalents.toc; then
+            echo "Error: Failed to update version in TOC file"
+            exit 1
+          fi
+
+          # Configure git
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+          # Create the version commit and tag
+          git add PeaversTalents.toc
+          git commit -m "chore: Update TOC version to ${NEW_VERSION}"
+          git tag -a "PeaversTalents-${NEW_VERSION}" -m "Release ${NEW_VERSION}"
+
+          # Push both the commit and tag
+          git push origin HEAD:master
+          git push origin "PeaversTalents-${NEW_VERSION}"
