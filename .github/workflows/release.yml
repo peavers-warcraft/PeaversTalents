@@ -112,15 +112,36 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Update TOC version
+      - name: Update TOC version and create tag
         run: |
           NEW_VERSION="${{ needs.prepare-release.outputs.new_version }}"
+
+          # Update TOC file
           sed -i "s/^## Version: .*$/## Version: ${NEW_VERSION}/" PeaversTalents.toc
 
           if ! grep -q "## Version: ${NEW_VERSION}" PeaversTalents.toc; then
             echo "Error: Failed to update version in TOC file"
             exit 1
           fi
+
+          # Configure git
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+          # Commit the TOC change
+          git add PeaversTalents.toc
+          git commit -m "chore: Update TOC version to ${NEW_VERSION}"
+
+          # Create and push the tag
+          TAG_NAME="PeaversTalents-${NEW_VERSION}"
+          git tag -a "${TAG_NAME}" -m "Release ${NEW_VERSION}"
+
+          # Push both the commit and tag
+          git push origin HEAD:master
+          git push origin "${TAG_NAME}"
+
+          # Sleep briefly to ensure tag is visible
+          sleep 5
 
       - name: Package and upload to CurseForge
         uses: BigWigsMods/packager@v2
@@ -130,17 +151,3 @@ jobs:
           RELEASE_TITLE: "PeaversTalents ${{ needs.prepare-release.outputs.new_version }}"
         with:
           args: -g retail
-
-      - name: Commit changes
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git add PeaversTalents.toc
-          git commit -m "chore: Update TOC version to ${{ needs.prepare-release.outputs.new_version }}"
-          git push
-
-      - name: Create tag
-        run: |
-          TAG_NAME="PeaversTalents-${{ needs.prepare-release.outputs.new_version }}"
-          git tag -a "$TAG_NAME" -m "Release ${{ needs.prepare-release.outputs.new_version }}"
-          git push origin "$TAG_NAME"
