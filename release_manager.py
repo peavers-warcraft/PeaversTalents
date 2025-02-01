@@ -49,28 +49,6 @@ class ReleaseManager:
         self.toc_file = toc_file
         self.current_version = self._get_current_version()
 
-        # Get GitHub repository from environment
-        self.github_repo = os.environ.get('GITHUB_REPOSITORY')
-        if not self.github_repo:
-            raise EnvironmentError("GITHUB_REPOSITORY environment variable not set")
-
-        # Setup API tokens
-        self.github_token = os.environ.get('GITHUB_TOKEN')
-        self.cf_api_key = os.environ.get('CF_API_KEY')
-        if not self.github_token or not self.cf_api_key:
-            raise EnvironmentError("GITHUB_TOKEN and CF_API_KEY must be set")
-
-        # CurseForge API configuration
-        self.cf_api_url = "https://wow.curseforge.com/api"
-        self.cf_project_id = self._get_cf_project_id()  # You'll need to set this up
-
-    def _get_cf_project_id(self) -> int:
-        """Get CurseForge project ID from environment or config."""
-        project_id = os.environ.get('CF_PROJECT_ID')
-        if not project_id:
-            raise EnvironmentError("CF_PROJECT_ID environment variable not set")
-        return int(project_id)
-
     def _get_current_version(self) -> Version:
         """Extract current version from TOC file."""
         try:
@@ -111,6 +89,39 @@ class ReleaseManager:
             print(f"Error output: {e.stderr}")
             raise
 
+    def prepare_release(self, bump_type: VersionBumpType, release_notes: Optional[str] = None) -> Version:
+        """Prepare a new release by bumping version and creating git tag."""
+        # Calculate new version
+        new_version = self.current_version.bump(bump_type)
+
+        # Update TOC file
+        self._update_toc_version(new_version)
+
+        # Configure git identity using environment variables
+        git_name = os.environ.get('GITHUB_ACTOR', 'GitHub Actions')
+        git_email = f"{git_name}@users.noreply.github.com"
+        self._run_git_command(['config', 'user.name', git_name])
+        self._run_git_command(['config', 'user.email', git_email])
+
+        # Create version commit
+        self._run_git_command(['add', self.toc_file])
+        commit_msg = f"chore: Update TOC version to {new_version}"
+        self._run_git_command(['commit', '-m', commit_msg])
+
+        # Create and push tag
+        tag_name = f"PeaversTalents-{new_version}"
+        tag_message = f"Release {new_version}"
+        if release_notes:
+            tag_message += f"\n\n{release_notes}"
+
+        self._run_git_command(['tag', '-a', tag_name, '-m', tag_message])
+
+        # Push changes and tag
+        self._run_git_command(['push', 'origin', 'HEAD:master'])
+        self._run_git_command(['push', 'origin', tag_name])
+
+        return new_version
+
     def _create_release_zip(self, version: str) -> str:
         """Create a ZIP file for the release."""
         zip_name = f"PeaversTalents-{version}.zip"
@@ -131,113 +142,61 @@ class ReleaseManager:
 
         return zip_name
 
-    def _create_github_release(self, version: str, release_notes: Optional[str]):
-        """Create a GitHub release using the API."""
-        headers = {
-            'Authorization': f'token {self.github_token}',
-            'Accept': 'application/vnd.github.v3+json'
-        }
+    def upload_to_curseforge(self, version: Version, zip_file: str):
+        """Upload the release to CurseForge."""
+        if 'CF_API_KEY' not in os.environ:
+            raise EnvironmentError("CF_API_KEY environment variable not set")
 
-        # Create release
-        release_data = {
-            'tag_name': f'PeaversTalents-{version}',
-            'name': f'PeaversTalents {version}',
-            'body': release_notes or f'Release version {version}',
-            'draft': False,
-            'prerelease': False
-        }
+        cf_token = os.environ['CF_API_KEY']
+        project_id = os.environ.get('CF_PROJECT_ID')
+        if not project_id:
+            raise EnvironmentError("CF_PROJECT_ID environment variable not set")
 
-        response = requests.post(
-            f'https://api.github.com/repos/{self.github_repo}/releases',
-            headers=headers,
-            json=release_data
+        # Get game version IDs
+        versions_response = requests.get(
+            'https://wow.curseforge.com/api/game/versions',
+            headers={'X-Api-Token': cf_token}
         )
-        response.raise_for_status()
+        versions_response.raise_for_status()
+        game_versions = versions_response.json()
 
-        # Upload release asset
-        release = response.json()
-        zip_file = self._create_release_zip(version)
+        # Find the correct game version ID for retail
+        retail_version_id = None
+        for version in game_versions:
+            if version['gameVersionTypeID'] == 517:  # Retail
+                retail_version_id = version['id']
+                break
 
-        with open(zip_file, 'rb') as f:
-            upload_headers = {
-                'Authorization': f'token {self.github_token}',
-                'Content-Type': 'application/zip'
-            }
-            upload_url = release['upload_url'].replace(
-                '{?name,label}', f'?name={zip_file}'
-            )
-            response = requests.post(
-                upload_url,
-                headers=upload_headers,
-                data=f
-            )
-            response.raise_for_status()
+        if not retail_version_id:
+            raise ValueError("Could not find retail game version ID")
 
-        return zip_file
-
-    def _upload_to_curseforge(self, version: str, zip_file: str):
-        """Upload the release to CurseForge using their API."""
-        headers = {
-            'X-Api-Token': self.cf_api_key
-        }
-
-        # Prepare upload metadata
+        # Prepare the upload request
         metadata = {
-            'changelog': f'Release version {version}',
-            'changelogType': 'markdown',
-            'displayName': f'PeaversTalents {version}',
-            'gameVersions': [10200],  # WoW Retail version ID
-            'releaseType': 'release'
+            "changelog": "",  # You can add changelog here if needed
+            "changelogType": "markdown",
+            "displayName": f"Version {version}",
+            "gameVersions": [retail_version_id],
+            "releaseType": "release"  # or "alpha", "beta"
         }
 
-        # Upload file
         files = {
-            'file': open(zip_file, 'rb'),
+            'file': (zip_file, open(zip_file, 'rb'), 'application/zip'),
             'metadata': (None, json.dumps(metadata))
         }
 
+        # Upload to CurseForge
         response = requests.post(
-            f'{self.cf_api_url}/projects/{self.cf_project_id}/upload-file',
-            headers=headers,
+            f'https://wow.curseforge.com/api/projects/{project_id}/upload-file',
+            headers={'X-Api-Token': cf_token},
             files=files
         )
-        response.raise_for_status()
 
-    def prepare_release(self, bump_type: VersionBumpType, release_notes: Optional[str] = None) -> Version:
-        """Prepare a new release by bumping version and creating git tag."""
-        # Calculate new version
-        new_version = self.current_version.bump(bump_type)
+        if not response.ok:
+            print(f"Error uploading to CurseForge: {response.status_code}")
+            print(response.text)
+            raise Exception("Failed to upload to CurseForge")
 
-        # Update TOC file
-        self._update_toc_version(new_version)
-
-        # Configure git identity using environment variables
-        git_name = os.environ.get('GITHUB_ACTOR', 'GitHub Actions')
-        git_email = f"{git_name}@users.noreply.github.com"
-        self._run_git_command(['config', 'user.name', git_name])
-        self._run_git_command(['config', 'user.email', git_email])
-
-        # Create version commit
-        self._run_git_command(['add', self.toc_file])
-        commit_msg = f"chore: Update TOC version to {new_version}"
-        self._run_git_command(['commit', '-m', commit_msg])
-
-        # Push changes
-        self._run_git_command(['push', 'origin', 'HEAD:master'])
-
-        # Create GitHub release and get ZIP file
-        zip_file = self._create_github_release(str(new_version), release_notes)
-
-        # Upload to CurseForge
-        self._upload_to_curseforge(str(new_version), zip_file)
-
-        # Clean up ZIP file
-        try:
-            os.remove(zip_file)
-        except OSError:
-            print(f"Warning: Could not remove temporary file {zip_file}")
-
-        return new_version
+        print(f"Successfully uploaded version {version} to CurseForge")
 
 def main():
     # Parse command line arguments
@@ -257,6 +216,8 @@ def main():
     try:
         manager = ReleaseManager()
         new_version = manager.prepare_release(bump_type, release_notes)
+        zip_file = manager._create_release_zip(str(new_version))
+        manager.upload_to_curseforge(new_version, zip_file)
         print(f"Successfully released version {new_version}")
     except Exception as e:
         print(f"Error during release process: {e}")
