@@ -2,7 +2,7 @@ local addonName, addonTable = ...
 addonTable.dungeonTalents = addonTable.dungeonTalents or {}
 
 local talentData = {
-	updated = "2025-01-31 00:01:02", 
+	updated = "2025-02-01 00:01:07", 
 
 	[1] = {  -- Warrior
 		specs = {
@@ -155,7 +155,7 @@ local talentData = {
 				},
 				["the-necrotic-wake"] = {
 					label = "The Necrotic Wake",
-					talentString = "CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAzAAAMAbzMDzMmZWMjZZmZsNgZbbm2iZYMzMMwslBAMAYDYjZMzMAAAwMzy2SbzMsBMDwghZA",
+					talentString = "CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAzAAAMAbjZYmxMziZMLzMsNDMbbz0WMDjZmhBmtMAgBAbAbMzMzMAAAwMzy2SbzMsBMDwghZA",
 				},
 				["the-stonevault"] = {
 					label = "The Stonevault",
@@ -455,7 +455,7 @@ local talentData = {
 				},
 				["mists-of-tirna-scithe"] = {
 					label = "Mists of Tirna Scithe",
-					talentString = "CUQAAAAAAAAAAAAAAAAAAAAAAAAM2mBAAAAAgZZMWmGzYmxMzYMDzMjhxsNMzMbLzMjZmZAjlZbAAAAYGMAGzmhBGYWYhWsBD",
+					talentString = "CUQAAAAAAAAAAAAAAAAAAAAAAAAM2mBAAAAAgZZMWmGzYmxMzYMDzMjhxsNMzMbbzMjZmZAjlZbAAAAYGMAGzmhBGYWYhWsBD",
 				},
 				["siege-of-boralus"] = {
 					label = "Siege of Boralus",
@@ -737,7 +737,7 @@ local talentData = {
 				},
 				["siege-of-boralus"] = {
 					label = "Siege of Boralus",
-					talentString = "CYQAAAAAAAAAAAAAAAAAAAAAAAAAAAAMbz2yMjxY2mlZmBMzMDAAAAAAbmxwGsAzwQjNAwYaGw2CzMNMzMz2MWmxMYWGsMzYwYmZbMA",
+					talentString = "CYQAAAAAAAAAAAAAAAAAAAAAAAAAAAAMbz22MjxY2mlZmBMzMDAAAAAAbmxwGsAzwQjNAwsMNDYbhZmGmZmxwyMmxmZZwyMjBjZmtxA",
 				},
 				["the-dawnbreaker"] = {
 					label = "The Dawnbreaker",
@@ -1095,11 +1095,11 @@ local talentData = {
 				},
 				["the-dawnbreaker"] = {
 					label = "The Dawnbreaker",
-					talentString = "CwQAAAAAAAAAAAAAAAAAAAAAAAAAAAzYMmBmlZsNmZGDAAAAAAwyCMxMDMDjNgtZmZYWYmx2sMTbLzmtZmhZBAA2AAAAmtZpZmZWYGsB",
+					talentString = "CwQAAAAAAAAAAAAAAAAAAAAAAAAAAAzYMmBmlZsNmZGDAAAAAAwyCImZgZYsBsNzMDz2Ymx2sMTbLzmtZmhZBAA2AAAAmtZpZmZWYGsB",
 				},
 				["the-necrotic-wake"] = {
 					label = "The Necrotic Wake",
-					talentString = "CwQAAAAAAAAAAAAAAAAAAAAAAAAAAAzYMmBmlZsNmZGDAAAAAAwyCMxMDMDjNgtZmZY2Ymx2sMTbLzmtZmhZBAA2AAAAmtZpZmZWYGsB",
+					talentString = "CwQAAAAAAAAAAAAAAAAAAAAAAAAAAAzYMmBmlZsNmZGDAAAAAAwyCImZgZYsBsNzMDz2Ymx2sMTbLzmtZmhZBAA2AAAAmtZpZmZWYGsB",
 				},
 				["the-stonevault"] = {
 					label = "The Stonevault",
@@ -1231,7 +1231,7 @@ local talentData = {
 				},
 				["ara-kara-city-of-echoes"] = {
 					label = "Ara-Kara, City of Echoes",
-					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzMbzmZWYmZmZzmZsNzMzYmBAAAAAYJYYMYMmRzMmxMzMWmhNGAAAAAAADAAAAQzsMLzMbDAYBGzAA",
+					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzMbzmZWYmZmZzmZsNzMzYmBAAAAAYJYYMYMzMamxMMzMWmhNGAAAAAAADAAAAQzsMLzMbDAYBGzAA",
 				},
 				["city-of-threads"] = {
 					label = "City of Threads",
