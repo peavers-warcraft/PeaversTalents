@@ -111,8 +111,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Update TOC version and create tag
+      - name: Create version commit and tag
         run: |
           NEW_VERSION="${{ needs.prepare-release.outputs.new_version }}"
 
@@ -128,22 +130,24 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-          # Commit the TOC change
+          # Stage the changes but don't commit yet
           git add PeaversTalents.toc
+
+          # Create a version update commit
           git commit -m "chore: Update TOC version to ${NEW_VERSION}"
 
-          # Create and push the tag
+          # Get the commit SHA
+          COMMIT_SHA=$(git rev-parse HEAD)
+
+          # Create tag on this commit
           TAG_NAME="PeaversTalents-${NEW_VERSION}"
-          git tag -a "${TAG_NAME}" -m "Release ${NEW_VERSION}"
+          git tag -a "${TAG_NAME}" -m "Release ${NEW_VERSION}" $COMMIT_SHA
 
           # Push both the commit and tag
           git push origin HEAD:master
           git push origin "${TAG_NAME}"
 
-          # Sleep briefly to ensure tag is visible
-          sleep 5
-
-      - name: Package and upload to CurseForge
+      - name: Package on tagged commit
         uses: BigWigsMods/packager@v2
         env:
           CF_API_KEY: ${{ secrets.CF_API_KEY }}
@@ -151,3 +155,4 @@ jobs:
           RELEASE_TITLE: "PeaversTalents ${{ needs.prepare-release.outputs.new_version }}"
         with:
           args: -g retail
+          tag: true
