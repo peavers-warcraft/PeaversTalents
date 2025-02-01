@@ -160,21 +160,21 @@ class ReleaseManager:
         versions_response.raise_for_status()
         game_versions = versions_response.json()
 
-        # Find the correct game version ID for retail
-        retail_version_id = None
-        for version in game_versions:
-            if version['gameVersionTypeID'] == 517:  # Retail
-                retail_version_id = version['id']
-                break
+        # Find the latest retail version ID
+        retail_versions = [v for v in game_versions if v['gameVersionTypeID'] == 517]  # 517 is retail
+        if not retail_versions:
+            raise ValueError("Could not find any retail game versions")
 
-        if not retail_version_id:
-            raise ValueError("Could not find retail game version ID")
+        # Sort by API version number and take the latest one
+        latest_retail = max(retail_versions, key=lambda x: int(x['apiVersion']))
+        retail_version_id = latest_retail['id']
+        print(f"Using game version: {latest_retail['name']} (API: {latest_retail['apiVersion']})")
 
         # Prepare the upload request
         metadata = {
             "changelog": "",  # You can add changelog here if needed
             "changelogType": "markdown",
-            "displayName": f"Version {version}",
+            "displayName": f"PeaversTalents v{version}",
             "gameVersions": [retail_version_id],
             "releaseType": "release"  # or "alpha", "beta"
         }
