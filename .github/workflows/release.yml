@@ -122,6 +122,15 @@ jobs:
             exit 1
           fi
 
+      - name: Package and upload to CurseForge
+        uses: BigWigsMods/packager@v2
+        env:
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TITLE: "PeaversTalents ${{ needs.prepare-release.outputs.new_version }}"
+        with:
+          args: -g retail
+
       - name: Commit changes
         run: |
           git config user.name "GitHub Actions"
@@ -135,12 +144,3 @@ jobs:
           TAG_NAME="PeaversTalents-${{ needs.prepare-release.outputs.new_version }}"
           git tag -a "$TAG_NAME" -m "Release ${{ needs.prepare-release.outputs.new_version }}"
           git push origin "$TAG_NAME"
-
-      - name: Package and upload to CurseForge
-        uses: BigWigsMods/packager@v2
-        env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
-          RELEASE_TITLE: "PeaversTalents ${{ needs.prepare-release.outputs.new_version }}"
-        with:
-          args: -g retail
