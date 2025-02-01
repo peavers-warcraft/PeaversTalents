@@ -2,7 +2,7 @@ local addonName, addonTable = ...
 addonTable.raidTalents = addonTable.raidTalents or {}
 
 local talentData = {
-	updated = "2025-02-01 00:59:12", 
+	updated = "2025-02-01 14:52:34", 
 
 	[1] = {  -- Warrior
 		specs = {
@@ -1079,7 +1079,7 @@ local talentData = {
 				},
 				["broodtwister-ovinax"] = {
 					label = "Broodtwister Ovi'nax",
-					talentString = "CwQAAAAAAAAAAAAAAAAAAAAAAAAAAAGjxMMsMjtZmZGAAAAAAAWWwImZgZYsxgtZmZYWGzM2sMTbLPw2sNzMMLAAwGAAAwsNLNzMzCzgF",
+					talentString = "CwQAAAAAAAAAAAAAAAAAAAAAAAAAAAGjxMMsMjtZmZGAAAAAAAWWwImZgZYsBsNzMjZWYmx2sMTbLPw2sNzMMLAAwGAAAwsNLNzMzCzgN",
 				},
 				["horror"] = {
 					label = "Horror",
@@ -1099,7 +1099,7 @@ local talentData = {
 				},
 				["the-silken-court"] = {
 					label = "The Silken Court",
-					talentString = "CwQAAAAAAAAAAAAAAAAAAAAAAAAAAAGjxMMsMjtZmZGDAAAAAAwyCGxMDMDjNGsNzMDz2YmxmlHYab5B2mtZmhZBAA2AAAAmtZpZmZWYGsA",
+					talentString = "CwQAAAAAAAAAAAAAAAAAAAAAAAAAAAGjxMMsMjtZmZGDAAAAAAwyCGxMDMDDAbzMzwsMmZsNLz02yDsNbzMDzCAAsBAAAMbzSzMzswMYB",
 				},
 				["ulgrax"] = {
 					label = "Ulgrax",
@@ -1251,7 +1251,7 @@ local talentData = {
 				},
 				["sikran"] = {
 					label = "Sikran",
-					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAgxMbMmFzMmZ2mtHwYbmZGPwMDAAAAAwWAzYYYmZ0MjBzMDzY2MDAAAAAAAAAAAANzysMzsNAgFMzMAA",
+					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAgxMbMmFzMmZ2mtHwYbmZGPwMDAAAAAwWDwMwwMjmZMzYmxYG2YAAAAAAMgBAAAAoZWmlZmtBAsAjZAA",
 				},
 				["the-silken-court"] = {
 					label = "The Silken Court",
