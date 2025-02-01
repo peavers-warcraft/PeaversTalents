@@ -2,7 +2,7 @@ local addonName, addonTable = ...
 addonTable.dungeonTalents = addonTable.dungeonTalents or {}
 
 local talentData = {
-	updated = "2025-02-01 00:59:12", 
+	updated = "2025-02-01 14:52:34", 
 
 	[1] = {  -- Warrior
 		specs = {
@@ -109,7 +109,7 @@ local talentData = {
 				},
 				["the-dawnbreaker"] = {
 					label = "The Dawnbreaker",
-					talentString = "CkEAAAAAAAAAAAAAAAAAAAAAAYEDAAAAzMzMmxMmZZmlZmZ2YGDTjxYMDglBG2YmZYwYMDAAAAAAwMDAYZbDwwAbwyiRjZAMbgZ2A",
+					talentString = "CkEAAAAAAAAAAAAAAAAAAAAAAYEDAAAAzMzMmxMmZZmlZmZ2wYYaMYMDglxYG2YmZYgZYAAAAAAAmZAALbbAGGYDWWMaMDgZDbmZD",
 				},
 				["the-necrotic-wake"] = {
 					label = "The Necrotic Wake",
@@ -155,7 +155,7 @@ local talentData = {
 				},
 				["the-necrotic-wake"] = {
 					label = "The Necrotic Wake",
-					talentString = "CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAzAAAMAbjZYmxMziZMLzMsNDMbbz0WMDjZmhBmtMAgBAbAbMzMzMAAAwMzy2SbzMsBMDwghZA",
+					talentString = "CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAzAAAMAbzMDzMmZWMjZZmZsNgZbbm2iZYMzMMwslBAMAYDYjZMzMAAAwMzy2SbzMsBMDwghZA",
 				},
 				["the-stonevault"] = {
 					label = "The Stonevault",
