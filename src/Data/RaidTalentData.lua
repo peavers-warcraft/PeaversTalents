@@ -2,7 +2,7 @@ local addonName, addonTable = ...
 addonTable.raidTalents = addonTable.raidTalents or {}
 
 local talentData = {
-	updated = "2025-02-01 15:01:00", 
+	updated = "2025-02-02 00:01:04", 
 
 	[1] = {  -- Warrior
 		specs = {
@@ -325,7 +325,7 @@ local talentData = {
 				},
 				["ansurek"] = {
 					label = "Ansurek",
-					talentString = "C8PAAAAAAAAAAAAAAAAAAAAAAMgxM2YgFYbYoBLzM2mxMzMjZMGMzYmZmxMDAAAAAAAAAAAAAANDjZmZmZMzYGGDzMwMmxMYD",
+					talentString = "C8PAAAAAAAAAAAAAAAAAAAAAAMgxM2YgFYbYoBLzM2mxMzMjZMGMzYmZmxMDAAAAAAAAAAAAAANDjZmZmZMzYGGDzMwMmxMYB",
 				},
 				["broodtwister-ovinax"] = {
 					label = "Broodtwister Ovi'nax",
@@ -379,7 +379,7 @@ local talentData = {
 				},
 				["kyveza"] = {
 					label = "Ky'veza",
-					talentString = "CMQAAAAAAAAAAAAAAAAAAAAAAMzMzMMmx2MAAAAAAMLwyMAAAAAA02yMzMMzgZmZZ2mZmxAjZmZGzsZbMDwmZZgBsAWGmADLA",
+					talentString = "CMQAAAAAAAAAAAAAAAAAAAAAAMzMzMMmx2MAAAAAAMLDWmBAAAAAg2WmZGMzgZmZZ2mZmxAjZmZGzsZbMDwmZZgBsAWGmADLA",
 				},
 				["rashanan"] = {
 					label = "Rasha'nan",
@@ -801,7 +801,7 @@ local talentData = {
 				},
 				["broodtwister-ovinax"] = {
 					label = "Broodtwister Ovi'nax",
-					talentString = "CgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAjZmZWmx2YmxMLzyMLGWwCsAzYTjlBwMwGDzCzsMzMzkZbhZmGzwMwyMmxixwswAAYYA",
+					talentString = "CgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAAAjZmZWmx2YmxMLzyMLGWwCsAzYTjlBwMwGDzCjlZmZmMLLMz0YGMLYZmZGMGmlxAAYYA",
 				},
 				["horror"] = {
 					label = "Horror",
@@ -927,7 +927,7 @@ local talentData = {
 				},
 				["kyveza"] = {
 					label = "Ky'veza",
-					talentString = "CAEAAAAAAAAAAAAAAAAAAAAAAYGMbzCmZegZmNDMzoxYmxMYmhZYmZmZmxMzMzMzMzwMAAAwMz2yyyMTbAAAAAAAAAAAAAAAA",
+					talentString = "CAEAAAAAAAAAAAAAAAAAAAAAAYGbmtZBzwYWMMmZ0YMzYGMzwMMzMzMzYmZmZmZmZYGAAAYmZbZZZmpNAAAAAAAAAAAAAAAA",
 				},
 				["rashanan"] = {
 					label = "Rasha'nan",
@@ -1087,7 +1087,7 @@ local talentData = {
 				},
 				["kyveza"] = {
 					label = "Ky'veza",
-					talentString = "CwQAAAAAAAAAAAAAAAAAAAAAAAAAAAGjxMMsMjtZmZGAAAAAAAWWwImZgZYsxgtZmZYWGzM2sMTbLPw2sNzMMLAAwGAAAwsNLNzMzCzgF",
+					talentString = "CwQAAAAAAAAAAAAAAAAAAAAAAAAAAAGjxMMsMjtZmZGAAAAAAAWWwImZgZYsxgtZmZY2GzM2sMTbLPw2sNzMMLAAwGAAAwsNLNzMzCzgF",
 				},
 				["rashanan"] = {
 					label = "Rasha'nan",
@@ -1227,7 +1227,7 @@ local talentData = {
 			[103] = {
 				["all-bosses"] = {
 					label = "All Bosses",
-					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAgxMbMmFzMmZ2mtHwYbmZGPwMDAAAAAwWDwMwwMjmZMzYmxYG2YAAAAAAMgBAAAAoZWmlZmtBAsAjZAA",
+					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAgxMbMmFzMmZ2mtHwYbmZGPwMDAAAAAwWAzYYYmZ0MjBzMDzY2MDAAAAAAAAAAAANzysMzsNAgFMzMAA",
 				},
 				["ansurek"] = {
 					label = "Ansurek",
@@ -1247,7 +1247,7 @@ local talentData = {
 				},
 				["rashanan"] = {
 					label = "Rasha'nan",
-					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAgxMbMmFzMmZ2mtHwYbmZGPwMDAAAAAwWDwMwwMjmZMzYmxYG2YAAAAAAMgBAAAAoZWmlZmtBAsAjZAA",
+					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAgxMbMmFzMmZ2mtHwYbmZGPwMDAAAAAwWwYGwYmZ0MjZGzMzYG2YAAAAAAAAAAAAoZWmlZmtBAsAjZAA",
 				},
 				["sikran"] = {
 					label = "Sikran",
@@ -1307,7 +1307,7 @@ local talentData = {
 				},
 				["ansurek"] = {
 					label = "Ansurek",
-					talentString = "CkGAAAAAAAAAAAAAAAAAAAAAAsNmZGLbzMzMWMb4BYstZWWGzAAAAAAAAAAAAYbwwMmhRmBMzwMjhZabmBAAAAAAAADYZZsgpZmlBAAAwCzMDgB",
+					talentString = "CkGAAAAAAAAAAAAAAAAAAAAAAsNmZGLbjZmxiZDPAjtNzyyYGAAAAAAAAAAAALDwMMMamBMzwMzMMTbzMAAAAAAAAYALLjFMNzsMAAAAWYmZAmB",
 				},
 				["broodtwister-ovinax"] = {
 					label = "Broodtwister Ovi'nax",
