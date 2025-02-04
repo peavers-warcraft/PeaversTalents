@@ -10,4 +10,3 @@ src/Data/DungeonTalentData.lua
 
 src/Misc/Utils.lua
 src/PeaversTalents.lua
-src/PeaversTalents.xml

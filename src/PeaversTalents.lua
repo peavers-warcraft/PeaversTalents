@@ -7,7 +7,7 @@ function addon.Utils.GetPlayerInfo()
 	return nil, nil, classID
 end
 
-local DEBUG_ENABLED = false
+local DEBUG_ENABLED = true
 
 -- Constants
 local DIALOG_WIDTH = 600
@@ -184,20 +184,18 @@ local function CreateExportDialog()
 	local dialog = CreateFrame("Frame", "TalentExportDialog", UIParent, "DefaultPanelTemplate")
 	addon.exportDialog = dialog
 
-	-- Basic frame setup
-	dialog:SetSize(DIALOG_WIDTH, DIALOG_HEIGHT)
+	dialog:SetSize(DIALOG_WIDTH, DIALOG_HEIGHT + 30)
 	dialog:SetPoint("CENTER")
 	dialog:SetFrameStrata("DIALOG")
 	dialog:SetFrameLevel(100)
 
-	-- Title background
+	-- Standard frame setup
 	dialog.TitleBg = CreateFrame("Frame", nil, dialog)
 	dialog.TitleBg:SetPoint("TOPLEFT", 0, 0)
 	dialog.TitleBg:SetPoint("TOPRIGHT", 0, 0)
 	dialog.TitleBg:SetHeight(TITLE_HEIGHT)
 	dialog.TitleBg:SetFrameLevel(dialog:GetFrameLevel() + 1)
 
-	-- Close button
 	dialog.CloseButton = CreateFrame("Button", nil, dialog, "UIPanelCloseButtonNoScripts")
 	dialog.CloseButton:SetPoint("TOPRIGHT", dialog, "TOPRIGHT", 0, 0)
 	dialog.CloseButton:SetFrameStrata("DIALOG")
@@ -207,23 +205,73 @@ local function CreateExportDialog()
 		dialog:Hide()
 	end)
 
+	-- Tab system
+	dialog.Tabs = {}
+	dialog.TabContents = {}
+
+	local function CreateTab(id, text)
+		local tabName = "TalentExportDialogTab" .. id
+		local tab = CreateFrame("Button", tabName, dialog, "PanelTabButtonTemplate")
+		tab:SetText(text)
+		tab:SetID(id)
+
+		if id == 1 then
+			tab:SetPoint("BOTTOMLEFT", dialog, "BOTTOMLEFT", 5, -30)
+		else
+			tab:SetPoint("LEFT", dialog.Tabs[id - 1], "RIGHT", -16, 0)
+		end
+
+		tab:SetScript("OnClick", function()
+			PanelTemplates_SetTab(dialog, id)
+			for _, content in pairs(dialog.TabContents) do
+				content:Hide()
+			end
+			dialog.TabContents[id]:Show()
+		end)
+
+		return tab
+	end
+
+	local function CreateTabContent(id)
+		local content = CreateFrame("Frame", nil, dialog)
+		content:SetPoint("TOPLEFT", dialog, "TOPLEFT", 0, -25)
+		content:SetPoint("BOTTOMRIGHT", dialog, "BOTTOMRIGHT", 0, -30)
+		content:Hide()
+		return content
+	end
+
+	-- Create tabs
+	dialog.Tabs[1] = CreateTab(1, "wowcompare.io")
+	dialog.Tabs[2] = CreateTab(2, "most-popular")
+	dialog.Tabs[3] = CreateTab(3, "Icey Veins")
+
+	PanelTemplates_SetNumTabs(dialog, 3)
+	PanelTemplates_SetTab(dialog, 1)
+
+	-- Create tab contents
+	for i = 1, 3 do
+		dialog.TabContents[i] = CreateTabContent(i)
+	end
+
+	-- Tab 1 Content (wowcompare.io)
+	local tab1 = dialog.TabContents[1]
+
+	tab1:Show()
+
 	-- Mythic+ Section
-	local mplusLabel = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
-	mplusLabel:SetPoint("TOPLEFT", SIDE_PADDING, -35)
+	local mplusLabel = tab1:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
+	mplusLabel:SetPoint("TOPLEFT", SIDE_PADDING, -10)
 	mplusLabel:SetText("Mythic+")
 
-	-- Mythic+ Description
-	dialog.mplusDesc = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	dialog.mplusDesc = tab1:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 	dialog.mplusDesc:SetPoint("TOPLEFT", mplusLabel, "BOTTOMLEFT", 0, -LABEL_PADDING)
 
-	-- Create dungeon dropdown
-	dialog.mplusDropdown = CreateFrame("Frame", "TalentExportDialog_MplusDropdown", dialog, "UIDropDownMenuTemplate")
+	dialog.mplusDropdown = CreateFrame("Frame", "TalentExportDialog_MplusDropdown", tab1, "UIDropDownMenuTemplate")
 	dialog.mplusDropdown:SetPoint("TOPLEFT", dialog.mplusDesc, "BOTTOMLEFT", -15, -5)
 	UIDropDownMenu_SetWidth(dialog.mplusDropdown, 150)
 	UIDropDownMenu_Initialize(dialog.mplusDropdown, InitializeDungeonDropdown)
 
-	-- Create dungeon editbox
-	dialog.mplusEdit = CreateFrame("EditBox", "TalentExportDialog_MplusEdit", dialog, "InputBoxTemplate")
+	dialog.mplusEdit = CreateFrame("EditBox", "TalentExportDialog_MplusEdit", tab1, "InputBoxTemplate")
 	dialog.mplusEdit:SetSize(380, 32)
 	dialog.mplusEdit:SetPoint("LEFT", dialog.mplusDropdown, "RIGHT", 10, 2)
 	dialog.mplusEdit:SetAutoFocus(false)
@@ -231,61 +279,56 @@ local function CreateExportDialog()
 	dialog.mplusEdit:EnableMouse(true)
 
 	-- Raid Section
-	local raidLabel = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
+	local raidLabel = tab1:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
 	raidLabel:SetPoint("TOPLEFT", dialog.mplusEdit, "BOTTOMLEFT", -195, -SECTION_SPACING)
 	raidLabel:SetText("Raid")
 
-	-- Raid Description
-	dialog.raidDesc = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	dialog.raidDesc = tab1:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 	dialog.raidDesc:SetPoint("TOPLEFT", raidLabel, "BOTTOMLEFT", 0, -LABEL_PADDING)
 
-	-- Create raid dropdown
-	dialog.raidDropdown = CreateFrame("Frame", "TalentExportDialog_RaidDropdown", dialog, "UIDropDownMenuTemplate")
+	dialog.raidDropdown = CreateFrame("Frame", "TalentExportDialog_RaidDropdown", tab1, "UIDropDownMenuTemplate")
 	dialog.raidDropdown:SetPoint("TOPLEFT", dialog.raidDesc, "BOTTOMLEFT", -15, -5)
 	UIDropDownMenu_SetWidth(dialog.raidDropdown, 150)
 	UIDropDownMenu_Initialize(dialog.raidDropdown, InitializeRaidDropdown)
 
-	-- Create raid editbox
-	dialog.raidEdit = CreateFrame("EditBox", "TalentExportDialog_RaidEdit", dialog, "InputBoxTemplate")
+	dialog.raidEdit = CreateFrame("EditBox", "TalentExportDialog_RaidEdit", tab1, "InputBoxTemplate")
 	dialog.raidEdit:SetSize(380, 32)
 	dialog.raidEdit:SetPoint("LEFT", dialog.raidDropdown, "RIGHT", 10, 2)
 	dialog.raidEdit:SetAutoFocus(false)
 	dialog.raidEdit:SetFontObject(ChatFontNormal)
 	dialog.raidEdit:EnableMouse(true)
 
-	local instructionsText = dialog:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	instructionsText:SetPoint("BOTTOM", dialog, "BOTTOM", 0, 15)
+	local instructionsText = tab1:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	instructionsText:SetPoint("BOTTOM", tab1, "BOTTOM", 0, 55)
 	instructionsText:SetText("Select a build to copy the latest talent string | Builds as of " .. addon.Utils.GetFormattedLocalTime(addon.dungeonTalents.updated))
 	instructionsText:SetJustifyH("CENTER")
 
-	-- Make the frame movable
+	-- Tab 2 & 3 Content
+	for i = 2, 3 do
+		local comingSoon = dialog.TabContents[i]:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+		comingSoon:SetPoint("CENTER")
+		comingSoon:SetText("Coming soon")
+	end
+
+	-- Frame behavior
 	dialog:SetMovable(true)
 	dialog:EnableMouse(true)
 	dialog:RegisterForDrag("LeftButton")
 	dialog:SetScript("OnDragStart", dialog.StartMoving)
 	dialog:SetScript("OnDragStop", dialog.StopMovingOrSizing)
-
-	-- Register for special frames (allows Escape key to close)
 	tinsert(UISpecialFrames, dialog:GetName())
 
+	-- OnShow handler
 	dialog:SetScript("OnShow", function()
-		Debug("Dialog shown")
 		local classID, specID = GetPlayerClassAndSpec()
-		Debug("Current class/spec:", classID, specID)
 
-		-- Initialize dropdowns with first available option
-		local dungeons = GetAvailableDungeons(classID, specID)
-		if #dungeons > 0 then
-			local firstDungeon = dungeons[1]
-			dialog.mplusEdit:SetText(firstDungeon.data.talentString or "")
-			UIDropDownMenu_SetText(dialog.mplusDropdown, firstDungeon.data.label or firstDungeon.key)
+		-- Update dropdowns
+		if #GetAvailableDungeons(classID, specID) > 0 then
+			UIDropDownMenu_Initialize(dialog.mplusDropdown, InitializeDungeonDropdown)
 		end
 
-		local bosses = GetAvailableRaidBosses(classID, specID)
-		if #bosses > 0 then
-			local firstBoss = bosses[1]
-			dialog.raidEdit:SetText(firstBoss.data.talentString or "")
-			UIDropDownMenu_SetText(dialog.raidDropdown, firstBoss.data.label or firstBoss.key)
+		if #GetAvailableRaidBosses(classID, specID) > 0 then
+			UIDropDownMenu_Initialize(dialog.raidDropdown, InitializeRaidDropdown)
 		end
 
 		if not dialog.hideHooked and talentFrame then
@@ -296,7 +339,6 @@ local function CreateExportDialog()
 		end
 	end)
 
-	-- Reset position when hidden
 	dialog:SetScript("OnHide", function()
 		dialog:ClearAllPoints()
 		dialog:SetPoint("CENTER")
