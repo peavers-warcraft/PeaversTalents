@@ -2,11 +2,23 @@
 ## Title: PeaversTalents
 ## Notes: A simple addon to set talents to latest from wowcompare.io.
 ## Author: Peavers
-## Version: 1.0.56
+## Version: 1.1.0
 ## X-Curse-Project-ID: 1184820
 
 src/Data/RaidTalentData.lua
 src/Data/DungeonTalentData.lua
+src/Data/MostPopularMiscDB.lua
+src/Data/MostPopularMythicDB.lua
+src/Data/MostPopularRaidDB.lua
 
-src/Misc/Utils.lua
+src/Core/Config.lua
+src/Core/DataManager.lua
+src/Core/EventHandler.lua
+
+src/UI/DropdownManager.lua
+src/UI/UIComponents.lua
+src/UI/TabContent.lua
+
+src/Utils/Utils.lua
+
 src/PeaversTalents.lua
