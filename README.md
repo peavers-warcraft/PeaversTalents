@@ -41,4 +41,4 @@ builds available right in game.
 ## Feedback and Support
 
 If you encounter any issues or have suggestions for improving the addon, feel free to reach out. Please make use of
-[https://github.com/peavers/peavers-talents/issues](GitHub) as CurseForge doesn't notify me of comments.
+[GitHub](https://github.com/peavers/peavers-talents/issues).
