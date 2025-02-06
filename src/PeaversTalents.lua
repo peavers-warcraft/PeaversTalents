@@ -39,7 +39,7 @@ local function CreateExportDialog()
     -- Create tabs
     dialog.Tabs[1] = UIComponents.CreateTab(dialog, 1, "wowcompare.io")
     dialog.Tabs[2] = UIComponents.CreateTab(dialog, 2, "most-popular")
-    dialog.Tabs[3] = UIComponents.CreateTab(dialog, 3, "Icey Veins")
+    dialog.Tabs[3] = UIComponents.CreateTab(dialog, 3, "community")
 
     PanelTemplates_SetNumTabs(dialog, 3)
     PanelTemplates_SetTab(dialog, 1)
