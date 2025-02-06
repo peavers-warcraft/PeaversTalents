@@ -2,7 +2,7 @@
 
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/peavers/peavers-talents)](https://github.com/peavers/peavers-talents/commits/master) [![last commit](https://img.shields.io/github/last-commit/peavers/peavers-talents)](https://github.com/peavers/peavers-talents/master) [![Curseforge](https://img.shields.io/curseforge/dt/1184820?label=CurseForge&color=F16436)](https://www.curseforge.com/wow/addons/peaverstalents)
 
-# Talent Import Made Simple
+## Talent Import Made Simple
 
 Using data from a constantly updated database from wowcompare.io, most-popular, and Icey Veins PeaversTalents has the best talent
 builds available right in game.
