@@ -38,11 +38,11 @@ local function InitializeDropdown(self, level, database, editBox, talentsKey)
 end
 
 function DropdownManager.Initializewowcompare.ioMythicDropdown(self, level)
-	InitializeDropdown(self, level, addon.dungeonTalents, addon.exportDialog.mplusEdit, "talentString")
+	InitializeDropdown(self, level, addon.TopPlayersMythicDB, addon.exportDialog.mplusEdit, "talentString")
 end
 
 function DropdownManager.Initializewowcompare.ioRaidDropdown(self, level)
-	InitializeDropdown(self, level, addon.raidTalents, addon.exportDialog.raidEdit, "talentString")
+	InitializeDropdown(self, level, addon.TopPlayersRaidDB, addon.exportDialog.raidEdit, "talentString")
 end
 
 function DropdownManager.Initializemost-popularMythicDropdown(self, level)

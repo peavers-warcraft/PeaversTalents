@@ -73,11 +73,11 @@ local function CreateExportDialog()
         local classID, specID = Utils.GetPlayerClassAndSpec()
 
         -- Update wowcompare.io dropdowns
-        if #DataManager.GetAvailableEntries(addon.dungeonTalents, classID, specID) > 0 then
+        if #DataManager.GetAvailableEntries(addon.TopPlayersMythicDB, classID, specID) > 0 then
             UIDropDownMenu_Initialize(dialog.mplusDropdown, addon.DropdownManager.Initializewowcompare.ioMythicDropdown)
         end
 
-        if #DataManager.GetAvailableEntries(addon.raidTalents, classID, specID) > 0 then
+        if #DataManager.GetAvailableEntries(addon.TopPlayersRaidDB, classID, specID) > 0 then
             UIDropDownMenu_Initialize(dialog.raidDropdown, addon.DropdownManager.Initializewowcompare.ioRaidDropdown)
         end
 

@@ -43,14 +43,4 @@ function DataManager.GetAvailableEntries(database, classID, specID)
     return entries
 end
 
-function DataManager.GetAvailableDungeons(classID, specID)
-    Utils.Debug("Getting dungeons for", classID, specID)
-    return DataManager.GetAvailableEntries(addon.dungeonTalents, classID, specID)
-end
-
-function DataManager.GetAvailableRaidBosses(classID, specID)
-    Utils.Debug("Getting raid bosses for", classID, specID)
-    return DataManager.GetAvailableEntries(addon.raidTalents, classID, specID)
-end
-
 return DataManager

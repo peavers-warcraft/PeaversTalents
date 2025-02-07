@@ -5,11 +5,11 @@
 ## Version: 1.1.5
 ## X-Curse-Project-ID: 1184820
 
-src/Data/RaidTalentData.lua
-src/Data/DungeonTalentData.lua
-src/Data/MostPopularMiscDB.lua
+src/Data/TopPlayersMythicDB.lua
+src/Data/TopPlayersRaidDB.lua
 src/Data/MostPopularMythicDB.lua
 src/Data/MostPopularRaidDB.lua
+src/Data/MostPopularMiscDB.lua
 
 src/Core/Config.lua
 src/Core/DataManager.lua
