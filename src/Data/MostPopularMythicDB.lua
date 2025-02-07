@@ -2,9 +2,9 @@ local addonName, addonTable = ...
 addonTable.MostPopularMythicDB = addonTable.MostPopularMythicDB or {}
 
 local talentData = {
-	updated = "2025-02-06 21:33:56",
+	updated = "2025-02-07 20:24:42",
 
-	[1] = { 
+	[1] = {
 		specs = {
 			[71] = {
 				[0] = {
@@ -38,7 +38,7 @@ local talentData = {
 			},
 		},
 	},
-	[2] = { 
+	[2] = {
 		specs = {
 			[65] = {
 				[0] = {
@@ -68,7 +68,7 @@ local talentData = {
 			},
 		},
 	},
-	[3] = { 
+	[3] = {
 		specs = {
 			[253] = {
 				[0] = {
@@ -102,7 +102,7 @@ local talentData = {
 			},
 		},
 	},
-	[4] = { 
+	[4] = {
 		specs = {
 			[259] = {
 				[0] = {
@@ -122,7 +122,7 @@ local talentData = {
 			},
 		},
 	},
-	[5] = { 
+	[5] = {
 		specs = {
 			[256] = {
 				[0] = {
@@ -148,7 +148,7 @@ local talentData = {
 			},
 		},
 	},
-	[6] = { 
+	[6] = {
 		specs = {
 			[250] = {
 				[0] = {
@@ -172,33 +172,33 @@ local talentData = {
 			},
 			[252] = {
 				[0] = {
-					label = "Mythic/Delves | Sanlayn",
-					talentString = "CwPAAAAAAAAAAAAAAAAAAAAAAAgZGjZMGDzMzMzMNMmZGzYAAAAAAAAAMMzYGzMzMDAYDMLGzMzMjZGDMwMGNWWAsNxGAMDA",
-				},
-				[1] = {
 					label = "Rider M Setup | Rider of the Apocalypse",
 					talentString = "CwPAAAAAAAAAAAAAAAAAAAAAAAgZGjZMGDzMzMzMNMmZGzYAAAAAAAAAMMzYGzMzMDAYDMLGzMzMMzA2MbGGyAzGDNWwAMDA",
 				},
-				[2] = {
+				[1] = {
 					label = "Rider M No Apoc | Rider of the Apocalypse",
 					talentString = "CwPAAAAAAAAAAAAAAAAAAAAAAAgZGjZMGDzMzMzMNMmZGzYAAAAAAAAAgZGDzMzMDAMbmhZBzMz8AzMzA2MbGGyAzGDNWAgZA",
 				},
-				[3] = {
+				[2] = {
 					label = "Rider M No Setup | Rider of the Apocalypse",
 					talentString = "CwPAAAAAAAAAAAAAAAAAAAAAAAgZGjZMGDzMzMzMNMmZGzYAAAAAAAAAgZGjZMzMDAMbmhZBzMz8AzMzA2MbGGyAzGDNWAgZA",
 				},
-				[4] = {
+				[3] = {
 					label = "Rider M All Burst | Rider of the Apocalypse",
 					talentString = "CwPAAAAAAAAAAAAAAAAAAAAAAAgZGjZmxYYmZmZmphhZGzYAAAAAAAAAMMzYMjZmZAAAzixMzMzMzMgNzmhhMwsxQjFMAzAA",
 				},
-				[5] = {
+				[4] = {
 					label = "Rider M Hybrid | Rider of the Apocalypse",
 					talentString = "CwPAAAAAAAAAAAAAAAAAAAAAAAgZGjZMGDzMzMzMNMmZGzYAAAAAAAAAgZGDjZmZAgZzMMLGzMzMjZGwmZzwQGY2YoxCAMDA",
+				},
+				[5] = {
+					label = "Mythic/Delves | Sanlayn",
+					talentString = "CwPAAAAAAAAAAAAAAAAAAAAAAAgZGjZMGDzMzMzMNMmZGzYAAAAAAAAAgZYGjZmZAgZzMMLzYmZmZMGDMwMGNWWAsNxGAMDA",
 				},
 			},
 		},
 	},
-	[7] = { 
+	[7] = {
 		specs = {
 			[262] = {
 				[0] = {
@@ -236,7 +236,7 @@ local talentData = {
 			},
 		},
 	},
-	[8] = { 
+	[8] = {
 		specs = {
 			[64] = {
 				[0] = {
@@ -266,7 +266,7 @@ local talentData = {
 			},
 		},
 	},
-	[9] = { 
+	[9] = {
 		specs = {
 			[265] = {
 				[0] = {
@@ -296,7 +296,7 @@ local talentData = {
 			},
 		},
 	},
-	[10] = { 
+	[10] = {
 		specs = {
 			[268] = {
 				[0] = {
@@ -316,7 +316,7 @@ local talentData = {
 			},
 		},
 	},
-	[11] = { 
+	[11] = {
 		specs = {
 			[102] = {
 				[0] = {
@@ -346,7 +346,7 @@ local talentData = {
 			},
 		},
 	},
-	[12] = { 
+	[12] = {
 		specs = {
 			[577] = {
 				[0] = {
@@ -360,21 +360,21 @@ local talentData = {
 			},
 			[581] = {
 				[0] = {
+					label = "Mythic Cheat | Fel-Scarred",
+					talentString = "CUkAAAAAAAAAAAAAAAAAAAAAAAAYMmZMMjMzMYYGLjhZsNDzMzwMmZ2mZmtZmhZYGAAAAglZxMGmFNNwMzMstB",
+				},
+				[1] = {
 					label = "Mythic Baseline/Delves/Open World | Fel-Scarred",
 					talentString = "CUkAAAAAAAAAAAAAAAAAAAAAAAAYMzMjhZkZmBDzMbjxYsNjZMjZGmZ2mZmtZmhZYGAAAAglZxMGmFNNwMjhtN",
 				},
-				[1] = {
+				[2] = {
 					label = "Mythic Defensive | Fel-Scarred",
 					talentString = "CUkAAAAAAAAAAAAAAAAAAAAAAAAYMmZMMjMzMYYmZbMGjtZYmZMjHwY2mZmtZmhZYGAAAAglZxMGmFNNwMzMstB",
-				},
-				[2] = {
-					label = "Mythic Cheat | Fel-Scarred",
-					talentString = "CUkAAAAAAAAAAAAAAAAAAAAAAAAYMmZMMjMzMYYGLjhZsNDzMzwMmZ2mZmtZmhZYGAAAAglZxMGmFNNwMzMstB",
 				},
 			},
 		},
 	},
-	[13] = { 
+	[13] = {
 		specs = {
 			[1473] = {
 				[0] = {

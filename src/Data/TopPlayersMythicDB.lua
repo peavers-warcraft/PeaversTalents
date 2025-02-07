@@ -2,9 +2,9 @@ local addonName, addonTable = ...
 addonTable.TopPlayersMythicDB = addonTable.TopPlayersMythicDB or {}
 
 local talentData = {
-	updated = "2025-02-07 17:28:18",
+	updated = "2025-02-07 20:23:20",
 
-	[1] = { 
+	[1] = {
 		specs = {
 			[71] = {
 				[0] = {
@@ -122,7 +122,7 @@ local talentData = {
 			},
 		},
 	},
-	[2] = { 
+	[2] = {
 		specs = {
 			[65] = {
 				[0] = {
@@ -173,7 +173,7 @@ local talentData = {
 				},
 				[2] = {
 					label = "City of Threads",
-					talentString = "CIEAAAAAAAAAAAAAAAAAAAAAAsZMYWGLzMjZmZZbmZmZmtxMGAAgBAAAAAAg2yMzihZwYY2aDAYgBwAbDAAAAYmZZbplZGLMYAYwMbYA",
+					talentString = "CIEAAAAAAAAAAAAAAAAAAAAAAsZMYWGLzMjZmZZbmZmZmtxwAAAMAAAAAAA0WzMzihZwYwWbAADMAGYbAAAAAzMLbLtMzYhBDAjxMbYA",
 				},
 				[3] = {
 					label = "Grim Batol",
@@ -240,7 +240,7 @@ local talentData = {
 			},
 		},
 	},
-	[3] = { 
+	[3] = {
 		specs = {
 			[253] = {
 				[0] = {
@@ -337,7 +337,7 @@ local talentData = {
 				},
 				[4] = {
 					label = "Mists of Tirna Scithe",
-					talentString = "C8PAAAAAAAAAAAAAAAAAAAAAAMGYglxoxyAY2AbzMWmZmZGjZMzMmZMGzMmBAAAAAAAAAAAAAANDjZmZmZMDzwYYmBLzwYmhN",
+					talentString = "C8PAAAAAAAAAAAAAAAAAAAAAAMGYglxoxyAY2AbzMWmZmZGjZMzMmZMGzMmBAAAAAAAAAAAAAANDjZmZmZMzwwYYmhxwMLzgN",
 				},
 				[5] = {
 					label = "Siege of Boralus",
@@ -353,12 +353,12 @@ local talentData = {
 				},
 				[8] = {
 					label = "The Stonevault",
-					talentString = "C8PAAAAAAAAAAAAAAAAAAAAAAMGYglxoxyAY2AbzMWmZmZGjZMzMmZMGzMmBAAAAAAAAAAAAAANDjZmZmZMzYGGDzMMGmxMYD",
+					talentString = "C8PAAAAAAAAAAAAAAAAAAAAAAMGYglxoxyAY2AbzMWmZmZGjZMzMmZMGzMmBAAAAAAAAAAAAAANDjZmZmZMzwwYYmhxwMLzgN",
 				},
 			},
 		},
 	},
-	[4] = { 
+	[4] = {
 		specs = {
 			[259] = {
 				[0] = {
@@ -476,7 +476,7 @@ local talentData = {
 			},
 		},
 	},
-	[5] = { 
+	[5] = {
 		specs = {
 			[256] = {
 				[0] = {
@@ -594,7 +594,7 @@ local talentData = {
 			},
 		},
 	},
-	[6] = { 
+	[6] = {
 		specs = {
 			[250] = {
 				[0] = {
@@ -637,7 +637,7 @@ local talentData = {
 			[251] = {
 				[0] = {
 					label = "All Dungeons",
-					talentString = "CsPAAAAAAAAAAAAAAAAAAAAAAMAMzMjZMmZYYmZmZGGmpZGDjBMzYMjZmZmZmZZmBAAAAAAAAAAAYssNwAWALDTgxCmZMmBA",
+					talentString = "CsPAAAAAAAAAAAAAAAAAAAAAAMAMzYMjxMDzYmZmZGGmpZGDjBMzYMjZmZmZmZZmBAAAAAAAAAAAYssNwAWALDTgxCmZMmBA",
 				},
 				[1] = {
 					label = "Ara-Kara City of Echoes",
@@ -712,7 +712,7 @@ local talentData = {
 			},
 		},
 	},
-	[7] = { 
+	[7] = {
 		specs = {
 			[262] = {
 				[0] = {
@@ -783,7 +783,7 @@ local talentData = {
 				},
 				[7] = {
 					label = "The Necrotic Wake",
-					talentString = "CcQAAAAAAAAAAAAAAAAAAAAAAMzMDMjZYmZmhZZmZZZMDAAAAAAAAAgNA2MjhNYBmhhGsAgZZyAW2mZmZGmxMwyMz0swyMYmBAYGD",
+					talentString = "CcQAAAAAAAAAAAAAAAAAAAAAAMzMDMjZYmZmhZZmZZZMDAAAAAAAAAgNA2MjhNYBmhhGsAgZZyMwCzMzgZMjhlZmpZhlZMmZAAmxA",
 				},
 				[8] = {
 					label = "The Stonevault",
@@ -830,7 +830,7 @@ local talentData = {
 			},
 		},
 	},
-	[8] = { 
+	[8] = {
 		specs = {
 			[64] = {
 				[0] = {
@@ -923,7 +923,7 @@ local talentData = {
 				},
 				[3] = {
 					label = "Grim Batol",
-					talentString = "C8DAAAAAAAAAAAAAAAAAAAAAAMzAbWwMjZmFPAMzMmGzMmZAAAAAAMzyMNzsMLAAAgFzMDmxMMzMLzYMm5BsZmlZsZWYAAAAAAAA",
+					talentString = "C8DAAAAAAAAAAAAAAAAAAAAAAYGYzCmhZmFDPgZmx0YmxMDAAAAAgZWmpZmlZBAAAsYmZwMmhZmZZGjxMPgNzsMjFzCDAAAAAAAA",
 				},
 				[4] = {
 					label = "Mists of Tirna Scithe",
@@ -948,7 +948,7 @@ local talentData = {
 			},
 		},
 	},
-	[9] = { 
+	[9] = {
 		specs = {
 			[265] = {
 				[0] = {
@@ -1066,7 +1066,7 @@ local talentData = {
 			},
 		},
 	},
-	[10] = { 
+	[10] = {
 		specs = {
 			[268] = {
 				[0] = {
@@ -1109,7 +1109,7 @@ local talentData = {
 			[269] = {
 				[0] = {
 					label = "All Dungeons",
-					talentString = "C0QAAAAAAAAAAAAAAAAAAAAAAYGzMYGzMMzMMzMAAAAAAAAAAAYZZYmYmhxMMswM2mxMMbMzws8ATAAsMmhZmxsMDAgNAwsMLNzMzCA",
+					talentString = "C0QAAAAAAAAAAAAAAAAAAAAAAYGzMYGzMMzMMzMAAAAAAAAAAAYZZYmYmhxMgFmx2MzMMbMzglZCAglxMMzMmlZAAsBAmlZpZmZWAA",
 				},
 				[1] = {
 					label = "Ara-Kara City of Echoes",
@@ -1184,7 +1184,7 @@ local talentData = {
 			},
 		},
 	},
-	[11] = { 
+	[11] = {
 		specs = {
 			[102] = {
 				[0] = {
@@ -1340,7 +1340,7 @@ local talentData = {
 			},
 		},
 	},
-	[12] = { 
+	[12] = {
 		specs = {
 			[577] = {
 				[0] = {
@@ -1420,7 +1420,7 @@ local talentData = {
 			},
 		},
 	},
-	[13] = { 
+	[13] = {
 		specs = {
 			[1473] = {
 				[0] = {

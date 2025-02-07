@@ -2,9 +2,9 @@ local addonName, addonTable = ...
 addonTable.MostPopularRaidDB = addonTable.MostPopularRaidDB or {}
 
 local talentData = {
-	updated = "2025-02-06 21:33:56",
+	updated = "2025-02-07 20:24:42",
 
-	[1] = { 
+	[1] = {
 		specs = {
 			[71] = {
 				[0] = {
@@ -66,20 +66,20 @@ local talentData = {
 			},
 		},
 	},
-	[2] = { 
+	[2] = {
 		specs = {
 			[65] = {
 				[0] = {
+					label = "Raid - Caster | Herald",
+					talentString = "CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAzAAAAYZmZwMmZW2mxsMzwyMwstZaLmxMmZGGY2yAAGwgNgNmZGzMLz2Mzs0AAACYBDgNGDjZA",
+				},
+				[1] = {
 					label = "Raid - Avenging Crusader | Lightsmith",
 					talentString = "CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAzAAAMALzMDmZbmZxMmlZG2mBmttZaLmxMmZGGY2yAAGAsBsxMzYGAEAwMzy2SbzMsBYGYAjZG",
 				},
-				[1] = {
+				[2] = {
 					label = "Raid - Melee | Herald",
 					talentString = "CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAzAAAAYZmZwMbzMLmxsMzwyMwstNTbxMmxMzwAzWGAwAGsBsxMzYmZZ2mZmlGAAQALAgNGDjZA",
-				},
-				[2] = {
-					label = "Raid - Caster | Herald",
-					talentString = "CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAzAAAAYZmZwMmZW2mxsMzwyMwstZaLmxMmZGGY2yAAGwgNgNmZGzMLz2Mzs0AAACYBDgNGDjZA",
 				},
 			},
 			[66] = {
@@ -116,7 +116,7 @@ local talentData = {
 			},
 		},
 	},
-	[3] = { 
+	[3] = {
 		specs = {
 			[253] = {
 				[0] = {
@@ -138,24 +138,24 @@ local talentData = {
 			},
 			[254] = {
 				[0] = {
-					label = "Raid Single Target | Dark Ranger",
-					talentString = "C4PAAAAAAAAAAAAAAAAAAAAAAYstNwAmgZhtAzCAAAAAAYGzMzgZmhZmZYmZGjZ2mZ8AAAAAAAAwMMmZmZmZmZyMzYYmBGmZZGA",
-				},
-				[1] = {
 					label = "Raid Single Target | Sentinel",
 					talentString = "C4PAAAAAAAAAAAAAAAAAAAAAAwADsMGN2GQmNsBAAAAAAmxMzMDzMDzMzwMzMGzsNzAAAAAAAAMDjZmZmZmZmMzMGmZghZWmBA",
 				},
-				[2] = {
+				[1] = {
 					label = "Raid Single Target with Cleave | Dark Ranger",
 					talentString = "C4PAAAAAAAAAAAAAAAAAAAAAAYstNwAmgZhtAzCAAAAAAYmZmZGMzYYmZMzMzYMz2MDAAAAAAAwMMmZmZmZmZamxYYmBGmZZGA",
 				},
-				[3] = {
+				[2] = {
 					label = "Raid Single Target with Cleave | Sentinel",
 					talentString = "C4PAAAAAAAAAAAAAAAAAAAAAAwADsMGN2GQmNsBAAAAAAmZmZmZYMzYmZGzMzwYmtxAAAAAAAAMDjZmZmZmZmmZMGmZghZWmBA",
 				},
-				[4] = {
+				[3] = {
 					label = "Raid Council | Dark Ranger",
 					talentString = "C4PAAAAAAAAAAAAAAAAAAAAAAYstNwAmgZhtAzCAAAAAAYGzMzMMzMMzMjZmZGjZ2MDAAAAAAAwMMzMmZmxMamxYYmhxwMmZYB",
+				},
+				[4] = {
+					label = "Raid Single Target | Dark Ranger",
+					talentString = "C4PAAAAAAAAAAAAAAAAAAAAAAYstNwAmgZhtAzCAAAAAAYGzMzgZmhZmZYmZGjZ2mZ8AAAAAAAAwMMmZmZmZmZyMzYYmBGmZZGA",
 				},
 			},
 			[255] = {
@@ -170,7 +170,7 @@ local talentData = {
 			},
 		},
 	},
-	[4] = { 
+	[4] = {
 		specs = {
 			[259] = {
 				[0] = {
@@ -192,16 +192,16 @@ local talentData = {
 			},
 			[260] = {
 				[0] = {
+					label = "Raid Council | Fatebound",
+					talentString = "CQQAAAAAAAAAAAAAAAAAAAAAAAAMwwYmZwMzwMMMzMzMjZmplZMLzAAAAAAgttxM8AzMjFmZZ2GAAAAzMDwAbwMGNmNAbTYxMA",
+				},
+				[1] = {
 					label = "Raid Single Target | Fatebound",
 					talentString = "CQQAAAAAAAAAAAAAAAAAAAAAAAAMwMzYGDmZGmhxYGzMjZmplZMLzAAAAAAgttZmBzMjlxMLz2AAAAwMDwAbwMGNmNAbTYxMA",
 				},
-				[1] = {
+				[2] = {
 					label = "Raid Single Target with Cleave | Fatebound",
 					talentString = "CQQAAAAAAAAAAAAAAAAAAAAAAAAMwMzYGDmZGmhhZGzMjZmplZMLzAAAAAAgttZmBzMjlxMLz2AAAAwMDwAbwMGNmNAbTYxMA",
-				},
-				[2] = {
-					label = "Raid Council | Fatebound",
-					talentString = "CQQAAAAAAAAAAAAAAAAAAAAAAAAMwwYmZwMzwMMMzMzMjZmplZMLzAAAAAAgttxM8AzMjFmZZ2GAAAAzMDwAbwMGNmNAbTYxMA",
 				},
 			},
 			[261] = {
@@ -224,16 +224,16 @@ local talentData = {
 			},
 		},
 	},
-	[5] = { 
+	[5] = {
 		specs = {
 			[256] = {
 				[0] = {
-					label = "Raid Mindbender | Voidweaver",
-					talentString = "CAQAAAAAAAAAAAAAAAAAAAAAAAA2mtZGD2GjZmxMbmlZmZmhBAAAAAAAAAAAzilZbYbmZwswwMzMGsw2MNmYBYmBAFgZbW2AjNb",
-				},
-				[1] = {
 					label = "Raid Full Uppies | Voidweaver",
 					talentString = "CAQAAAAAAAAAAAAAAAAAAAAAAAA2mNGzMz2YMzMmZzsMzMzMMAAAAAAAAAAAYWsMbDbzMDmFGzwMGsw2MNmYZAzMAoAMbzyGYsZD",
+				},
+				[1] = {
+					label = "Raid Mindbender | Voidweaver",
+					talentString = "CAQAAAAAAAAAAAAAAAAAAAAAAAA2mtZGD2GjZmxMbmlZmZmhBAAAAAAAAAAAzilZbYbmZwswwMzMGsw2MNmYBYmBAFgZbW2AjNb",
 				},
 			},
 			[257] = {
@@ -262,7 +262,7 @@ local talentData = {
 			},
 		},
 	},
-	[6] = { 
+	[6] = {
 		specs = {
 			[250] = {
 				[0] = {
@@ -294,7 +294,7 @@ local talentData = {
 			},
 		},
 	},
-	[7] = { 
+	[7] = {
 		specs = {
 			[262] = {
 				[0] = {
@@ -344,7 +344,7 @@ local talentData = {
 			},
 		},
 	},
-	[8] = { 
+	[8] = {
 		specs = {
 			[64] = {
 				[0] = {
@@ -390,7 +390,7 @@ local talentData = {
 			},
 		},
 	},
-	[9] = { 
+	[9] = {
 		specs = {
 			[265] = {
 				[0] = {
@@ -412,33 +412,33 @@ local talentData = {
 			},
 			[266] = {
 				[0] = {
-					label = "Raid Single Target | Diabolist / Soul Harvester",
-					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzmhxsZmZYWGAAAAAAAAAAzAGzYYBGYZ0CNswMzMsNmZxMzMzYMjhZmZmBmZAAA",
-				},
-				[1] = {
-					label = "Raid Single Target | Diabolist / Soul Harvester",
-					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAMzMzMjYWMMmtZmZYWGAAAAAAAAAAzMW2GYADYG2CZsxMzMmtxMLmZmZGjZAzMzMYmZAAA",
-				},
-				[2] = {
 					label = "Raid Single Target Cleave | Diabolist /  Soul Harvester",
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAMzMzMjYWMMmtZmZYWGAAAAAAAAAAzAGzYYBGYb0CNswMzMmtxMbmZmZGjZGYmZmBzMAAA",
 				},
-				[3] = {
+				[1] = {
 					label = "Raid Single Target Cleave | Diabolist /  Soul Harvester",
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAMzMzMjYWMMmtZmZYWGAAAAAAAAAAzMW2GYADYG2CZsxMzMmtxMbmZmZGjZYYmZmBzMAAA",
 				},
-				[4] = {
+				[2] = {
 					label = "Raid Council | Diabolist /  Soul Harvester",
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzmhxsZmZYWGAAAAAAAAAAzAGzYYBGYZ0CNswMjZsNmZzMzMzYMjZMjZmxgZAAA",
 				},
-				[5] = {
+				[3] = {
 					label = "Raid Council | Diabolist /  Soul Harvester",
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzihxsZmZYWGAAAAAAAAAAzMW2GYADYG2CZsxMjZsNmZzMzMzYMjZMjZmxgZAAA",
+				},
+				[4] = {
+					label = "Raid Single Target | Diabolist / Soul Harvester",
+					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzmhxsZmZYWGAAAAAAAAAAzAGzYYBGYZ0CNswMzMsNmZxMzMzYMjhZmZmBmZAAA",
+				},
+				[5] = {
+					label = "Raid Single Target | Diabolist / Soul Harvester",
+					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAMzMzMjYWMMmtZmZYWGAAAAAAAAAAzMW2GYADYG2CZsxMzMmtxMLmZmZGjZAzMzMYmZAAA",
 				},
 			},
 		},
 	},
-	[10] = { 
+	[10] = {
 		specs = {
 			[268] = {
 				[0] = {
@@ -496,7 +496,7 @@ local talentData = {
 			},
 		},
 	},
-	[11] = { 
+	[11] = {
 		specs = {
 			[102] = {
 				[0] = {
@@ -544,7 +544,7 @@ local talentData = {
 			},
 		},
 	},
-	[12] = { 
+	[12] = {
 		specs = {
 			[577] = {
 				[0] = {
@@ -580,7 +580,7 @@ local talentData = {
 			},
 		},
 	},
-	[13] = { 
+	[13] = {
 		specs = {
 			[1473] = {
 				[0] = {

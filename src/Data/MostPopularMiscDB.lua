@@ -2,9 +2,9 @@ local addonName, addonTable = ...
 addonTable.MostPopularMiscDB = addonTable.MostPopularMiscDB or {}
 
 local talentData = {
-	updated = "2025-02-06 21:33:56",
+	updated = "2025-02-07 20:24:42",
 
-	[1] = { 
+	[1] = {
 		specs = {
 			[71] = {
 				[0] = {
@@ -14,17 +14,17 @@ local talentData = {
 			},
 			[72] = {
 				[0] = {
-					label = "Delves/Open World | Mountain Thane",
-					talentString = "CgEAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAaAzghhZwywMzGMMjxwMMzstNzYmx2YmxYGmhNbzwMzMAAAQYMwGssY0YGQmFYxYB",
-				},
-				[1] = {
 					label = "Leveling/Open World | Mountain Thane",
 					talentString = "CgEAAAAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAaAGMjhZwyYmZ2ghZMGmhZmttZGzM2GzMGzwMsZbGmZmBAAACjB2glFjGzAysALGLA",
+				},
+				[1] = {
+					label = "Delves/Open World | Mountain Thane",
+					talentString = "CgEAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAaAzghhZwywMzGMMjxwMMzstNzYmx2YmxYGmhNbzwMzMAAAQYMwGssY0YGQmFYxYB",
 				},
 			},
 		},
 	},
-	[2] = { 
+	[2] = {
 		specs = {
 			[65] = {
 				[0] = {
@@ -58,7 +58,7 @@ local talentData = {
 			},
 		},
 	},
-	[3] = { 
+	[3] = {
 		specs = {
 			[253] = {
 				[0] = {
@@ -96,7 +96,7 @@ local talentData = {
 			},
 		},
 	},
-	[4] = { 
+	[4] = {
 		specs = {
 			[259] = {
 				[0] = {
@@ -122,7 +122,7 @@ local talentData = {
 			},
 		},
 	},
-	[5] = { 
+	[5] = {
 		specs = {
 			[256] = {
 				[0] = {
@@ -152,7 +152,7 @@ local talentData = {
 			},
 		},
 	},
-	[6] = { 
+	[6] = {
 		specs = {
 			[250] = {
 				[0] = {
@@ -202,7 +202,7 @@ local talentData = {
 			},
 		},
 	},
-	[7] = { 
+	[7] = {
 		specs = {
 			[262] = {
 				[0] = {
@@ -212,19 +212,19 @@ local talentData = {
 			},
 			[263] = {
 				[0] = {
+					label = "StormOpen World | Stormbringer",
+					talentString = "CcQAAAAAAAAAAAAAAAAAAAAAAMzMDMjZmtZmZGmlZmllxAAAAAAAAAAwGALmxwGZBmhhGsAgZZyAWYMzMMzMzywyMzkFWGLjZGAAjB",
+				},
+				[1] = {
 					label = "StormSingle Target | Stormbringer",
 					talentString = "CcQAAAAAAAAAAAAAAAAAAAAAAMzMzCmhZ2mZmZY2mZWWGAAAAAAAAAAYDgNzYYjsAzwQDWAwsMZGYZxMzMDjZmthlZmJwYZMzAAMjB",
 				},
-				[1] = {
+				[2] = {
 					label = "StormSingle Target | Totemic",
 					talentString = "CcQAAAAAAAAAAAAAAAAAAAAAAMzMgZGDzMzMYZmx2sNDAAAAAAAAAgNYBWgZspx2AYmgNAMLTmBWWMzMzwYmZZYZmZCMWGzMAAzMD",
 				},
-				[2] = {
-					label = "StormDelves | Stormbringer",
-					talentString = "CcQAAAAAAAAAAAAAAAAAAAAAAMzMDMjZmtZmZGmlZmllxAAAAAAAAAAwGALmxwGZBmhhGsAgZZyAWYMzMMzMzywyMzkFWGLjZGAAjB",
-				},
 				[3] = {
-					label = "StormOpen World | Stormbringer",
+					label = "StormDelves | Stormbringer",
 					talentString = "CcQAAAAAAAAAAAAAAAAAAAAAAMzMDMjZmtZmZGmlZmllxAAAAAAAAAAwGALmxwGZBmhhGsAgZZyAWYMzMMzMzywyMzkFWGLjZGAAjB",
 				},
 			},
@@ -236,7 +236,7 @@ local talentData = {
 			},
 		},
 	},
-	[8] = { 
+	[8] = {
 		specs = {
 			[64] = {
 				[0] = {
@@ -270,7 +270,7 @@ local talentData = {
 			},
 		},
 	},
-	[9] = { 
+	[9] = {
 		specs = {
 			[265] = {
 				[0] = {
@@ -312,7 +312,7 @@ local talentData = {
 			},
 		},
 	},
-	[10] = { 
+	[10] = {
 		specs = {
 			[268] = {
 				[0] = {
@@ -332,7 +332,7 @@ local talentData = {
 			},
 		},
 	},
-	[11] = { 
+	[11] = {
 		specs = {
 			[102] = {
 				[0] = {
@@ -342,20 +342,20 @@ local talentData = {
 			},
 			[103] = {
 				[0] = {
-					label = "Single Target | Druid of the Claw",
-					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAgxMbMmFzMmZ2mtHwYbmZGPwMDAAAAAwSAzAYmZ0MjZYmZYGz2MDAAAAAAAAAAAANzysMzsMgALYmZAA",
-				},
-				[1] = {
 					label = "Single Target | Wildstalker",
 					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmZb2MzCzYmZb2YsNzMjZmBAAAAAYJYYAjZmRzMmhZmxyMsNzAAAAAAAAMAAAACAmtZWa2mZZDMDA",
 				},
-				[2] = {
+				[1] = {
 					label = "AOE With BT | Druid of the Claw",
 					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzMbzmZWMzMzMbzGsNzMzYmBAAAAAYJYYAjZmRzMmhZmxyMsNzAAAAAAAAAAAAQzsMLzMbDIwCYGAA",
 				},
-				[3] = {
+				[2] = {
 					label = "AOE With BT | Wildstalker",
 					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzMbzmZWYmZmZzmZsNzMzYmBAAAAAYJYYAjZmRzMmhZmxyMsNGAAAAAAAAAAAACAmtZWa2mZZDmZAA",
+				},
+				[3] = {
+					label = "Single Target | Druid of the Claw",
+					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAgxMbMmFzMmZ2mtHwYbmZGPwMDAAAAAwSAzAYmZ0MjZYmZYGz2MDAAAAAAAAAAAANzysMzsMgALYmZAA",
 				},
 			},
 			[104] = {
@@ -376,7 +376,7 @@ local talentData = {
 			},
 		},
 	},
-	[12] = { 
+	[12] = {
 		specs = {
 			[577] = {
 				[0] = {
@@ -386,7 +386,7 @@ local talentData = {
 			},
 		},
 	},
-	[13] = { 
+	[13] = {
 		specs = {
 			[1473] = {
 				[0] = {

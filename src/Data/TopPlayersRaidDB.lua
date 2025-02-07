@@ -2,9 +2,9 @@ local addonName, addonTable = ...
 addonTable.TopPlayersRaidDB = addonTable.TopPlayersRaidDB or {}
 
 local talentData = {
-	updated = "2025-02-07 17:28:18",
+	updated = "2025-02-07 20:23:20",
 
-	[1] = { 
+	[1] = {
 		specs = {
 			[71] = {
 				[0] = {
@@ -122,7 +122,7 @@ local talentData = {
 			},
 		},
 	},
-	[2] = { 
+	[2] = {
 		specs = {
 			[65] = {
 				[0] = {
@@ -240,7 +240,7 @@ local talentData = {
 			},
 		},
 	},
-	[3] = { 
+	[3] = {
 		specs = {
 			[253] = {
 				[0] = {
@@ -353,12 +353,12 @@ local talentData = {
 				},
 				[8] = {
 					label = "Ansurek",
-					talentString = "C8PAAAAAAAAAAAAAAAAAAAAAAMgxM2YgFYbYoBLzM2mxMzMjZMGMzYmZmxMDAAAAAAAAAAAAAANDjZmZmZMzYGGDzMwMmxMYD",
+					talentString = "C8PAAAAAAAAAAAAAAAAAAAAAAMgxM2YgFYbYoBLzM2mxMzMjZMGMzYmZmxMDAAAAAAAAAAAAAANDjZmZmZMzYGGDzMwMmxMYB",
 				},
 			},
 		},
 	},
-	[4] = { 
+	[4] = {
 		specs = {
 			[259] = {
 				[0] = {
@@ -476,7 +476,7 @@ local talentData = {
 			},
 		},
 	},
-	[5] = { 
+	[5] = {
 		specs = {
 			[256] = {
 				[0] = {
@@ -509,7 +509,7 @@ local talentData = {
 				},
 				[7] = {
 					label = "The Silken Court",
-					talentString = "CAQAAAAAAAAAAAAAAAAAAAAAAAAWmtZGD2GjZmxMbmlZmZmhBAAAAAAAAAAAzilZbYbmZwswYGmxgF2mpxELDYmBACwsNLLgxmN",
+					talentString = "CAQAAAAAAAAAAAAAAAAAAAAAAAA2mtZGD2GjZmxMbmlZmZmhBAAAAAAAAAAAzilZbYbmZwswwMjxgF2mpxELDYmBACwsNLLgxmN",
 				},
 				[8] = {
 					label = "Ansurek",
@@ -594,7 +594,7 @@ local talentData = {
 			},
 		},
 	},
-	[6] = { 
+	[6] = {
 		specs = {
 			[250] = {
 				[0] = {
@@ -712,7 +712,7 @@ local talentData = {
 			},
 		},
 	},
-	[7] = { 
+	[7] = {
 		specs = {
 			[262] = {
 				[0] = {
@@ -830,7 +830,7 @@ local talentData = {
 			},
 		},
 	},
-	[8] = { 
+	[8] = {
 		specs = {
 			[64] = {
 				[0] = {
@@ -943,12 +943,12 @@ local talentData = {
 				},
 				[8] = {
 					label = "Ansurek",
-					talentString = "C8DAAAAAAAAAAAAAAAAAAAAAAYMMbWwMmxs5BYMzw0YmxMDAAAAAgZWmpZmlZBAAAsYMDmxMzMzMLzYMmhNzsMDmFGAAAAAAAA",
+					talentString = "C8DAAAAAAAAAAAAAAAAAAAAAAYGMbzCmxMmNPAjZGmGzMmBAAAAAgZWmpZmlZBAAAsYMDmxMzMzMLzYMmhNzsMDmFGAAAAAAAA",
 				},
 			},
 		},
 	},
-	[9] = { 
+	[9] = {
 		specs = {
 			[265] = {
 				[0] = {
@@ -1066,7 +1066,7 @@ local talentData = {
 			},
 		},
 	},
-	[10] = { 
+	[10] = {
 		specs = {
 			[268] = {
 				[0] = {
@@ -1091,7 +1091,7 @@ local talentData = {
 				},
 				[5] = {
 					label = "Broodtwister Ovinax",
-					talentString = "CwQAAAAAAAAAAAAAAAAAAAAAAAAAAAGjxMMsMjtZmZGDAAAAAAwyCGxMDMDjNGsNzMDzyYmx2sYab5B2mtZmhZBAA2AAAAmtZpZmZWYGsA",
+					talentString = "CwQAAAAAAAAAAAAAAAAAAAAAAAAAAAGjxMMsMjtZmZGAAAAAAAWWwImZgZYsxgtZmZYWGzM2sMTbLPw2sNzMMLAAwGAAAwsNLNzMzCzgF",
 				},
 				[6] = {
 					label = "Kyveza",
@@ -1184,7 +1184,7 @@ local talentData = {
 			},
 		},
 	},
-	[11] = { 
+	[11] = {
 		specs = {
 			[102] = {
 				[0] = {
@@ -1293,7 +1293,7 @@ local talentData = {
 				},
 				[7] = {
 					label = "The Silken Court",
-					talentString = "CgGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzYmxMzy8AjhZMzYxDMMzsYZAMgZGTmmZmxMzMMYjBAAAAAAMmZAAAAgmZbWmZWGAALMzMAA",
+					talentString = "CgGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzYmxMzy8AjhZYGLmhZmFLDgBMzYy0MzMmZmhBbMAAAAAAgxMDAAAA0MbzyMzyAAYhZmBA",
 				},
 				[8] = {
 					label = "Ansurek",
@@ -1340,7 +1340,7 @@ local talentData = {
 			},
 		},
 	},
-	[12] = { 
+	[12] = {
 		specs = {
 			[577] = {
 				[0] = {
@@ -1420,7 +1420,7 @@ local talentData = {
 			},
 		},
 	},
-	[13] = { 
+	[13] = {
 		specs = {
 			[1473] = {
 				[0] = {
