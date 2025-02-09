@@ -2,7 +2,7 @@ local addonName, addonTable = ...
 addonTable.MostPopularMiscDB = addonTable.MostPopularMiscDB or {}
 
 local talentData = {
-	updated = "2025-02-07 20:24:42",
+	updated = "2025 02 09 18 11 57",
 
 	[1] = {
 		specs = {
@@ -14,12 +14,12 @@ local talentData = {
 			},
 			[72] = {
 				[0] = {
-					label = "Leveling/Open World | Mountain Thane",
-					talentString = "CgEAAAAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAaAGMjhZwyYmZ2ghZMGmhZmttZGzM2GzMGzwMsZbGmZmBAAACjB2glFjGzAysALGLA",
-				},
-				[1] = {
 					label = "Delves/Open World | Mountain Thane",
 					talentString = "CgEAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAaAzghhZwywMzGMMjxwMMzstNzYmx2YmxYGmhNbzwMzMAAAQYMwGssY0YGQmFYxYB",
+				},
+				[1] = {
+					label = "Leveling/Open World | Mountain Thane",
+					talentString = "CgEAAAAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAaAGMjhZwyYmZ2ghZMGmhZmttZGzM2GzMGzwMsZbGmZmBAAACjB2glFjGzAysALGLA",
 				},
 			},
 		},
@@ -212,19 +212,19 @@ local talentData = {
 			},
 			[263] = {
 				[0] = {
-					label = "StormOpen World | Stormbringer",
-					talentString = "CcQAAAAAAAAAAAAAAAAAAAAAAMzMDMjZmtZmZGmlZmllxAAAAAAAAAAwGALmxwGZBmhhGsAgZZyAWYMzMMzMzywyMzkFWGLjZGAAjB",
-				},
-				[1] = {
 					label = "StormSingle Target | Stormbringer",
 					talentString = "CcQAAAAAAAAAAAAAAAAAAAAAAMzMzCmhZ2mZmZY2mZWWGAAAAAAAAAAYDgNzYYjsAzwQDWAwsMZGYZxMzMDjZmthlZmJwYZMzAAMjB",
 				},
-				[2] = {
+				[1] = {
 					label = "StormSingle Target | Totemic",
 					talentString = "CcQAAAAAAAAAAAAAAAAAAAAAAMzMgZGDzMzMYZmx2sNDAAAAAAAAAgNYBWgZspx2AYmgNAMLTmBWWMzMzwYmZZYZmZCMWGzMAAzMD",
 				},
-				[3] = {
+				[2] = {
 					label = "StormDelves | Stormbringer",
+					talentString = "CcQAAAAAAAAAAAAAAAAAAAAAAMzMDMjZmtZmZGmlZmllxAAAAAAAAAAwGALmxwGZBmhhGsAgZZyAWYMzMMzMzywyMzkFWGLjZGAAjB",
+				},
+				[3] = {
+					label = "StormOpen World | Stormbringer",
 					talentString = "CcQAAAAAAAAAAAAAAAAAAAAAAMzMDMjZmtZmZGmlZmllxAAAAAAAAAAwGALmxwGZBmhhGsAgZZyAWYMzMMzMzywyMzkFWGLjZGAAjB",
 				},
 			},
@@ -342,20 +342,20 @@ local talentData = {
 			},
 			[103] = {
 				[0] = {
+					label = "Single Target | Druid of the Claw",
+					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAgxMbMmFzMmZ2mtHwYbmZGPwMDAAAAAwSAzAYmZ0MjZYmZYGz2MDAAAAAAAAAAAANzysMzsMgALYmZAA",
+				},
+				[1] = {
 					label = "Single Target | Wildstalker",
 					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmZb2MzCzYmZb2YsNzMjZmBAAAAAYJYYAjZmRzMmhZmxyMsNzAAAAAAAAMAAAACAmtZWa2mZZDMDA",
 				},
-				[1] = {
+				[2] = {
 					label = "AOE With BT | Druid of the Claw",
 					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzMbzmZWMzMzMbzGsNzMzYmBAAAAAYJYYAjZmRzMmhZmxyMsNzAAAAAAAAAAAAQzsMLzMbDIwCYGAA",
 				},
-				[2] = {
+				[3] = {
 					label = "AOE With BT | Wildstalker",
 					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzMbzmZWYmZmZzmZsNzMzYmBAAAAAYJYYAjZmRzMmhZmxyMsNGAAAAAAAAAAAACAmtZWa2mZZDmZAA",
-				},
-				[3] = {
-					label = "Single Target | Druid of the Claw",
-					talentString = "CcGAAAAAAAAAAAAAAAAAAAAAAAAAAAAgxMbMmFzMmZ2mtHwYbmZGPwMDAAAAAwSAzAYmZ0MjZYmZYGz2MDAAAAAAAAAAAANzysMzsMgALYmZAA",
 				},
 			},
 			[104] = {

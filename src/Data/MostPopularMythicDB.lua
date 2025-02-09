@@ -2,7 +2,7 @@ local addonName, addonTable = ...
 addonTable.MostPopularMythicDB = addonTable.MostPopularMythicDB or {}
 
 local talentData = {
-	updated = "2025-02-07 20:24:42",
+	updated = "2025 02 09 18 11 57",
 
 	[1] = {
 		specs = {
@@ -172,28 +172,28 @@ local talentData = {
 			},
 			[252] = {
 				[0] = {
+					label = "Mythic/Delves | Sanlayn",
+					talentString = "CwPAAAAAAAAAAAAAAAAAAAAAAAgZGjZMGDzMzMzMNMmZGzYAAAAAAAAAgZYGjZmZAgZzMMLzYmZmZMGDMwMGNWWAsNxGAMDA",
+				},
+				[1] = {
 					label = "Rider M Setup | Rider of the Apocalypse",
 					talentString = "CwPAAAAAAAAAAAAAAAAAAAAAAAgZGjZMGDzMzMzMNMmZGzYAAAAAAAAAMMzYGzMzMDAYDMLGzMzMMzA2MbGGyAzGDNWwAMDA",
 				},
-				[1] = {
+				[2] = {
 					label = "Rider M No Apoc | Rider of the Apocalypse",
 					talentString = "CwPAAAAAAAAAAAAAAAAAAAAAAAgZGjZMGDzMzMzMNMmZGzYAAAAAAAAAgZGDzMzMDAMbmhZBzMz8AzMzA2MbGGyAzGDNWAgZA",
 				},
-				[2] = {
+				[3] = {
 					label = "Rider M No Setup | Rider of the Apocalypse",
 					talentString = "CwPAAAAAAAAAAAAAAAAAAAAAAAgZGjZMGDzMzMzMNMmZGzYAAAAAAAAAgZGjZMzMDAMbmhZBzMz8AzMzA2MbGGyAzGDNWAgZA",
 				},
-				[3] = {
+				[4] = {
 					label = "Rider M All Burst | Rider of the Apocalypse",
 					talentString = "CwPAAAAAAAAAAAAAAAAAAAAAAAgZGjZmxYYmZmZmphhZGzYAAAAAAAAAMMzYMjZmZAAAzixMzMzMzMgNzmhhMwsxQjFMAzAA",
 				},
-				[4] = {
+				[5] = {
 					label = "Rider M Hybrid | Rider of the Apocalypse",
 					talentString = "CwPAAAAAAAAAAAAAAAAAAAAAAAgZGjZMGDzMzMzMNMmZGzYAAAAAAAAAgZGDjZmZAgZzMMLGzMzMjZGwmZzwQGY2YoxCAMDA",
-				},
-				[5] = {
-					label = "Mythic/Delves | Sanlayn",
-					talentString = "CwPAAAAAAAAAAAAAAAAAAAAAAAgZGjZMGDzMzMzMNMmZGzYAAAAAAAAAgZYGjZmZAgZzMMLzYmZmZMGDMwMGNWWAsNxGAMDA",
 				},
 			},
 		},
@@ -360,16 +360,16 @@ local talentData = {
 			},
 			[581] = {
 				[0] = {
-					label = "Mythic Cheat | Fel-Scarred",
-					talentString = "CUkAAAAAAAAAAAAAAAAAAAAAAAAYMmZMMjMzMYYGLjhZsNDzMzwMmZ2mZmtZmhZYGAAAAglZxMGmFNNwMzMstB",
-				},
-				[1] = {
 					label = "Mythic Baseline/Delves/Open World | Fel-Scarred",
 					talentString = "CUkAAAAAAAAAAAAAAAAAAAAAAAAYMzMjhZkZmBDzMbjxYsNjZMjZGmZ2mZmtZmhZYGAAAAglZxMGmFNNwMjhtN",
 				},
-				[2] = {
+				[1] = {
 					label = "Mythic Defensive | Fel-Scarred",
 					talentString = "CUkAAAAAAAAAAAAAAAAAAAAAAAAYMmZMMjMzMYYmZbMGjtZYmZMjHwY2mZmtZmhZYGAAAAglZxMGmFNNwMzMstB",
+				},
+				[2] = {
+					label = "Mythic Cheat | Fel-Scarred",
+					talentString = "CUkAAAAAAAAAAAAAAAAAAAAAAAAYMmZMMjMzMYYGLjhZsNDzMzwMmZ2mZmtZmhZYGAAAAglZxMGmFNNwMzMstB",
 				},
 			},
 		},

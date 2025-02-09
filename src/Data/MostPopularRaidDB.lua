@@ -2,7 +2,7 @@ local addonName, addonTable = ...
 addonTable.MostPopularRaidDB = addonTable.MostPopularRaidDB or {}
 
 local talentData = {
-	updated = "2025-02-07 20:24:42",
+	updated = "2025 02 09 18 11 57",
 
 	[1] = {
 		specs = {
@@ -70,16 +70,16 @@ local talentData = {
 		specs = {
 			[65] = {
 				[0] = {
-					label = "Raid - Caster | Herald",
-					talentString = "CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAzAAAAYZmZwMmZW2mxsMzwyMwstZaLmxMmZGGY2yAAGwgNgNmZGzMLz2Mzs0AAACYBDgNGDjZA",
+					label = "Raid - Avenging Crusader | Lightsmith",
+					talentString = "CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAzAAAMALzMDmZbmZxMmlZG2mBmttZaLmxMmZGGY2yAAGAsBsxMzYGAEAwMzy2SbzMsBYGADjZG",
 				},
 				[1] = {
-					label = "Raid - Avenging Crusader | Lightsmith",
-					talentString = "CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAzAAAMALzMDmZbmZxMmlZG2mBmttZaLmxMmZGGY2yAAGAsBsxMzYGAEAwMzy2SbzMsBYGYAjZG",
-				},
-				[2] = {
 					label = "Raid - Melee | Herald",
 					talentString = "CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAzAAAAYZmZwMbzMLmxsMzwyMwstNTbxMmxMzwAzWGAwAGsBsxMzYmZZ2mZmlGAAQALAgNGDjZA",
+				},
+				[2] = {
+					label = "Raid - Caster | Herald",
+					talentString = "CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAzAAAAYZmZwMmZW2mxsMzwyMwstZaLmxMmZGGY2yAAGwgNgNmZGzMLz2Mzs0AAACYBDgNGDjZA",
 				},
 			},
 			[66] = {
@@ -138,24 +138,24 @@ local talentData = {
 			},
 			[254] = {
 				[0] = {
+					label = "Raid Single Target | Dark Ranger",
+					talentString = "C4PAAAAAAAAAAAAAAAAAAAAAAYstNwAmgZhtAzCAAAAAAYGzMzgZmhZmZYmZGjZ2mZ8AAAAAAAAwMMmZmZmZmZyMzYYmBGmZZGA",
+				},
+				[1] = {
 					label = "Raid Single Target | Sentinel",
 					talentString = "C4PAAAAAAAAAAAAAAAAAAAAAAwADsMGN2GQmNsBAAAAAAmxMzMDzMDzMzwMzMGzsNzAAAAAAAAMDjZmZmZmZmMzMGmZghZWmBA",
 				},
-				[1] = {
+				[2] = {
 					label = "Raid Single Target with Cleave | Dark Ranger",
 					talentString = "C4PAAAAAAAAAAAAAAAAAAAAAAYstNwAmgZhtAzCAAAAAAYmZmZGMzYYmZMzMzYMz2MDAAAAAAAwMMmZmZmZmZamxYYmBGmZZGA",
 				},
-				[2] = {
+				[3] = {
 					label = "Raid Single Target with Cleave | Sentinel",
 					talentString = "C4PAAAAAAAAAAAAAAAAAAAAAAwADsMGN2GQmNsBAAAAAAmZmZmZYMzYmZGzMzwYmtxAAAAAAAAMDjZmZmZmZmmZMGmZghZWmBA",
 				},
-				[3] = {
+				[4] = {
 					label = "Raid Council | Dark Ranger",
 					talentString = "C4PAAAAAAAAAAAAAAAAAAAAAAYstNwAmgZhtAzCAAAAAAYGzMzMMzMMzMjZmZGjZ2MDAAAAAAAwMMzMmZmxMamxYYmhxwMmZYB",
-				},
-				[4] = {
-					label = "Raid Single Target | Dark Ranger",
-					talentString = "C4PAAAAAAAAAAAAAAAAAAAAAAYstNwAmgZhtAzCAAAAAAYGzMzgZmhZmZYmZGjZ2mZ8AAAAAAAAwMMmZmZmZmZyMzYYmBGmZZGA",
 				},
 			},
 			[255] = {
@@ -192,16 +192,16 @@ local talentData = {
 			},
 			[260] = {
 				[0] = {
-					label = "Raid Council | Fatebound",
-					talentString = "CQQAAAAAAAAAAAAAAAAAAAAAAAAMwwYmZwMzwMMMzMzMjZmplZMLzAAAAAAgttxM8AzMjFmZZ2GAAAAzMDwAbwMGNmNAbTYxMA",
-				},
-				[1] = {
 					label = "Raid Single Target | Fatebound",
 					talentString = "CQQAAAAAAAAAAAAAAAAAAAAAAAAMwMzYGDmZGmhxYGzMjZmplZMLzAAAAAAgttZmBzMjlxMLz2AAAAwMDwAbwMGNmNAbTYxMA",
 				},
-				[2] = {
+				[1] = {
 					label = "Raid Single Target with Cleave | Fatebound",
 					talentString = "CQQAAAAAAAAAAAAAAAAAAAAAAAAMwMzYGDmZGmhhZGzMjZmplZMLzAAAAAAgttZmBzMjlxMLz2AAAAwMDwAbwMGNmNAbTYxMA",
+				},
+				[2] = {
+					label = "Raid Council | Fatebound",
+					talentString = "CQQAAAAAAAAAAAAAAAAAAAAAAAAMwwYmZwMzwMMMzMzMjZmplZMLzAAAAAAgttxM8AzMjFmZZ2GAAAAzMDwAbwMGNmNAbTYxMA",
 				},
 			},
 			[261] = {
@@ -228,12 +228,12 @@ local talentData = {
 		specs = {
 			[256] = {
 				[0] = {
-					label = "Raid Full Uppies | Voidweaver",
-					talentString = "CAQAAAAAAAAAAAAAAAAAAAAAAAA2mNGzMz2YMzMmZzsMzMzMMAAAAAAAAAAAYWsMbDbzMDmFGzwMGsw2MNmYZAzMAoAMbzyGYsZD",
-				},
-				[1] = {
 					label = "Raid Mindbender | Voidweaver",
 					talentString = "CAQAAAAAAAAAAAAAAAAAAAAAAAA2mtZGD2GjZmxMbmlZmZmhBAAAAAAAAAAAzilZbYbmZwswwMzMGsw2MNmYBYmBAFgZbW2AjNb",
+				},
+				[1] = {
+					label = "Raid Full Uppies | Voidweaver",
+					talentString = "CAQAAAAAAAAAAAAAAAAAAAAAAAA2mNGzMz2YMzMmZzsMzMzMMAAAAAAAAAAAYWsMbDbzMDmFGzwMGsw2MNmYZAzMAoAMbzyGYsZD",
 				},
 			},
 			[257] = {
@@ -412,28 +412,28 @@ local talentData = {
 			},
 			[266] = {
 				[0] = {
-					label = "Raid Single Target Cleave | Diabolist /  Soul Harvester",
-					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAMzMzMjYWMMmtZmZYWGAAAAAAAAAAzAGzYYBGYb0CNswMzMmtxMbmZmZGjZGYmZmBzMAAA",
-				},
-				[1] = {
-					label = "Raid Single Target Cleave | Diabolist /  Soul Harvester",
-					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAMzMzMjYWMMmtZmZYWGAAAAAAAAAAzMW2GYADYG2CZsxMzMmtxMbmZmZGjZYYmZmBzMAAA",
-				},
-				[2] = {
-					label = "Raid Council | Diabolist /  Soul Harvester",
-					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzmhxsZmZYWGAAAAAAAAAAzAGzYYBGYZ0CNswMjZsNmZzMzMzYMjZMjZmxgZAAA",
-				},
-				[3] = {
-					label = "Raid Council | Diabolist /  Soul Harvester",
-					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzihxsZmZYWGAAAAAAAAAAzMW2GYADYG2CZsxMjZsNmZzMzMzYMjZMjZmxgZAAA",
-				},
-				[4] = {
 					label = "Raid Single Target | Diabolist / Soul Harvester",
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzmhxsZmZYWGAAAAAAAAAAzAGzYYBGYZ0CNswMzMsNmZxMzMzYMjhZmZmBmZAAA",
 				},
-				[5] = {
+				[1] = {
 					label = "Raid Single Target | Diabolist / Soul Harvester",
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAMzMzMjYWMMmtZmZYWGAAAAAAAAAAzMW2GYADYG2CZsxMzMmtxMLmZmZGjZAzMzMYmZAAA",
+				},
+				[2] = {
+					label = "Raid Single Target Cleave | Diabolist /  Soul Harvester",
+					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAMzMzMjYWMMmtZmZYWGAAAAAAAAAAzAGzYYBGYb0CNswMzMmtxMbmZmZGjZGYmZmBzMAAA",
+				},
+				[3] = {
+					label = "Raid Single Target Cleave | Diabolist /  Soul Harvester",
+					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAMzMzMjYWMMmtZmZYWGAAAAAAAAAAzMW2GYADYG2CZsxMzMmtxMbmZmZGjZYYmZmBzMAAA",
+				},
+				[4] = {
+					label = "Raid Council | Diabolist /  Soul Harvester",
+					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzmhxsZmZYWGAAAAAAAAAAzAGzYYBGYZ0CNswMjZsNmZzMzMzYMjZMjZmxgZAAA",
+				},
+				[5] = {
+					label = "Raid Council | Diabolist /  Soul Harvester",
+					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzihxsZmZYWGAAAAAAAAAAzMW2GYADYG2CZsxMjZsNmZzMzMzYMjZMjZmxgZAAA",
 				},
 			},
 		},
