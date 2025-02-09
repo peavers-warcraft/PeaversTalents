@@ -14,6 +14,7 @@ src/Data/MostPopularMiscDB.lua
 src/Core/Config.lua
 src/Core/DataManager.lua
 src/Core/EventHandler.lua
+src/Core/VersionCheck.lua
 
 src/UI/DropdownManager.lua
 src/UI/UIComponents.lua

@@ -20,6 +20,10 @@ function Utils.Debug(...)
 	end
 end
 
+function Utils.Print(...)
+    print("|cFF69CCF0[PeaversTalents]|r", ...)
+end
+
 function Utils.GetPlayerClassAndSpec()
 	local _, _, playerClassID = Utils.GetPlayerInfo()
 	local currentSpecIndex = GetSpecialization()
