@@ -2,7 +2,7 @@ local addonName, addonTable = ...
 addonTable.MostPopularMiscDB = addonTable.MostPopularMiscDB or {}
 
 local talentData = {
-	updated = "2025 02 09 18 29 42",
+	updated = "2025-02-10 00:38:22",
 
 	[1] = {
 		specs = {
@@ -46,7 +46,7 @@ local talentData = {
 			},
 			[66] = {
 				[0] = {
-					label = "Delves  Open World | Templar",
+					label = "Delves Open World | Templar",
 					talentString = "CIEAAAAAAAAAAAAAAAAAAAAAAsNmZYWGLMzMzMLbzMzYGMjBAAYAAAAAAAotmZGGMDjZmZrNAYMwAYgtBAAYmptZZ2mBIwmZAMADDjB",
 				},
 			},
@@ -288,11 +288,11 @@ local talentData = {
 			},
 			[266] = {
 				[0] = {
-					label = "Delves / Open World | Diabolist /  Soul Harvester",
+					label = "Delves / Open World | Diabolist / Soul Harvester",
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAMzMzMjYWMMmtZmZYWGAAAAAAAAAAzAGzYYBGYb0CNswMzMmtxMbmZmZGjZGYmZmBzMAAA",
 				},
 				[1] = {
-					label = "Delves / Open World | Diabolist /  Soul Harvester",
+					label = "Delves / Open World | Diabolist / Soul Harvester",
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAMzMzMjYWMMmtZmZYWGAAAAAAAAAAzMW2GYADYG2CZsxMzMmtxMbmZmZGjZYYmZmBzMAAA",
 				},
 			},
@@ -380,7 +380,7 @@ local talentData = {
 		specs = {
 			[577] = {
 				[0] = {
-					label = "Ignition Delves  Open World | Fel-Scarred",
+					label = "Ignition Delves Open World | Fel-Scarred",
 					talentString = "CEkAAAAAAAAAAAAAAAAAAAAAAYmZmZmZGMzMjxMZmZGAAAAAAwsMMmhZGYmtZbWmZGMDssBLziZMMbaaMmZGDbb",
 				},
 			},

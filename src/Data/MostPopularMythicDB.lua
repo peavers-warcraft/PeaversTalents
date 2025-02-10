@@ -2,7 +2,7 @@ local addonName, addonTable = ...
 addonTable.MostPopularMythicDB = addonTable.MostPopularMythicDB or {}
 
 local talentData = {
-	updated = "2025 02 09 18 29 42",
+	updated = "2025-02-10 00:38:22",
 
 	[1] = {
 		specs = {
@@ -112,7 +112,7 @@ local talentData = {
 			},
 			[261] = {
 				[0] = {
-					label = "Mythic Build   Play this | Trickster",
+					label = "Mythic Build Play this | Trickster",
 					talentString = "CUQAAAAAAAAAAAAAAAAAAAAAAAAM2mBAAAAAgZZMWmGzYmxMGjZYmZmhxsNMzYbbmZMzMjBjlZZAAAAYGMAGzmhBGYW0CtYDG",
 				},
 				[1] = {
@@ -152,11 +152,11 @@ local talentData = {
 		specs = {
 			[250] = {
 				[0] = {
-					label = "Mythic no  Gorefiends Grasp | Deathbringer",
+					label = "Mythic no Gorefiends Grasp | Deathbringer",
 					talentString = "CoPAAAAAAAAAAAAAAAAAAAAAAghxMzYMzMmZYGzMz0MMMzYGDAAAAAmZmZmZmZmNzMjBAAAzMzMAAAAjttBGwSwywEYYBgZwG",
 				},
 				[1] = {
-					label = "Mythic  Gorefiends Grasp | Deathbringer",
+					label = "Mythic Gorefiends Grasp | Deathbringer",
 					talentString = "CoPAAAAAAAAAAAAAAAAAAAAAAghZmZGjZmxMDzYmZmmhhZGzYAAAAAwMzMzMzMmNzMjBAAAzMzMAAAAjttBGwSwywEYYBgZwG",
 				},
 			},
@@ -280,11 +280,11 @@ local talentData = {
 			},
 			[266] = {
 				[0] = {
-					label = "Mythic | Diabolist /  Soul Harvester",
+					label = "Mythic | Diabolist / Soul Harvester",
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzmhxsZmZYWGAAAAAAAAAAzAGzYYBGYZ0CNswMjZsNmZzMzMzYMjZMjZmxgZAAA",
 				},
 				[1] = {
-					label = "Mythic | Diabolist /  Soul Harvester",
+					label = "Mythic | Diabolist / Soul Harvester",
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzihxsZmZYWGAAAAAAAAAAzMW2GYADYG2CZsxMjZsNmZzMzMzYMjZMjZmxgZAAA",
 				},
 			},

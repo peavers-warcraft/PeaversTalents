@@ -2,7 +2,7 @@ local addonName, addonTable = ...
 addonTable.MostPopularRaidDB = addonTable.MostPopularRaidDB or {}
 
 local talentData = {
-	updated = "2025 02 09 18 29 42",
+	updated = "2025-02-10 00:38:22",
 
 	[1] = {
 		specs = {
@@ -210,7 +210,7 @@ local talentData = {
 					talentString = "CUQAAAAAAAAAAAAAAAAAAAAAAAAM2mBAAAAAgZZMWmGzYmxwYMDzMzMjxsNMzYbbmZMzMjBjlZbAAAAYGMAGzmhBGYW0CtYDG",
 				},
 				[1] = {
-					label = "Raid Build Single Target  Play this | Deathstalker",
+					label = "Raid Build Single Target Play this | Deathstalker",
 					talentString = "CUQAAAAAAAAAAAAAAAAAAAAAAAAM2mBAAAAAgZZMWmmZGzMGGDDzMzMjxsNMzYbbmZMzMjBjlZbAAAAYGMsYWGYALglhJkZBG",
 				},
 				[2] = {
@@ -420,19 +420,19 @@ local talentData = {
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAMzMzMjYWMMmtZmZYWGAAAAAAAAAAzMW2GYADYG2CZsxMzMmtxMLmZmZGjZAzMzMYmZAAA",
 				},
 				[2] = {
-					label = "Raid Single Target Cleave | Diabolist /  Soul Harvester",
+					label = "Raid Single Target Cleave | Diabolist / Soul Harvester",
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAMzMzMjYWMMmtZmZYWGAAAAAAAAAAzAGzYYBGYb0CNswMzMmtxMbmZmZGjZGYmZmBzMAAA",
 				},
 				[3] = {
-					label = "Raid Single Target Cleave | Diabolist /  Soul Harvester",
+					label = "Raid Single Target Cleave | Diabolist / Soul Harvester",
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAMzMzMjYWMMmtZmZYWGAAAAAAAAAAzMW2GYADYG2CZsxMzMmtxMbmZmZGjZYYmZmBzMAAA",
 				},
 				[4] = {
-					label = "Raid Council | Diabolist /  Soul Harvester",
+					label = "Raid Council | Diabolist / Soul Harvester",
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzmhxsZmZYWGAAAAAAAAAAzAGzYYBGYZ0CNswMjZsNmZzMzMzYMjZMjZmxgZAAA",
 				},
 				[5] = {
-					label = "Raid Council | Diabolist /  Soul Harvester",
+					label = "Raid Council | Diabolist / Soul Harvester",
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzihxsZmZYWGAAAAAAAAAAzMW2GYADYG2CZsxMjZsNmZzMzMzYMjZMjZmxgZAAA",
 				},
 			},
