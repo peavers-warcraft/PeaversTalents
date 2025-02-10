@@ -2,7 +2,7 @@ local addonName, addonTable = ...
 addonTable.MostPopularMiscDB = addonTable.MostPopularMiscDB or {}
 
 local talentData = {
-	updated = "2025-02-10 14:02:53",
+	updated = "2025-02-10 23:06:37",
 
 	[1] = {
 		specs = {
@@ -28,15 +28,15 @@ local talentData = {
 		specs = {
 			[65] = {
 				[0] = {
-					label = "Lightsmith | Copy Lightsmith Build",
+					label = "Lightsmith | Lightsmith Build",
 					talentString = "CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAzAAAAYZmZwMbzMLmxsMzwyMwstNTbxMmxMzwAzWGAwAGsBsxMzYGAEAwMzy2SLzMsBA2YMMmB",
 				},
 				[1] = {
-					label = "Lightsmith | Copy Lightsmith Build",
+					label = "Lightsmith | Lightsmith Build",
 					talentString = "CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAzAAAAYZmZwMmZW2mxsMzwyMwstZaLmxMmZGGY2yAAGwgNgNmZGzAgAAmZW2WaZmhNMA2YMMmB",
 				},
 				[2] = {
-					label = "Lightsmith | Copy Lightsmith Build",
+					label = "Lightsmith | Lightsmith Build",
 					talentString = "CEEAAAAAAAAAAAAAAAAAAAAAAAAAAYAAzAAAMAbjZYmxMziZMLzMsMDMbbz0WjZYMzMMwslBAMAMbAbMzMzMAIAgZmltlWmZYDYmBAGzA",
 				},
 				[3] = {

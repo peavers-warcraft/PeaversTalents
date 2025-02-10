@@ -2,7 +2,7 @@ local addonName, addonTable = ...
 addonTable.MostPopularRaidDB = addonTable.MostPopularRaidDB or {}
 
 local talentData = {
-	updated = "2025-02-10 14:02:53",
+	updated = "2025-02-10 23:06:37",
 
 	[1] = {
 		specs = {
@@ -36,31 +36,31 @@ local talentData = {
 			},
 			[73] = {
 				[0] = {
-					label = "Copy Raid Single Target | Preview Build",
+					label = "Raid Single Target | Preview Build",
 					talentString = "CkEAAAAAAAAAAAAAAAAAAAAAAYEDAAAAzMzYmZGMbzsMzMz2mZMMNzgZmBwyADbMzMwDMzDMMAAAAAAgZGAgltNADDsBLLGNmBwsFbYD",
 				},
 				[1] = {
-					label = "Copy Raid Single Target with Cleave | Preview Build",
+					label = "Raid Single Target with Cleave | Preview Build",
 					talentString = "CkEAAAAAAAAAAAAAAAAAAAAAAYEDAAAAzMzYmZGMbzsMzMz2mZMMNzgZmBwyADbMzMwDMzDMMAAAAAAgZGAgltNADDsBLLGNmBwsFbYD",
 				},
 				[2] = {
-					label = "Copy Raid Council | Preview Build",
+					label = "Raid Council | Preview Build",
 					talentString = "CkEAAAAAAAAAAAAAAAAAAAAAAYEDAAAAzMzYmxMmZbmlZmZ2YGDTzAzMDwsMwwGzMDYmHYYAAAAAAAzMAALbbAGGYDWWMaMDgZL2Y2A",
 				},
 				[3] = {
-					label = "Copy Mountain Thane Raid Punish Build | Preview Build",
+					label = "Mountain Thane Raid Punish Build | Preview Build",
 					talentString = "CkEAAAAAAAAAAAAAAAAAAAAAAYEDAAAAzMzYmZGMbzsMzMz2mZMMNzgZmBwyADbMzMwDMzDMMAAAAAAgZGAgltNADDsBLLGNmBwsFbYD",
 				},
 				[4] = {
-					label = "Copy Mountain Thane Raid Execute Build | Preview Build",
+					label = "Mountain Thane Raid Execute Build | Preview Build",
 					talentString = "CkEAAAAAAAAAAAAAAAAAAAAAAYEDAAAAzMzYmZGMbzsNzMz2mZMMNzgZmBwyADbMzMwDMzDMMAAAAAAgZGAgttNADDsBLLGNmBwsFbYD",
 				},
 				[5] = {
-					label = "Copy Colossus Raid Punish Build | Preview Build",
+					label = "Colossus Raid Punish Build | Preview Build",
 					talentString = "CkEAAAAAAAAAAAAAAAAAAAAAAYEDAAAAzMzwMzgZbmlZmZ22YMMNDMzMAzyYmZAzMD8AMDDAAAAAAYmBA8ALbbAGgNzYYjMwMsQjNsA",
 				},
 				[6] = {
-					label = "Copy Colossus Raid Execute Build | Preview Build",
+					label = "Colossus Raid Execute Build | Preview Build",
 					talentString = "CkEAAAAAAAAAAAAAAAAAAAAAAYEDAAAAzMzwMzgZbmtZmZ22YMMNDMzMAzyYmZAzMD8AMDDAAAAAAYmBA8AbbbAGgNzYYjMwMsQjNsA",
 				},
 			},

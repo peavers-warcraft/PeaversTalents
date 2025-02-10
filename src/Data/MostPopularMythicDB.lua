@@ -2,7 +2,7 @@ local addonName, addonTable = ...
 addonTable.MostPopularMythicDB = addonTable.MostPopularMythicDB or {}
 
 local talentData = {
-	updated = "2025-02-10 14:02:53",
+	updated = "2025-02-10 23:06:37",
 
 	[1] = {
 		specs = {
@@ -32,7 +32,7 @@ local talentData = {
 			},
 			[73] = {
 				[0] = {
-					label = "Copy Mountain Thane Mythic Build | Preview Build",
+					label = "Mountain Thane Mythic Build | Preview Build",
 					talentString = "CkEAAAAAAAAAAAAAAAAAAAAAAYEDAAAAzMzMmxMmZbmlZmZWYGDTjxDYMDglBG2YmZMDzYYAAAAAAAzMAALbbAGGYDWWMaMDgZL2Y2A",
 				},
 			},

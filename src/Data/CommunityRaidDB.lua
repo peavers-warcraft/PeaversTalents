@@ -2,27 +2,27 @@ local addonName, addonTable = ...
 addonTable.CommunityRaidDB = addonTable.CommunityRaidDB or {}
 
 local talentData = {
-	updated = "2025-02-10 14:02:53",
+	updated = "2025-02-10 23:06:37",
 
 	[1] = {
 		specs = {
 			[71] = {
 				[0] = {
-					label = "Slayer Single Target Raid Talents",
+					label = "Slayer Single Target Raid",
 					talentString = "CcEAAAAAAAAAAAAAAAAAAAAAAAgtZMjxMzMzmlllZGAAAAMYaYGsZMDMjxMzgZGGGDzwAAAAAAAgHYMLzMzAIwYZbgFwAmhJwwgN",
 				},
 				[1] = {
-					label = "Slayer Multitarget Raid Talents",
+					label = "Slayer Multitarget Raid",
 					talentString = "CcEAAAAAAAAAAAAAAAAAAAAAAAAzYmZMzMPwsZZZZmZAAAAYw0wMDLDzAjlxMzgZGGYYGGAAAAAAA8AjZZmZGABGLbDsAGwMMBGGsB",
 				},
 			},
 			[72] = {
 				[0] = {
-					label = "Slayer Single Target Raid Talents",
+					label = "Slayer Single Target Raid",
 					talentString = "CgEAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAgRDMDYMMDjBmFYYGjZmHYYmZbbMmZmFMzMzMjZYb4BYMzAAAAhZssNwCYAzwEYsNsB",
 				},
 				[1] = {
-					label = "Slayer Multitarget Raid Talents",
+					label = "Slayer Multitarget Raid",
 					talentString = "CgEAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAagZAjhZYMMzsBDzYMMDzMbbzMmZmNmZMzMMDb2mhZGDAAAEmx22ALgBMDTgx2wG",
 				},
 			},
@@ -76,25 +76,25 @@ local talentData = {
 		specs = {
 			[259] = {
 				[0] = {
-					label = "Deathstalker Raid Talents",
+					label = "Deathstalker Raid",
 					talentString = "CMQAAAAAAAAAAAAAAAAAAAAAAMzMzMMmx2MAAAAAAMbwyMAAAAAA022MzgZGjZmZZ2mZmxAjZmZGzsZbMDwmZZgBsAWGmADLA",
 				},
 				[1] = {
-					label = "Fatebound Raid Talents",
+					label = "Fatebound Raid",
 					talentString = "CMQAAAAAAAAAAAAAAAAAAAAAAMzMzMMmBDAAAAAAzGsMDAAAAAAttNzMmZmxYmZWmtZmZMwYmZmxMb2GzAYgFYGjGzCgtBsB",
 				},
 			},
 			[260] = {
 				[0] = {
-					label = "Fatebound Raid Talents Hidden Opportunity",
+					label = "Fatebound Raid Hidden Opportunity",
 					talentString = "CQQAAAAAAAAAAAAAAAAAAAAAAAAMwMzYGDmZGmhxYGzMjZmplZMLzAAAAAAgttxMYmZsMmZZ2GAAAAzMDwAbwMGNmNAbDsYG",
 				},
 				[1] = {
-					label = "Fatebound Raid Talents Keep It Rolling",
+					label = "Fatebound Raid Keep It Rolling",
 					talentString = "CQQAAAAAAAAAAAAAAAAAAAAAAAAM2mxMjZMmZmZYGGjZMMzMz0yMmtZAAAAAAw22MzgZmxCsMbDAAAAzMADsBzY0Y2AsNwiZA",
 				},
 				[2] = {
-					label = "Trickster Raid Talents Hidden Opportunity",
+					label = "Trickster Raid Hidden Opportunity",
 					talentString = "CQQAAAAAAAAAAAAAAAAAAAAAAAAMwMzYGDmZGmhBzYmZMzMtMjZZGAAAAAAstNzMYmZsMmZZ2GAAAAmZGAMmNDDMwswCtxmZA",
 				},
 			},
@@ -134,11 +134,11 @@ local talentData = {
 		specs = {
 			[251] = {
 				[0] = {
-					label = "Breath Raid Talents",
+					label = "Breath Raid",
 					talentString = "CsPAAAAAAAAAAAAAAAAAAAAAAMGAzYMzMGDDzMzMzMmxMNzYMjBMzYMjZmZmZmZxMAAAAAAAAAAAAjltBGwCYZYCMWwMMmBA",
 				},
 				[1] = {
-					label = "Obliteration Raid Talents",
+					label = "Obliteration Raid",
 					talentString = "CsPAAAAAAAAAAAAAAAAAAAAAAwAYGzMjxYsMjZmZmZGzYmYMMYYmZMzwMzMzMzsMzAAAAAAAAAAAAMW2GYALglhJwYBzYGzAA",
 				},
 			},
@@ -186,11 +186,11 @@ local talentData = {
 		specs = {
 			[62] = {
 				[0] = {
-					label = "Spellslinger Raid Cleave Talents",
+					label = "Spellslinger Raid Cleave",
 					talentString = "C4DAAAAAAAAAAAAAAAAAAAAAAYMMbzCmxMmFPAjZGGTzMmBAAAAAgBAAAmZ2WWWmZiFAAAAAAAwyMGmZmZGGmZmxMzYmZGDjB",
 				},
 				[1] = {
-					label = "Sunfury Raid Cleave Talents",
+					label = "Sunfury Raid Cleave",
 					talentString = "C4DAAAAAAAAAAAAAAAAAAAAAAYMMbzCmxMmFPAjZGGTzMmBAAAAAgBAMzMtMbLzAAYDAAAAAAAsMjBzMzMmhZmZMmxMzMGzYA",
 				},
 			},
@@ -200,21 +200,21 @@ local talentData = {
 		specs = {
 			[268] = {
 				[0] = {
-					label = "Default/DefensiveRaiding Talents",
+					label = "Default/DefensiveRaiding",
 					talentString = "CwQAAAAAAAAAAAAAAAAAAAAAAAAAAAGjxMMjFzDsNzMzAAAAAAAwyCIMDMDzswYsNzMDzyYM2mlZaZ7BWsNmZmZBAAWmtplZbmlBAAAADWA",
 				},
 				[1] = {
-					label = "Advanced/OffensiveRaiding Talents",
+					label = "Advanced/OffensiveRaiding",
 					talentString = "CwQAAAAAAAAAAAAAAAAAAAAAAAAAAAGjxMMsMjtZmZGAAAAAAAWWAhZgZYmFGjtZmZYWGmx2sMTbL2mtZmxMLAAwGAAAwsNLNzMzGzgF",
 				},
 			},
 			[270] = {
 				[0] = {
-					label = "Rising Mist Raid Talents",
+					label = "Rising Mist Raid",
 					talentString = "C4QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGzCzYYDzYmZZYDLzMb2mltlZmlFmRzMzAzYmZBYZmZGmNGDWMBAAAAAAsYZWWmlZmJAAwC",
 				},
 				[1] = {
-					label = "Tear of Morning Raid Talents",
+					label = "Tear of Morning Raid",
 					talentString = "C4QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGWsMWGgZmZs9AsYb2mZWsMLbLzMLLY0MzMwMmZWYwyMzMMbMGsYCAAAAAAYxyssMLzMTAAgF",
 				},
 			},
@@ -230,7 +230,7 @@ local talentData = {
 			},
 			[104] = {
 				[0] = {
-					label = "Single-Target/Raid Talents",
+					label = "Single-Target/Raid",
 					talentString = "CgGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzYmxMzy8AjZMDzYxDMMzsYZAMgZGTmmZmxMzMMYjBAAAAAAMmZAAAAgmZbWmZWGAALMzMAA",
 				},
 			},

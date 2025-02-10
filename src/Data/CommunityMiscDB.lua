@@ -2,41 +2,41 @@ local addonName, addonTable = ...
 addonTable.CommunityMiscDB = addonTable.CommunityMiscDB or {}
 
 local talentData = {
-	updated = "2025-02-10 14:02:53",
+	updated = "2025-02-10 23:06:37",
 
 	[1] = {
 		specs = {
 			[71] = {
 				[0] = {
-					label = "Slayer Delve Talents",
+					label = "Slayer Delve",
 					talentString = "CcEAAAAAAAAAAAAAAAAAAAAAAAYYmZMjZmZmFLLLjZAAAAYw0wMDLDzAjlxMzgZGGz4BYGGAAAAAAAMjZZMGgtAjltBWADYGmADwG",
 				},
 			},
 			[72] = {
 				[0] = {
-					label = "Slayer Delve Talents",
+					label = "Slayer Delve",
 					talentString = "CgEAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAagZGghZYMMzsBDzMjhZYmZbbmxMzsxMjZmhZYz2MMzYAAAgwM22GYBMgZYCM2wG",
 				},
 			},
 			[73] = {
 				[0] = {
-					label = "Delves Talents",
+					label = "Delves",
 					talentString = "CkEAAAAAAAAAAAAAAAAAAAAAAYEDAAAAzMzMmZGmZbmlZmZWYGDTjBjZAsMwwGzMDDz8AjZAAAAAAAzMAALbbAGGYDWWMaMDgZDbMbA",
 				},
 				[1] = {
-					label = "Mountain Thane Talents Explained",
+					label = "Mountain Thane",
 					talentString = "CkEAAAAAAAAAAAAAAAAAAAAAAYEDAAAAzMzMmZGmZbmlZmZWYGDTjBjZAsMwwGzMDDz8AjZAAAAAAAzMAALbbAGGYDWWMaMDgZDbMbA",
 				},
 				[2] = {
-					label = "Colossus Talents Explained",
+					label = "Colossus",
 					talentString = "CkEAAAAAAAAAAAAAAAAAAAAAAYEDAAAAzMzMmZGmZbmlZmZWYGDTjBjZAsMwwGzMDDz8AjZAAAAAAAzMAALbbAGGYDWWMaMDgZDbMbA",
 				},
 				[3] = {
-					label = "Class Talents Explained",
+					label = "Class",
 					talentString = "CkEAAAAAAAAAAAAAAAAAAAAAAYEDAAAAzMzMmZGmZbmlZmZWYGDTjBjZAsMwwGzMDDz8AjZAAAAAAAzMAALbbAGGYDWWMaMDgZDbMbA",
 				},
 				[4] = {
-					label = "Protection Talents Explained",
+					label = "Protection",
 					talentString = "CkEAAAAAAAAAAAAAAAAAAAAAAYEDAAAAzMzMmZGmZbmlZmZWYGDTjBjZAsMwwGzMDDz8AjZAAAAAAAzMAALbbAGGYDWWMaMDgZDbMbA",
 				},
 			},
@@ -64,7 +64,7 @@ local talentData = {
 			},
 			[66] = {
 				[0] = {
-					label = "Single-Target Talents Templar",
+					label = "Single-Target Templar",
 					talentString = "CIEAAAAAAAAAAAAAAAAAAAAAAsNzMDz2YZMjZM2mZmZmxYYAAAGAAAAAAASmZWMMDGzY2aDAGDYAMYbAAAmZabWmtZAA2MwAwMDDjB",
 				},
 			},
@@ -142,7 +142,7 @@ local talentData = {
 		specs = {
 			[259] = {
 				[0] = {
-					label = "TWW Delve Talents",
+					label = "TWW Delve",
 					talentString = "CMQAAAAAAAAAAAAAAAAAAAAAAYMjZmxMMDAAAAAAz2glZAAAAAAottZmhHYmBzMzysNYMmZmZGzMzYbbZMDwmZZgBsAWGmADLA",
 				},
 			},
@@ -176,13 +176,13 @@ local talentData = {
 		specs = {
 			[250] = {
 				[0] = {
-					label = "Single Target Talents",
+					label = "Single Target",
 					talentString = "CoPAAAAAAAAAAAAAAAAAAAAAAghBzYMzMmZYGzMz0MjhZGzYGAAAAAmZmZmZmZmNzMjBAAAzMzMDAAAYstNwAWALDTghFAMYD",
 				},
 			},
 			[251] = {
 				[0] = {
-					label = "Delves Talents",
+					label = "Delves",
 					talentString = "CsPAAAAAAAAAAAAAAAAAAAAAAwAYGzMjxYsMjZmZmZGzYmYMMYYmZMzwMzMzMzsMzAAAAAAAAAAAAMW2GYALglhJwYBzYGzAA",
 				},
 			},
@@ -262,25 +262,25 @@ local talentData = {
 			},
 			[62] = {
 				[0] = {
-					label = "Delve Talents",
+					label = "Delve",
 					talentString = "C4DAAAAAAAAAAAAAAAAAAAAAAYMbmtZBzwMziBmZYMNzYGAAAAAAGAwMz0ystNDAgNAAAAAA2AYZGDzMzMjZYmZGjZMzMjhxA",
 				},
 				[1] = {
-					label = "Spellslinger Single Target Talents",
+					label = "Spellslinger Single Target",
 					talentString = "C4DAAAAAAAAAAAAAAAAAAAAAAYMMbzCmxMmFPAjZGGTzMmBAAAAAgBAAAmZ2WWWmZiFAAAAAAAwywwMzMzYGmZMmZGzMzYMjB",
 				},
 				[2] = {
-					label = "Sunfury Single Target Talents",
+					label = "Sunfury Single Target",
 					talentString = "C4DAAAAAAAAAAAAAAAAAAAAAAYMMbzCmxMmFPAjZGGTzMmBAAAAAgBAMzMtMbLzAAYDAAAAAAAsMjBzMzMmhZGjZmxMzMGzYA",
 				},
 			},
 			[63] = {
 				[0] = {
-					label = "Delve Talents",
+					label = "Delve",
 					talentString = "C8DAAAAAAAAAAAAAAAAAAAAAAYGbmtZBzwMziBmZYaMzYGAAAAAAGAwMz0yssMDAwmxMYMzYmhFzyYGzMMz2MWmZZYAAAAAAAA",
 				},
 				[1] = {
-					label = "Single-Target Cleave Talents",
+					label = "Single-Target Cleave",
 					talentString = "C8DAAAAAAAAAAAAAAAAAAAAAAYGMbWwMmxs4BYMzw0YmxMDAAAAAgZWmpZmlZBAAAsYMDmZmxMzYxsMGz8AYmlZwswMAAAAAAAA",
 				},
 			},
@@ -290,31 +290,31 @@ local talentData = {
 		specs = {
 			[265] = {
 				[0] = {
-					label = "Single-Target Talents",
+					label = "Single-Target",
 					talentString = "CkQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzihxsZmZYWGAAAwMjZWmZM2MzMLMzMDAYmxy2ADYAzwSghtZAAAAAAAAgZmZzA",
 				},
 				[1] = {
-					label = "Delves Talents",
+					label = "Delves",
 					talentString = "CkQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzihxsZmZYWGAAAwMjZWmZmx2MzMLMmZAAzMWWGYADYG2CMsNDAAAAAAAAMDLA",
 				},
 			},
 			[266] = {
 				[0] = {
-					label = "Single-Target Talents",
+					label = "Single-Target",
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAMzMzMjYWMMmtZmZYWGAAAAAAAAAAzAGzYYBGYbYhGWYmZGz2YmFzMzMjxMGMzMzAzMAAA",
 				},
 				[1] = {
-					label = "Delves Talents",
+					label = "Delves",
 					talentString = "CoQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzmhxsNzMDz2AAAAAAAAAAYeAwYGDLwAbDL0wCzMmZ2GzsZmZmZMMGmZGzYYmBAAA",
 				},
 			},
 			[267] = {
 				[0] = {
-					label = "Single-Target Talents",
+					label = "Single-Target",
 					talentString = "CsQAAAAAAAAAAAAAAAAAAAAAAghZmZmZEzmhxsZmZY2mFzwMzsY2MWMzAAAAAjZmZZmZmBMmxwCMw2wGNWwAAAAAAAYGjZAA",
 				},
 				[1] = {
-					label = "Delves Talents",
+					label = "Delves",
 					talentString = "CsQAAAAAAAAAAAAAAAAAAAAAAAmZmZmZEzihxsZmZYWmFjxMzsYWmZZZmZAAAAgxMsMzMzAGzYYBGYbYhGLYAAAAAAAMMmBAA",
 				},
 			},
@@ -334,11 +334,11 @@ local talentData = {
 			},
 			[269] = {
 				[0] = {
-					label = "Single-Target Talents",
+					label = "Single-Target",
 					talentString = "C0QAAAAAAAAAAAAAAAAAAAAAAMzsMzgZmZMLzAYAAAAAAAAAAAwyywImZgZYYxMjtZmZY2GmBLzEAAbzMDzMjZbGAAbAgZZWamZmFAA",
 				},
 				[1] = {
-					label = "Talents Explained",
+					label = "",
 					talentString = "C0QAAAAAAAAAAAAAAAAAAAAAAYGzMYGzMMzMMzMAAAAAAAAAAAYZZYmYmhxMgFmx2MzMMbDzglZCAglxMMzMmlZAAsBAmlZpZmZWAA",
 				},
 			},
@@ -354,7 +354,7 @@ local talentData = {
 		specs = {
 			[102] = {
 				[0] = {
-					label = "Single-Target Talents",
+					label = "Single-Target",
 					talentString = "CYGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALUYmZGGmZAzMMzYAbzMLsMz2MWwMzMzsY2mZMzM2AbMADw22YBTzMLDAAAA2MzYAA",
 				},
 			},
@@ -366,11 +366,11 @@ local talentData = {
 			},
 			[104] = {
 				[0] = {
-					label = "TWW Delve Talents",
+					label = "TWW Delve",
 					talentString = "CgGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzYMzMWmxyMjxYswwMzilBwYwMjJamxMzMjZxwyMAAAAAAAGjZgltZ2wY2GATAAAAbYmBA",
 				},
 				[1] = {
-					label = "Talents Explained",
+					label = "",
 					talentString = "CgGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAzYMzMWmhZmZMGLMMzsYZAMGMzYimZMzMzYWMswAAAAAAAGGzALbzshxsNAmAAAA2YmZAA",
 				},
 			},
@@ -432,11 +432,11 @@ local talentData = {
 			},
 			[1467] = {
 				[0] = {
-					label = "Single-Target Talents",
+					label = "Single-Target",
 					talentString = "CsbBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmZmBzsZGzMgBjHYaGzMZ2GbjZmZMjZ2mBMjZ2YmZZmZgBGDWglxox2AYGA2wA",
 				},
 				[1] = {
-					label = "Delve Talents",
+					label = "Delve",
 					talentString = "CsbBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAmZGYGmxMDMjxw0MmZysNz2MzMzYGzsMDYmZsxMzyMzADwgFYZMasNAmBgNMA",
 				},
 			},
