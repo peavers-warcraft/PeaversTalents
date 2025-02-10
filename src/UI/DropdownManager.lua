@@ -57,4 +57,16 @@ function DropdownManager.Initializemost-popularMiscDropdown(self, level)
 	InitializeDropdown(self, level, addon.MostPopularMiscDB, addon.exportDialog.most-popularMiscEdit, "talentString")
 end
 
+function DropdownManager.InitializecommunityMythicDropdown(self, level)
+	InitializeDropdown(self, level, addon.CommunityMythicDB, addon.exportDialog.communityMplusEdit, "talentString")
+end
+
+function DropdownManager.InitializecommunityRaidDropdown(self, level)
+	InitializeDropdown(self, level, addon.CommunityRaidDB, addon.exportDialog.communityRaidEdit, "talentString")
+end
+
+function DropdownManager.InitializecommunityMiscDropdown(self, level)
+	InitializeDropdown(self, level, addon.CommunityMiscDB, addon.exportDialog.communityMiscEdit, "talentString")
+end
+
 return DropdownManager

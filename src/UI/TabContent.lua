@@ -107,9 +107,58 @@ function TabContent.Createmost-popularTab(dialog, tab)
 end
 
 function TabContent.CreateIceyVeinsTab(dialog, tab)
-	local comingSoonText = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-	comingSoonText:SetPoint("CENTER", tab, "CENTER", 0, 25)
-	comingSoonText:SetText("Coming Soon(ish)!")
+	-- Mythic+ Section
+	local mplusLabel = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
+	mplusLabel:SetPoint("TOPLEFT", addon.Config.DIALOG.PADDING.SIDE, -10)
+	mplusLabel:SetText("Mythic+")
+
+	dialog.iceveinsMplusDesc = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	dialog.iceveinsMplusDesc:SetPoint("TOPLEFT", mplusLabel, "BOTTOMLEFT", 0, -addon.Config.DIALOG.PADDING.LABEL)
+
+	dialog.iceveinsMplusDropdown = CreateFrame("Frame", "TalentExportDialog_IceveinsMplusDropdown", tab, "UIDropDownMenuTemplate")
+	dialog.iceveinsMplusDropdown:SetPoint("TOPLEFT", dialog.iceveinsMplusDesc, "BOTTOMLEFT", -15, -5)
+	UIDropDownMenu_SetWidth(dialog.iceveinsMplusDropdown, 150)
+	UIDropDownMenu_Initialize(dialog.iceveinsMplusDropdown, addon.DropdownManager.InitializecommunityMythicDropdown)
+
+	dialog.iceveinsMplusEdit = TabContent.CreateEditBox(tab, "TalentExportDialog_communityMplusEdit")
+	dialog.iceveinsMplusEdit:SetPoint("LEFT", dialog.iceveinsMplusDropdown, "RIGHT", 10, 2)
+
+	-- Raid Section
+	local raidLabel = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
+	raidLabel:SetPoint("TOPLEFT", dialog.iceveinsMplusEdit, "BOTTOMLEFT", -195, -addon.Config.DIALOG.SECTION_SPACING)
+	raidLabel:SetText("Raid")
+
+	dialog.iceveinsRaidDesc = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	dialog.iceveinsRaidDesc:SetPoint("TOPLEFT", raidLabel, "BOTTOMLEFT", 0, -addon.Config.DIALOG.PADDING.LABEL)
+
+	dialog.iceveinsRaidDropdown = CreateFrame("Frame", "TalentExportDialog_communityRaidDropdown", tab, "UIDropDownMenuTemplate")
+	dialog.iceveinsRaidDropdown:SetPoint("TOPLEFT", dialog.iceveinsRaidDesc, "BOTTOMLEFT", -15, -5)
+	UIDropDownMenu_SetWidth(dialog.iceveinsRaidDropdown, 150)
+	UIDropDownMenu_Initialize(dialog.iceveinsRaidDropdown, addon.DropdownManager.InitializecommunityRaidDropdown)
+
+	dialog.iceveinsRaidEdit = TabContent.CreateEditBox(tab, "TalentExportDialog_communityRaidEdit")
+	dialog.iceveinsRaidEdit:SetPoint("LEFT", dialog.iceveinsRaidDropdown, "RIGHT", 10, 2)
+
+	-- Misc Section
+	local miscLabel = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
+	miscLabel:SetPoint("TOPLEFT", dialog.iceveinsRaidEdit, "BOTTOMLEFT", -195, -addon.Config.DIALOG.SECTION_SPACING)
+	miscLabel:SetText("Misc")
+
+	dialog.iceveinsMiscDesc = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	dialog.iceveinsMiscDesc:SetPoint("TOPLEFT", miscLabel, "BOTTOMLEFT", 0, -addon.Config.DIALOG.PADDING.LABEL)
+
+	dialog.iceveinsMiscDropdown = CreateFrame("Frame", "TalentExportDialog_communityMiscDropdown", tab, "UIDropDownMenuTemplate")
+	dialog.iceveinsMiscDropdown:SetPoint("TOPLEFT", dialog.iceveinsMiscDesc, "BOTTOMLEFT", -15, -5)
+	UIDropDownMenu_SetWidth(dialog.iceveinsMiscDropdown, 150)
+	UIDropDownMenu_Initialize(dialog.iceveinsMiscDropdown, addon.DropdownManager.InitializecommunityMiscDropdown)
+
+	dialog.iceveinsMiscEdit = TabContent.CreateEditBox(tab, "TalentExportDialog_communityMiscEdit")
+	dialog.iceveinsMiscEdit:SetPoint("LEFT", dialog.iceveinsMiscDropdown, "RIGHT", 10, 2)
+
+	local instructionsText = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	instructionsText:SetPoint("BOTTOM", tab, "BOTTOM", 0, 55)
+	instructionsText:SetText("Select a build to copy the latest talent string | Builds as of " .. Utils.GetFormattedLocalTime(addon.CommunityMythicDB.updated))
+	instructionsText:SetJustifyH("CENTER")
 end
 
 return TabContent

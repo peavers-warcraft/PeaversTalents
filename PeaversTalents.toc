@@ -7,9 +7,12 @@
 
 src/Data/TopPlayersMythicDB.lua
 src/Data/TopPlayersRaidDB.lua
+src/Data/CommunityMiscDB.lua
+src/Data/CommunityMythicDB.lua
+src/Data/CommunityRaidDB.lua
+src/Data/MostPopularMiscDB.lua
 src/Data/MostPopularMythicDB.lua
 src/Data/MostPopularRaidDB.lua
-src/Data/MostPopularMiscDB.lua
 
 src/Core/Config.lua
 src/Core/DataManager.lua
