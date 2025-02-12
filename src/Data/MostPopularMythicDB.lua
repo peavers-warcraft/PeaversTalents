@@ -2,7 +2,7 @@ local addonName, addonTable = ...
 addonTable.MostPopularMythicDB = addonTable.MostPopularMythicDB or {}
 
 local talentData = {
-	updated = "2025-02-11 16:32:42",
+	updated = "2025-02-12 12:42:10",
 
 	[1] = {
 		specs = {
@@ -158,16 +158,6 @@ local talentData = {
 				[1] = {
 					label = "Mythic Gorefiends Grasp | Deathbringer",
 					talentString = "CoPAAAAAAAAAAAAAAAAAAAAAAghZmZGjZmxMDzYmZmmhhZGzYAAAAAwMzMzMzMmNzMjBAAAzMzMAAAAjttBGwSwywEYYBgZwG",
-				},
-			},
-			[251] = {
-				[0] = {
-					label = "Mythic Breath of Sindragosa | Deathbringer",
-					talentString = "CsPAAAAAAAAAAAAAAAAAAAAAAMGgZGjZmxYYGzMzMzMGmJzYMjBMzYMjZmZmZmZxMAAAAAAAAAAAAjltBGwCYZYCZsgZYMDA",
-				},
-				[1] = {
-					label = "Mythic Shattered Frost | Rider of the Apocalypse",
-					talentString = "CsPAAAAAAAAAAAAAAAAAAAAAAAgZGjZmxYYmZmZmZGGmJzYYYGMzYmhZmZmZmZZmBAAAAAAAAAAAAsYWMMwAzmGaYDzMGzMA",
 				},
 			},
 			[252] = {

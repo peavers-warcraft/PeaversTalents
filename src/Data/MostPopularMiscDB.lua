@@ -2,7 +2,7 @@ local addonName, addonTable = ...
 addonTable.MostPopularMiscDB = addonTable.MostPopularMiscDB or {}
 
 local talentData = {
-	updated = "2025-02-11 16:32:42",
+	updated = "2025-02-12 12:42:10",
 
 	[1] = {
 		specs = {
@@ -162,12 +162,6 @@ local talentData = {
 				[1] = {
 					label = "Open-World | Deathbringer",
 					talentString = "CoPAAAAAAAAAAAAAAAAAAAAAAghxMzYMzMmZYGzMz0MMMzYGDAAAAAmZmZmZmZmNzMjBAAAzMzMAAAAjttBGwSwywEYYBgZwG",
-				},
-			},
-			[251] = {
-				[0] = {
-					label = "Delves | Rider of the Apocalypse",
-					talentString = "CsPAAAAAAAAAAAAAAAAAAAAAAAgZGzMjxYYmxMzMzMGzMZGYghZGzMMzMzMzMLzMAAAAAAAAAAAAgFzihBGY20QDbYmZGzMA",
 				},
 			},
 			[252] = {
