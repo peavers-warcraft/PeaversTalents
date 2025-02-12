@@ -4,7 +4,7 @@
 ## IconTexture: Interface\AddOns\PeaversTalents\src\Media\Icon.tga
 ## Notes: A simple addon to set talents to latest from wowcompare.io.
 ## Author: Peavers
-## Version: 1.1.15
+## Version: 1.1.16
 ## X-Curse-Project-ID: 1184820
 
 src/Core/Config.lua
