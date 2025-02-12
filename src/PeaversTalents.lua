@@ -94,6 +94,19 @@ local function CreateExportDialog()
             UIDropDownMenu_Initialize(dialog.most-popularMiscDropdown, addon.DropdownManager.Initializemost-popularMiscDropdown)
         end
 
+        -- Update community dropdowns
+        if #DataManager.GetAvailableEntries(addon.CommunityMythicDB, classID, specID) > 0 then
+            UIDropDownMenu_Initialize(dialog.communityMplusDropdown, addon.DropdownManager.InitializecommunityMythicDropdown)
+        end
+
+        if #DataManager.GetAvailableEntries(addon.CommunityRaidDB, classID, specID) > 0 then
+            UIDropDownMenu_Initialize(dialog.communityRaidDropdown, addon.DropdownManager.InitializecommunityRaidDropdown)
+        end
+
+        if #DataManager.GetAvailableEntries(addon.CommunityMiscDB, classID, specID) > 0 then
+            UIDropDownMenu_Initialize(dialog.communityMiscDropdown, addon.DropdownManager.InitializecommunityMiscDropdown)
+        end
+
         if not dialog.hideHooked and talentFrame then
             talentFrame:HookScript("OnHide", function()
                 dialog:Hide()
