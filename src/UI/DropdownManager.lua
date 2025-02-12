@@ -22,6 +22,11 @@ local function InitializeDropdown(self, level, database, editBox, talentsKey)
 		return
 	end
 
+    -- Set initial "Select" text if no selection has been made
+    if UIDropDownMenu_GetText(self) == "" or UIDropDownMenu_GetText(self) == nil then
+        UIDropDownMenu_SetText(self, "Select...")
+    end
+
 	info.func = function(button)
 		local key = button.value
 		local classID, specID = Utils.GetPlayerClassAndSpec()
