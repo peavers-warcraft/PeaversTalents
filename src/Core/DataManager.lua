@@ -27,18 +27,26 @@ function DataManager.GetAvailableEntries(database, classID, specID)
         return entries
     end
 
-    for key, data in pairs(specTable) do
+    -- Create an ordered list of keys while preserving their original type
+    local orderedKeys = {}
+    for key in pairs(specTable) do
         if key ~= "specs" then
-            table.insert(entries, {
-                key = key,
-                data = data,
-            })
+            table.insert(orderedKeys, key)
         end
     end
 
-    table.sort(entries, function(a, b)
-        return (a.data.label or a.key) < (b.data.label or b.key)
+    -- Sort numerically but preserve key types
+    table.sort(orderedKeys, function(a, b)
+        return tonumber(a) < tonumber(b)
     end)
+
+    -- Insert entries in the correct order while preserving original key type
+    for _, key in ipairs(orderedKeys) do
+        table.insert(entries, {
+            key = key,  -- Keep the original key type
+            data = specTable[key],
+        })
+    end
 
     return entries
 end
