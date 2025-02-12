@@ -1,7 +1,7 @@
 local _, addon = ...
 
 addon.Config = {
-	DEBUG_ENABLED = false,
+	DEBUG_ENABLED = true,
 
 	DIALOG = {
 		WIDTH = 600,

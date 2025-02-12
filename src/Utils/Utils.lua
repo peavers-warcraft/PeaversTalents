@@ -41,4 +41,28 @@ function Utils.GetFormattedLocalTime(timestamp)
 	return string.format("%s %s", dateStr, timeStr)
 end
 
+-- Format update time from the data API
+function Utils.GetFormattedUpdate(source)
+    if not source then return "Unknown" end
+
+    local updates = PeaversTalentsData.API.GetLastUpdate(source)
+    if not updates or not updates[source] then
+        return "Unknown"
+    end
+
+    -- Get the most recent update time from any category
+    local latestUpdate = nil
+    for _, timestamp in pairs(updates[source]) do
+        if timestamp and (not latestUpdate or timestamp > latestUpdate) then
+            latestUpdate = timestamp
+        end
+    end
+
+    if not latestUpdate then
+        return "Unknown"
+    end
+
+    return Utils.GetFormattedLocalTime(latestUpdate)
+end
+
 return Utils

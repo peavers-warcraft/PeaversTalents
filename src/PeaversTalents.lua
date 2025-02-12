@@ -18,6 +18,15 @@ addon.TabContent = TabContent
 local EventHandler = addon.EventHandler or {}
 addon.EventHandler = EventHandler
 
+-- Helper function to check if data addon is loaded and accessible
+local function CheckDataAddonLoaded()
+    if not PeaversTalentsData then
+        Utils.Debug("PeaversTalentsData addon not found!")
+        return false
+    end
+    return true
+end
+
 -- Create the export dialog
 local function CreateExportDialog()
     local dialog = CreateFrame("Frame", "TalentExportDialog", UIParent, "DefaultPanelTemplate")
@@ -72,41 +81,58 @@ local function CreateExportDialog()
     dialog:SetScript("OnShow", function()
         local classID, specID = Utils.GetPlayerClassAndSpec()
 
-        -- Update wowcompare.io dropdowns
-        if #DataManager.GetAvailableEntries(addon.TopPlayersMythicDB, classID, specID) > 0 then
-            UIDropDownMenu_Initialize(dialog.mplusDropdown, addon.DropdownManager.Initializewowcompare.ioMythicDropdown)
+        -- Check if data addon is loaded
+        if not CheckDataAddonLoaded() then
+            return
         end
 
-        if #DataManager.GetAvailableEntries(addon.TopPlayersRaidDB, classID, specID) > 0 then
-            UIDropDownMenu_Initialize(dialog.raidDropdown, addon.DropdownManager.Initializewowcompare.ioRaidDropdown)
+        -- Get all available sources
+        local sources = PeaversTalentsData.API.GetSources()
+
+        -- Initialize wowcompare.io dropdowns
+        if Utils.TableContains(sources, "top-players") then
+            local builds = PeaversTalentsData.API.GetBuilds(classID, specID, "top-players")
+            if builds and #builds > 0 then
+                UIDropDownMenu_Initialize(dialog.mplusDropdown, addon.DropdownManager.Initializewowcompare.ioMythicDropdown)
+                UIDropDownMenu_Initialize(dialog.raidDropdown, addon.DropdownManager.Initializewowcompare.ioRaidDropdown)
+            end
         end
 
-        -- Update most-popular dropdowns
-        if #DataManager.GetAvailableEntries(addon.MostPopularMythicDB, classID, specID) > 0 then
-            UIDropDownMenu_Initialize(dialog.most-popularMplusDropdown, addon.DropdownManager.Initializemost-popularMythicDropdown)
+        -- Initialize most-popular dropdowns
+        if Utils.TableContains(sources, "most-popular") then
+            local builds = PeaversTalentsData.API.GetBuilds(classID, specID, "most-popular")
+            if builds and #builds > 0 then
+                UIDropDownMenu_Initialize(dialog.most-popularMplusDropdown, addon.DropdownManager.Initializemost-popularMythicDropdown)
+                UIDropDownMenu_Initialize(dialog.most-popularRaidDropdown, addon.DropdownManager.Initializemost-popularRaidDropdown)
+                UIDropDownMenu_Initialize(dialog.most-popularMiscDropdown, addon.DropdownManager.Initializemost-popularMiscDropdown)
+            end
         end
 
-        if #DataManager.GetAvailableEntries(addon.MostPopularRaidDB, classID, specID) > 0 then
-            UIDropDownMenu_Initialize(dialog.most-popularRaidDropdown, addon.DropdownManager.Initializemost-popularRaidDropdown)
+        -- Initialize community dropdowns
+        if Utils.TableContains(sources, "community") then
+            local builds = PeaversTalentsData.API.GetBuilds(classID, specID, "community")
+            if builds and #builds > 0 then
+                UIDropDownMenu_Initialize(dialog.communityMplusDropdown, addon.DropdownManager.InitializecommunityMythicDropdown)
+                UIDropDownMenu_Initialize(dialog.communityRaidDropdown, addon.DropdownManager.InitializecommunityRaidDropdown)
+                UIDropDownMenu_Initialize(dialog.communityMiscDropdown, addon.DropdownManager.InitializecommunityMiscDropdown)
+            end
         end
 
-        if #DataManager.GetAvailableEntries(addon.MostPopularMiscDB, classID, specID) > 0 then
-            UIDropDownMenu_Initialize(dialog.most-popularMiscDropdown, addon.DropdownManager.Initializemost-popularMiscDropdown)
+        -- Handle tab visibility based on available data
+        for i, tab in ipairs(dialog.Tabs) do
+            local source = i == 1 and "top-players" or i == 2 and "most-popular" or "community"
+            local hasData = Utils.TableContains(sources, source) and
+                           PeaversTalentsData.API.GetBuilds(classID, specID, source) and
+                           #PeaversTalentsData.API.GetBuilds(classID, specID, source) > 0
+
+            if hasData then
+                tab:Show()
+            else
+                tab:Hide()
+            end
         end
 
-        -- Update community dropdowns
-        if #DataManager.GetAvailableEntries(addon.CommunityMythicDB, classID, specID) > 0 then
-            UIDropDownMenu_Initialize(dialog.communityMplusDropdown, addon.DropdownManager.InitializecommunityMythicDropdown)
-        end
-
-        if #DataManager.GetAvailableEntries(addon.CommunityRaidDB, classID, specID) > 0 then
-            UIDropDownMenu_Initialize(dialog.communityRaidDropdown, addon.DropdownManager.InitializecommunityRaidDropdown)
-        end
-
-        if #DataManager.GetAvailableEntries(addon.CommunityMiscDB, classID, specID) > 0 then
-            UIDropDownMenu_Initialize(dialog.communityMiscDropdown, addon.DropdownManager.InitializecommunityMiscDropdown)
-        end
-
+        -- Hook the hide script if not already done
         if not dialog.hideHooked and talentFrame then
             talentFrame:HookScript("OnHide", function()
                 dialog:Hide()
@@ -128,6 +154,16 @@ function addon.ShowExportDialog()
     Utils.Debug("Showing export dialog")
     local dialog = addon.exportDialog or CreateExportDialog()
     dialog:Show()
+end
+
+-- Helper function for source checking
+function Utils.TableContains(tbl, value)
+    for _, v in pairs(tbl) do
+        if v == value then
+            return true
+        end
+    end
+    return false
 end
 
 -- Initialize events

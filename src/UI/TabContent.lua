@@ -3,6 +3,7 @@ local Utils = addon.Utils
 local TabContent = addon.TabContent or {}
 addon.TabContent = TabContent
 
+
 function TabContent.CreateEditBox(parent, name)
 	local editBox = CreateFrame("EditBox", name, parent, "InputBoxTemplate")
 	editBox:SetSize(380, 32)
@@ -47,7 +48,7 @@ function TabContent.Createwowcompare.ioTab(dialog, tab)
 
 	local instructionsText = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 	instructionsText:SetPoint("BOTTOM", tab, "BOTTOM", 0, 55)
-	instructionsText:SetText("Select a build to copy the latest talent string | Builds as of " .. Utils.GetFormattedLocalTime(addon.TopPlayersMythicDB.updated))
+	instructionsText:SetText("Select a build to copy the latest talent string | Builds as of " .. Utils.GetFormattedUpdate("top-players"))
 	instructionsText:SetJustifyH("CENTER")
 end
 
@@ -102,7 +103,7 @@ function TabContent.Createmost-popularTab(dialog, tab)
 
 	local instructionsText = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 	instructionsText:SetPoint("BOTTOM", tab, "BOTTOM", 0, 55)
-	instructionsText:SetText("Select a build to copy the latest talent string | Builds as of " .. Utils.GetFormattedLocalTime(addon.MostPopularMythicDB.updated))
+	instructionsText:SetText("Select a build to copy the latest talent string | Builds as of " .. Utils.GetFormattedUpdate("most-popular"))
 	instructionsText:SetJustifyH("CENTER")
 end
 
@@ -157,7 +158,7 @@ function TabContent.CreateIceyVeinsTab(dialog, tab)
 
 	local instructionsText = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 	instructionsText:SetPoint("BOTTOM", tab, "BOTTOM", 0, 55)
-	instructionsText:SetText("Select a build to copy the latest talent string | Builds as of " .. Utils.GetFormattedLocalTime(addon.CommunityMythicDB.updated))
+	instructionsText:SetText("Select a build to copy the latest talent string | Builds as of " .. Utils.GetFormattedUpdate("community"))
 	instructionsText:SetJustifyH("CENTER")
 end
 
