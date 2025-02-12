@@ -2,7 +2,7 @@
 ## Title: PeaversTalents
 ## Notes: Pick the latest talent builds from wowcompare.io, most-popular, and community.
 ## Author: Peavers
-## Version: 1.1.19
+## Version: 1.1.20
 ## Dependencies: PeaversTalentsData
 ## X-Curse-Project-ID: 1184820
 ## IconTexture: Interface\AddOns\PeaversTalents\src\Media\Icon.tga
