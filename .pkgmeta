@@ -1,12 +1,5 @@
 package-as: PeaversTalents
 
-externals:
-  libs/PeaversTalentsData:
-    url: https://github.com/peavers/PeaversTalentsData.git
-    tag: master
-    files:
-      - "*"
-
 ignore:
   - .git
   - .github
