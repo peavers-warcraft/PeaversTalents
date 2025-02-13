@@ -1,4 +1,4 @@
-# PeaversTalents
+# Peavers Talents
 
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/peavers/PeaversTalents)](https://github.com/peavers/PeaversTalents/commits/master) [![Last commit](https://img.shields.io/github/last-commit/peavers/PeaversTalents)](https://github.com/peavers/PeaversTalents/master) [![CurseForge](https://img.shields.io/curseforge/dt/1184820?label=CurseForge&color=F16436)](https://www.curseforge.com/wow/addons/peaverstalents)
 
