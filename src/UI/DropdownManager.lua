@@ -6,117 +6,130 @@ local DataManager = addon.DataManager
 local DropdownManager = addon.DropdownManager or {}
 addon.DropdownManager = DropdownManager
 
-local function InitializeDropdown(frame, level, source, category, editBox)
-    Utils.Debug("Initializing dropdown for source:", source, "category:", category)
+local function InitializeDropdown(frame, level, source, category, editBox, newLabel)
+	Utils.Debug("Initializing dropdown for source:", source, "category:", category)
 
-    if not editBox then
-        Utils.Debug("No editBox provided for dropdown")
-        return
-    end
+	if not editBox then
+		Utils.Debug("No editBox provided for dropdown")
+		return
+	end
 
-    local info = UIDropDownMenu_CreateInfo()
-    local classID, specID = Utils.GetPlayerClassAndSpec()
-    local entries = DataManager.GetAvailableEntries(source, classID, specID, category)
+	local info = UIDropDownMenu_CreateInfo()
+	local classID, specID = Utils.GetPlayerClassAndSpec()
+	local entries = DataManager.GetAvailableEntries(source, classID, specID, category)
 
-    -- Check if there's no data
-    if #entries == 0 then
-        info.text = "No data found"
-        info.disabled = true
-        info.notClickable = true
-        UIDropDownMenu_AddButton(info, level)
-        UIDropDownMenu_SetText(frame, "No data found")
-        UIDropDownMenu_DisableDropDown(frame)
-        return
-    end
+	-- Hide new label by default
+	if newLabel then newLabel:Hide() end
 
-    -- Load saved selection for this source/category
-    local savedSource, savedCategory, savedBuildKey = addon.LocalStorage.LoadSelection(source, category)
-    Utils.Debug("Loaded selection:", savedSource, savedCategory, savedBuildKey)
+	-- Check if there's no data
+	if #entries == 0 then
+		info.text = "No data found"
+		info.disabled = true
+		info.notClickable = true
+		UIDropDownMenu_AddButton(info, level)
+		UIDropDownMenu_SetText(frame, "No data found")
+		UIDropDownMenu_DisableDropDown(frame)
+		return
+	end
 
-    -- If we have a saved selection, find and apply it
-    if savedBuildKey then
-        Utils.Debug("Looking for saved build:", savedBuildKey)
-        for _, entry in ipairs(entries) do
-            if entry.key == savedBuildKey then
-                Utils.Debug("Found saved build:", entry.data.label)
-                editBox:SetText(entry.data.talentString or "")
-                editBox:SetCursorPosition(0)
-                UIDropDownMenu_SetText(frame, entry.data.label or tostring(savedBuildKey))
-                break
-            end
-        end
-    else
-        UIDropDownMenu_SetText(frame, "Select...")
-    end
+	-- Load saved selection for this source/category
+	local savedSource, savedCategory, savedBuildKey, savedTalentString = addon.LocalStorage.LoadSelection(source, category)
+	Utils.Debug("Loaded selection:", savedSource, savedCategory, savedBuildKey)
 
-    info.func = function(self)
-        local key = self.value
-        Utils.Debug("User made dropdown selection - source:", source, "category:", category, "key:", key)
+	-- If we have a saved selection, find and apply it
+	if savedBuildKey then
+		Utils.Debug("Looking for saved build:", savedBuildKey)
+		for _, entry in ipairs(entries) do
+			if entry.key == savedBuildKey then
+				Utils.Debug("Found saved build:", entry.data.label)
+				editBox:SetText(entry.data.talentString or "")
+				editBox:SetCursorPosition(0)
+				UIDropDownMenu_SetText(frame, entry.data.label or tostring(savedBuildKey))
 
-        for _, entry in ipairs(entries) do
-            if entry.key == key then
-                editBox:SetText(entry.data.talentString or "")
-                editBox:SetCursorPosition(0)
-                UIDropDownMenu_SetText(frame, entry.data.label or tostring(key))
+				-- Only show New label if talent strings are different and hasn't been seen
+				if savedTalentString and entry.data.talentString and
+					savedTalentString ~= entry.data.talentString and
+					not (savedSelection and savedSelection.hasBeenSeen) then
+					Utils.Debug("Talent strings different and not seen - showing New label")
+					if newLabel then newLabel:Show() end
+				end
+				break
+			end
+		end
+	else
+		UIDropDownMenu_SetText(frame, "Select...")
+	end
 
-                Utils.Debug("Saving selection to local storage")
-                addon.LocalStorage.SaveSelection(source, category, key)
-                break
-            end
-        end
-    end
+	info.func = function(self)
+		local key = self.value
+		Utils.Debug("User made dropdown selection - source:", source, "category:", category, "key:", key)
 
-    for _, entry in ipairs(entries) do
-        info.text = entry.data.label or entry.key
-        info.value = entry.key
-        info.disabled = false
-        info.notClickable = false
-        info.checked = (UIDropDownMenu_GetText(frame) == info.text)
-        UIDropDownMenu_AddButton(info, level)
-    end
+		for _, entry in ipairs(entries) do
+			if entry.key == key then
+				editBox:SetText(entry.data.talentString or "")
+				editBox:SetCursorPosition(0)
+				UIDropDownMenu_SetText(frame, entry.data.label or tostring(key))
 
-    UIDropDownMenu_EnableDropDown(frame)
+				Utils.Debug("Saving selection to local storage")
+				addon.LocalStorage.SaveSelection(source, category, key, entry.data.talentString)
+				if newLabel then newLabel:Hide() end
+				CloseDropDownMenus()
+				break
+			end
+		end
+	end
+
+	for _, entry in ipairs(entries) do
+		info.text = entry.data.label or entry.key
+		info.value = entry.key
+		info.disabled = false
+		info.notClickable = false
+		info.checked = (UIDropDownMenu_GetText(frame) == entry.data.label)
+		UIDropDownMenu_AddButton(info, level)
+	end
+
+	UIDropDownMenu_EnableDropDown(frame)
 end
 
 -- Update dropdown initializers with categories
 function DropdownManager.Initializewowcompare.ioMythicDropdown(frame, level)
-    InitializeDropdown(frame, level, "top-players", "mythic", addon.exportDialog.wowcompare.ioMythicEdit)
+	InitializeDropdown(frame, level, "top-players", "mythic", addon.exportDialog.wowcompare.ioMythicEdit, addon.exportDialog.wowcompare.ioMythicNewLabel)
 end
 
 function DropdownManager.Initializewowcompare.ioRaidDropdown(frame, level)
-    InitializeDropdown(frame, level, "top-players", "raid", addon.exportDialog.wowcompare.ioRaidEdit)
+	InitializeDropdown(frame, level, "top-players", "raid", addon.exportDialog.wowcompare.ioRaidEdit, addon.exportDialog.wowcompare.ioRaidNewLabel)
 end
 
 function DropdownManager.Initializemost-popularMythicDropdown(frame, level)
-    InitializeDropdown(frame, level, "most-popular", "mythic", addon.exportDialog.most-popularMythicEdit)
+	InitializeDropdown(frame, level, "most-popular", "mythic", addon.exportDialog.most-popularMythicEdit, addon.exportDialog.most-popularMythicNewLabel)
 end
 
 function DropdownManager.Initializemost-popularRaidDropdown(frame, level)
-    InitializeDropdown(frame, level, "most-popular", "raid", addon.exportDialog.most-popularRaidEdit)
+	InitializeDropdown(frame, level, "most-popular", "raid", addon.exportDialog.most-popularRaidEdit, addon.exportDialog.most-popularRaidNewLabel)
 end
 
 function DropdownManager.Initializemost-popularMiscDropdown(frame, level)
-    InitializeDropdown(frame, level, "most-popular", "misc", addon.exportDialog.most-popularMiscEdit)
+	InitializeDropdown(frame, level, "most-popular", "misc", addon.exportDialog.most-popularMiscEdit, addon.exportDialog.most-popularMiscNewLabel)
 end
 
 function DropdownManager.InitializecommunityMythicDropdown(frame, level)
-    InitializeDropdown(frame, level, "community", "mythic", addon.exportDialog.communityMythicEdit)
+	InitializeDropdown(frame, level, "community", "mythic", addon.exportDialog.communityMythicEdit, addon.exportDialog.communityMythicNewLabel)
 end
 
 function DropdownManager.InitializecommunityRaidDropdown(frame, level)
-    InitializeDropdown(frame, level, "community", "raid", addon.exportDialog.communityRaidEdit)
+	InitializeDropdown(frame, level, "community", "raid", addon.exportDialog.communityRaidEdit, addon.exportDialog.communityRaidNewLabel)
 end
 
 function DropdownManager.InitializecommunityMiscDropdown(frame, level)
-    InitializeDropdown(frame, level, "community", "misc", addon.exportDialog.communityMiscEdit)
+	InitializeDropdown(frame, level, "community", "misc", addon.exportDialog.communityMiscEdit, addon.exportDialog.communityMiscNewLabel)
 end
 
 function DropdownManager.InitializeUggMythicDropdown(frame, level)
-    InitializeDropdown(frame, level, "worldwide", "mythic", addon.exportDialog.uggMythicEdit)
+	InitializeDropdown(frame, level, "worldwide", "mythic", addon.exportDialog.uggMythicEdit, addon.exportDialog.uggMythicNewLabel)
 end
 
 function DropdownManager.InitializeUggRaidDropdown(frame, level)
-    InitializeDropdown(frame, level, "worldwide", "raid", addon.exportDialog.uggRaidEdit)
+	InitializeDropdown(frame, level, "worldwide", "raid", addon.exportDialog.uggRaidEdit, addon.exportDialog.uggRaidNewLabel)
 end
 
 return DropdownManager
