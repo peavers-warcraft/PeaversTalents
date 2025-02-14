@@ -49,12 +49,13 @@ local function CreateExportDialog()
     dialog.Tabs[1] = UIComponents.CreateTab(dialog, 1, "wowcompare.io")
     dialog.Tabs[2] = UIComponents.CreateTab(dialog, 2, "most-popular")
     dialog.Tabs[3] = UIComponents.CreateTab(dialog, 3, "community")
+    dialog.Tabs[4] = UIComponents.CreateTab(dialog, 4, "worldwide")
 
-    PanelTemplates_SetNumTabs(dialog, 3)
+    PanelTemplates_SetNumTabs(dialog, 4)
     PanelTemplates_SetTab(dialog, 1)
 
     -- Create tab contents
-    for i = 1, 3 do
+    for i = 1, 4 do
         dialog.TabContents[i] = UIComponents.CreateTabContent(dialog)
     end
 
@@ -68,6 +69,9 @@ local function CreateExportDialog()
 
     local tab3 = dialog.TabContents[3]
     TabContent.CreateIceyVeinsTab(dialog, tab3)
+
+    local tab4 = dialog.TabContents[4]
+    TabContent.CreateUggTab(dialog, tab4)
 
     -- Frame behavior
     dialog:SetMovable(true)
@@ -93,8 +97,8 @@ local function CreateExportDialog()
         if Utils.TableContains(sources, "top-players") then
             local builds = PeaversTalentsData.API.GetBuilds(classID, specID, "top-players")
             if builds and #builds > 0 then
-                UIDropDownMenu_Initialize(dialog.mplusDropdown, addon.DropdownManager.Initializewowcompare.ioMythicDropdown)
-                UIDropDownMenu_Initialize(dialog.raidDropdown, addon.DropdownManager.Initializewowcompare.ioRaidDropdown)
+                UIDropDownMenu_Initialize(dialog.wowcompare.ioMythicDropdown, addon.DropdownManager.Initializewowcompare.ioMythicDropdown)
+                UIDropDownMenu_Initialize(dialog.wowcompare.ioRaidDropdown, addon.DropdownManager.Initializewowcompare.ioRaidDropdown)
             end
         end
 
@@ -102,7 +106,7 @@ local function CreateExportDialog()
         if Utils.TableContains(sources, "most-popular") then
             local builds = PeaversTalentsData.API.GetBuilds(classID, specID, "most-popular")
             if builds and #builds > 0 then
-                UIDropDownMenu_Initialize(dialog.most-popularMplusDropdown, addon.DropdownManager.Initializemost-popularMythicDropdown)
+                UIDropDownMenu_Initialize(dialog.most-popularMythicDropdown, addon.DropdownManager.Initializemost-popularMythicDropdown)
                 UIDropDownMenu_Initialize(dialog.most-popularRaidDropdown, addon.DropdownManager.Initializemost-popularRaidDropdown)
                 UIDropDownMenu_Initialize(dialog.most-popularMiscDropdown, addon.DropdownManager.Initializemost-popularMiscDropdown)
             end
@@ -112,15 +116,24 @@ local function CreateExportDialog()
         if Utils.TableContains(sources, "community") then
             local builds = PeaversTalentsData.API.GetBuilds(classID, specID, "community")
             if builds and #builds > 0 then
-                UIDropDownMenu_Initialize(dialog.communityMplusDropdown, addon.DropdownManager.InitializecommunityMythicDropdown)
+                UIDropDownMenu_Initialize(dialog.communityMythicDropdown, addon.DropdownManager.InitializecommunityMythicDropdown)
                 UIDropDownMenu_Initialize(dialog.communityRaidDropdown, addon.DropdownManager.InitializecommunityRaidDropdown)
                 UIDropDownMenu_Initialize(dialog.communityMiscDropdown, addon.DropdownManager.InitializecommunityMiscDropdown)
             end
         end
 
+		-- Initialize worldwide dropdowns
+		if Utils.TableContains(sources, "worldwide") then
+			local builds = PeaversTalentsData.API.GetBuilds(classID, specID, "worldwide")
+			if builds and #builds > 0 then
+				UIDropDownMenu_Initialize(dialog.uggMythicDropdown, addon.DropdownManager.InitializeUggMythicDropdown)
+				UIDropDownMenu_Initialize(dialog.uggRaidDropdown, addon.DropdownManager.InitializeUggRaidDropdown)
+			end
+		end
+
         -- Handle tab visibility based on available data
         for i, tab in ipairs(dialog.Tabs) do
-            local source = i == 1 and "top-players" or i == 2 and "most-popular" or "community"
+            local source = i == 1 and "top-players" or i == 2 and "most-popular" or i == 3 and "community" or i == 4 and "worldwide"
             local hasData = Utils.TableContains(sources, source) and
                            PeaversTalentsData.API.GetBuilds(classID, specID, source) and
                            #PeaversTalentsData.API.GetBuilds(classID, specID, source) > 0

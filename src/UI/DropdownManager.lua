@@ -64,15 +64,15 @@ end
 
 -- Update dropdown initializers with categories
 function DropdownManager.Initializewowcompare.ioMythicDropdown(self, level)
-    InitializeDropdown(self, level, "top-players", "mythic", addon.exportDialog.mplusEdit)
+    InitializeDropdown(self, level, "top-players", "mythic", addon.exportDialog.wowcompare.ioMythicEdit)
 end
 
 function DropdownManager.Initializewowcompare.ioRaidDropdown(self, level)
-    InitializeDropdown(self, level, "top-players", "raid", addon.exportDialog.raidEdit)
+    InitializeDropdown(self, level, "top-players", "raid", addon.exportDialog.wowcompare.ioRaidEdit)
 end
 
 function DropdownManager.Initializemost-popularMythicDropdown(self, level)
-    InitializeDropdown(self, level, "most-popular", "mythic", addon.exportDialog.most-popularMplusEdit)
+    InitializeDropdown(self, level, "most-popular", "mythic", addon.exportDialog.most-popularMythicEdit)
 end
 
 function DropdownManager.Initializemost-popularRaidDropdown(self, level)
@@ -84,7 +84,7 @@ function DropdownManager.Initializemost-popularMiscDropdown(self, level)
 end
 
 function DropdownManager.InitializecommunityMythicDropdown(self, level)
-    InitializeDropdown(self, level, "community", "mythic", addon.exportDialog.communityMplusEdit)
+    InitializeDropdown(self, level, "community", "mythic", addon.exportDialog.communityMythicEdit)
 end
 
 function DropdownManager.InitializecommunityRaidDropdown(self, level)
@@ -93,6 +93,14 @@ end
 
 function DropdownManager.InitializecommunityMiscDropdown(self, level)
     InitializeDropdown(self, level, "community", "misc", addon.exportDialog.communityMiscEdit)
+end
+
+function DropdownManager.InitializeUggMythicDropdown(self, level)
+    InitializeDropdown(self, level, "worldwide", "mythic", addon.exportDialog.uggMythicEdit)
+end
+
+function DropdownManager.InitializeUggRaidDropdown(self, level)
+    InitializeDropdown(self, level, "worldwide", "raid", addon.exportDialog.uggRaidEdit)
 end
 
 return DropdownManager

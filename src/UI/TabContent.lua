@@ -3,163 +3,151 @@ local Utils = addon.Utils
 local TabContent = addon.TabContent or {}
 addon.TabContent = TabContent
 
-
 function TabContent.CreateEditBox(parent, name)
-	local editBox = CreateFrame("EditBox", name, parent, "InputBoxTemplate")
-	editBox:SetSize(380, 32)
-	editBox:SetAutoFocus(false)
-	editBox:SetFontObject(ChatFontNormal)
-	editBox:EnableMouse(true)
-	return editBox
+    local editBox = CreateFrame("EditBox", name, parent, "InputBoxTemplate")
+    editBox:SetSize(380, 32)
+    editBox:SetAutoFocus(false)
+    editBox:SetFontObject(ChatFontNormal)
+    editBox:EnableMouse(true)
+    return editBox
 end
 
+-- Configuration for different tab types
+local TAB_CONFIGS = {
+    wowcompare.io = {
+        sections = {
+            {
+                name = "Mythic+",
+                dropdownInitializer = "Initializewowcompare.ioMythicDropdown",
+                editBoxPrefix = "wowcompare.ioMythic"
+            },
+            {
+                name = "Raid",
+                dropdownInitializer = "Initializewowcompare.ioRaidDropdown",
+                editBoxPrefix = "wowcompare.ioRaid"
+            }
+        },
+        updateKey = "top-players"
+    },
+    most-popular = {
+        sections = {
+            {
+                name = "Mythic+",
+                dropdownInitializer = "Initializemost-popularMythicDropdown",
+                editBoxPrefix = "most-popularMythic"
+            },
+            {
+                name = "Raid",
+                dropdownInitializer = "Initializemost-popularRaidDropdown",
+                editBoxPrefix = "most-popularRaid"
+            },
+            {
+                name = "Misc",
+                dropdownInitializer = "Initializemost-popularMiscDropdown",
+                editBoxPrefix = "most-popularMisc"
+            }
+        },
+        updateKey = "most-popular"
+    },
+    community = {
+        sections = {
+            {
+                name = "Mythic+",
+                dropdownInitializer = "InitializecommunityMythicDropdown",
+                editBoxPrefix = "communityMythic"
+            },
+            {
+                name = "Raid",
+                dropdownInitializer = "InitializecommunityRaidDropdown",
+                editBoxPrefix = "communityRaid"
+            },
+            {
+                name = "Misc",
+                dropdownInitializer = "InitializecommunityMiscDropdown",
+                editBoxPrefix = "communityMisc"
+            }
+        },
+        updateKey = "community"
+    },
+    ugg = {
+        sections = {
+            {
+                name = "Mythic+",
+                dropdownInitializer = "InitializeUggMythicDropdown",
+                editBoxPrefix = "uggMythic"
+            },
+            {
+                name = "Raid",
+                dropdownInitializer = "InitializeUggRaidDropdown",
+                editBoxPrefix = "uggRaid"
+            }
+        },
+        updateKey = "worldwide"
+    }
+}
+
+-- Generic function to create a section (Mythic+, Raid, or Misc)
+local function CreateSection(dialog, tab, section, prevElement, isFirst)
+    local label = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
+    if isFirst then
+        label:SetPoint("TOPLEFT", addon.Config.DIALOG.PADDING.SIDE, -10)
+    else
+        label:SetPoint("TOPLEFT", prevElement, "BOTTOMLEFT", -195, -addon.Config.DIALOG.SECTION_SPACING)
+    end
+    label:SetText(section.name)
+
+    local descKey = section.name:lower():gsub("%+", "plus") .. "Desc"
+    dialog[descKey] = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    dialog[descKey]:SetPoint("TOPLEFT", label, "BOTTOMLEFT", 0, -addon.Config.DIALOG.PADDING.LABEL)
+
+    local dropdownName = "TalentExportDialog_" .. section.name:gsub("%+", "") .. "Dropdown"
+    local dropdown = CreateFrame("Frame", dropdownName, tab, "UIDropDownMenuTemplate")
+    dropdown:SetPoint("TOPLEFT", dialog[descKey], "BOTTOMLEFT", -15, -5)
+    UIDropDownMenu_SetWidth(dropdown, 150)
+    UIDropDownMenu_Initialize(dropdown, addon.DropdownManager[section.dropdownInitializer])
+    dialog[section.editBoxPrefix .. "Dropdown"] = dropdown
+
+    local editBox = TabContent.CreateEditBox(tab, dropdownName:gsub("Dropdown", "Edit"))
+    editBox:SetPoint("LEFT", dropdown, "RIGHT", 10, 2)
+    dialog[section.editBoxPrefix .. "Edit"] = editBox
+
+    return editBox
+end
+
+-- Generic function to create any type of tab
+local function CreateTab(dialog, tab, tabType)
+    local config = TAB_CONFIGS[tabType]
+    if not config then
+        error("Unknown tab type: " .. tostring(tabType))
+        return
+    end
+
+    local prevElement = nil
+    for i, section in ipairs(config.sections) do
+        prevElement = CreateSection(dialog, tab, section, prevElement, i == 1)
+    end
+
+    local instructionsText = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+    instructionsText:SetPoint("BOTTOM", tab, "BOTTOM", 0, 55)
+    instructionsText:SetText("Updated " .. Utils.GetFormattedUpdate(config.updateKey))
+    instructionsText:SetJustifyH("CENTER")
+end
+
+-- Create specific tab functions using the generic CreateTab function
 function TabContent.Createwowcompare.ioTab(dialog, tab)
-	-- Mythic+ Section
-	local mplusLabel = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
-	mplusLabel:SetPoint("TOPLEFT", addon.Config.DIALOG.PADDING.SIDE, -10)
-	mplusLabel:SetText("Mythic+")
-
-	dialog.mplusDesc = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	dialog.mplusDesc:SetPoint("TOPLEFT", mplusLabel, "BOTTOMLEFT", 0, -addon.Config.DIALOG.PADDING.LABEL)
-
-	dialog.mplusDropdown = CreateFrame("Frame", "TalentExportDialog_MplusDropdown", tab, "UIDropDownMenuTemplate")
-	dialog.mplusDropdown:SetPoint("TOPLEFT", dialog.mplusDesc, "BOTTOMLEFT", -15, -5)
-	UIDropDownMenu_SetWidth(dialog.mplusDropdown, 150)
-	UIDropDownMenu_Initialize(dialog.mplusDropdown, addon.DropdownManager.Initializewowcompare.ioMythicDropdown)
-
-	dialog.mplusEdit = TabContent.CreateEditBox(tab, "TalentExportDialog_MplusEdit")
-	dialog.mplusEdit:SetPoint("LEFT", dialog.mplusDropdown, "RIGHT", 10, 2)
-
-	-- Raid Section
-	local raidLabel = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
-	raidLabel:SetPoint("TOPLEFT", dialog.mplusEdit, "BOTTOMLEFT", -195, -addon.Config.DIALOG.SECTION_SPACING)
-	raidLabel:SetText("Raid")
-
-	dialog.raidDesc = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	dialog.raidDesc:SetPoint("TOPLEFT", raidLabel, "BOTTOMLEFT", 0, -addon.Config.DIALOG.PADDING.LABEL)
-
-	dialog.raidDropdown = CreateFrame("Frame", "TalentExportDialog_RaidDropdown", tab, "UIDropDownMenuTemplate")
-	dialog.raidDropdown:SetPoint("TOPLEFT", dialog.raidDesc, "BOTTOMLEFT", -15, -5)
-	UIDropDownMenu_SetWidth(dialog.raidDropdown, 150)
-	UIDropDownMenu_Initialize(dialog.raidDropdown, addon.DropdownManager.Initializewowcompare.ioRaidDropdown)
-
-	dialog.raidEdit = TabContent.CreateEditBox(tab, "TalentExportDialog_RaidEdit")
-	dialog.raidEdit:SetPoint("LEFT", dialog.raidDropdown, "RIGHT", 10, 2)
-
-	local instructionsText = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	instructionsText:SetPoint("BOTTOM", tab, "BOTTOM", 0, 55)
-	instructionsText:SetText("Select a build to copy the latest talent string | Builds as of " .. Utils.GetFormattedUpdate("top-players"))
-	instructionsText:SetJustifyH("CENTER")
+    CreateTab(dialog, tab, "top-players")
 end
 
 function TabContent.Createmost-popularTab(dialog, tab)
-	-- Mythic+ Section
-	local mplusLabel = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
-	mplusLabel:SetPoint("TOPLEFT", addon.Config.DIALOG.PADDING.SIDE, -10)
-	mplusLabel:SetText("Mythic+")
-
-	dialog.most-popularMplusDesc = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	dialog.most-popularMplusDesc:SetPoint("TOPLEFT", mplusLabel, "BOTTOMLEFT", 0, -addon.Config.DIALOG.PADDING.LABEL)
-
-	dialog.most-popularMplusDropdown = CreateFrame("Frame", "TalentExportDialog_most-popularMplusDropdown", tab, "UIDropDownMenuTemplate")
-	dialog.most-popularMplusDropdown:SetPoint("TOPLEFT", dialog.most-popularMplusDesc, "BOTTOMLEFT", -15, -5)
-	UIDropDownMenu_SetWidth(dialog.most-popularMplusDropdown, 150)
-	UIDropDownMenu_Initialize(dialog.most-popularMplusDropdown, addon.DropdownManager.Initializemost-popularMythicDropdown)
-
-	dialog.most-popularMplusEdit = TabContent.CreateEditBox(tab, "TalentExportDialog_most-popularMplusEdit")
-	dialog.most-popularMplusEdit:SetPoint("LEFT", dialog.most-popularMplusDropdown, "RIGHT", 10, 2)
-
-	-- Raid Section
-	local raidLabel = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
-	raidLabel:SetPoint("TOPLEFT", dialog.most-popularMplusEdit, "BOTTOMLEFT", -195, -addon.Config.DIALOG.SECTION_SPACING)
-	raidLabel:SetText("Raid")
-
-	dialog.most-popularRaidDesc = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	dialog.most-popularRaidDesc:SetPoint("TOPLEFT", raidLabel, "BOTTOMLEFT", 0, -addon.Config.DIALOG.PADDING.LABEL)
-
-	dialog.most-popularRaidDropdown = CreateFrame("Frame", "TalentExportDialog_most-popularRaidDropdown", tab, "UIDropDownMenuTemplate")
-	dialog.most-popularRaidDropdown:SetPoint("TOPLEFT", dialog.most-popularRaidDesc, "BOTTOMLEFT", -15, -5)
-	UIDropDownMenu_SetWidth(dialog.most-popularRaidDropdown, 150)
-	UIDropDownMenu_Initialize(dialog.most-popularRaidDropdown, addon.DropdownManager.Initializemost-popularRaidDropdown)
-
-	dialog.most-popularRaidEdit = TabContent.CreateEditBox(tab, "TalentExportDialog_most-popularRaidEdit")
-	dialog.most-popularRaidEdit:SetPoint("LEFT", dialog.most-popularRaidDropdown, "RIGHT", 10, 2)
-
-	-- Misc Section
-	local miscLabel = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
-	miscLabel:SetPoint("TOPLEFT", dialog.most-popularRaidEdit, "BOTTOMLEFT", -195, -addon.Config.DIALOG.SECTION_SPACING)
-	miscLabel:SetText("Misc")
-
-	dialog.most-popularMiscDesc = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	dialog.most-popularMiscDesc:SetPoint("TOPLEFT", miscLabel, "BOTTOMLEFT", 0, -addon.Config.DIALOG.PADDING.LABEL)
-
-	dialog.most-popularMiscDropdown = CreateFrame("Frame", "TalentExportDialog_most-popularMiscDropdown", tab, "UIDropDownMenuTemplate")
-	dialog.most-popularMiscDropdown:SetPoint("TOPLEFT", dialog.most-popularMiscDesc, "BOTTOMLEFT", -15, -5)
-	UIDropDownMenu_SetWidth(dialog.most-popularMiscDropdown, 150)
-	UIDropDownMenu_Initialize(dialog.most-popularMiscDropdown, addon.DropdownManager.Initializemost-popularMiscDropdown)
-
-	dialog.most-popularMiscEdit = TabContent.CreateEditBox(tab, "TalentExportDialog_most-popularMiscEdit")
-	dialog.most-popularMiscEdit:SetPoint("LEFT", dialog.most-popularMiscDropdown, "RIGHT", 10, 2)
-
-	local instructionsText = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	instructionsText:SetPoint("BOTTOM", tab, "BOTTOM", 0, 55)
-	instructionsText:SetText("Select a build to copy the latest talent string | Builds as of " .. Utils.GetFormattedUpdate("most-popular"))
-	instructionsText:SetJustifyH("CENTER")
+    CreateTab(dialog, tab, "most-popular")
 end
 
 function TabContent.CreateIceyVeinsTab(dialog, tab)
-	-- Mythic+ Section
-	local mplusLabel = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
-	mplusLabel:SetPoint("TOPLEFT", addon.Config.DIALOG.PADDING.SIDE, -10)
-	mplusLabel:SetText("Mythic+")
+    CreateTab(dialog, tab, "community")
+end
 
-	dialog.communityMplusDesc = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	dialog.communityMplusDesc:SetPoint("TOPLEFT", mplusLabel, "BOTTOMLEFT", 0, -addon.Config.DIALOG.PADDING.LABEL)
-
-	dialog.communityMplusDropdown = CreateFrame("Frame", "TalentExportDialog_IceveinsMplusDropdown", tab, "UIDropDownMenuTemplate")
-	dialog.communityMplusDropdown:SetPoint("TOPLEFT", dialog.communityMplusDesc, "BOTTOMLEFT", -15, -5)
-	UIDropDownMenu_SetWidth(dialog.communityMplusDropdown, 150)
-	UIDropDownMenu_Initialize(dialog.communityMplusDropdown, addon.DropdownManager.InitializecommunityMythicDropdown)
-
-	dialog.communityMplusEdit = TabContent.CreateEditBox(tab, "TalentExportDialog_communityMplusEdit")
-	dialog.communityMplusEdit:SetPoint("LEFT", dialog.communityMplusDropdown, "RIGHT", 10, 2)
-
-	-- Raid Section
-	local raidLabel = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
-	raidLabel:SetPoint("TOPLEFT", dialog.communityMplusEdit, "BOTTOMLEFT", -195, -addon.Config.DIALOG.SECTION_SPACING)
-	raidLabel:SetText("Raid")
-
-	dialog.communityRaidDesc = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	dialog.communityRaidDesc:SetPoint("TOPLEFT", raidLabel, "BOTTOMLEFT", 0, -addon.Config.DIALOG.PADDING.LABEL)
-
-	dialog.communityRaidDropdown = CreateFrame("Frame", "TalentExportDialog_communityRaidDropdown", tab, "UIDropDownMenuTemplate")
-	dialog.communityRaidDropdown:SetPoint("TOPLEFT", dialog.communityRaidDesc, "BOTTOMLEFT", -15, -5)
-	UIDropDownMenu_SetWidth(dialog.communityRaidDropdown, 150)
-	UIDropDownMenu_Initialize(dialog.communityRaidDropdown, addon.DropdownManager.InitializecommunityRaidDropdown)
-
-	dialog.communityRaidEdit = TabContent.CreateEditBox(tab, "TalentExportDialog_communityRaidEdit")
-	dialog.communityRaidEdit:SetPoint("LEFT", dialog.communityRaidDropdown, "RIGHT", 10, 2)
-
-	-- Misc Section
-	local miscLabel = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
-	miscLabel:SetPoint("TOPLEFT", dialog.communityRaidEdit, "BOTTOMLEFT", -195, -addon.Config.DIALOG.SECTION_SPACING)
-	miscLabel:SetText("Misc")
-
-	dialog.communityMiscDesc = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	dialog.communityMiscDesc:SetPoint("TOPLEFT", miscLabel, "BOTTOMLEFT", 0, -addon.Config.DIALOG.PADDING.LABEL)
-
-	dialog.communityMiscDropdown = CreateFrame("Frame", "TalentExportDialog_communityMiscDropdown", tab, "UIDropDownMenuTemplate")
-	dialog.communityMiscDropdown:SetPoint("TOPLEFT", dialog.communityMiscDesc, "BOTTOMLEFT", -15, -5)
-	UIDropDownMenu_SetWidth(dialog.communityMiscDropdown, 150)
-	UIDropDownMenu_Initialize(dialog.communityMiscDropdown, addon.DropdownManager.InitializecommunityMiscDropdown)
-
-	dialog.communityMiscEdit = TabContent.CreateEditBox(tab, "TalentExportDialog_communityMiscEdit")
-	dialog.communityMiscEdit:SetPoint("LEFT", dialog.communityMiscDropdown, "RIGHT", 10, 2)
-
-	local instructionsText = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	instructionsText:SetPoint("BOTTOM", tab, "BOTTOM", 0, 55)
-	instructionsText:SetText("Select a build to copy the latest talent string | Builds as of " .. Utils.GetFormattedUpdate("community"))
-	instructionsText:SetJustifyH("CENTER")
+function TabContent.CreateUggTab(dialog, tab)
+    CreateTab(dialog, tab, "worldwide")
 end
 
 return TabContent

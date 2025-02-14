@@ -81,7 +81,7 @@ function DataManager.GetCategoryBuilds(source, classID, specID, category)
 	return DataManager.GetAvailableEntries(source, classID, specID, category)
 end
 
--- New helper function to get available categories for a source
+-- Helper function to get available categories for a source
 function DataManager.GetAvailableCategories(source)
 	if not CheckDataAddonLoaded() then
 		return {}
