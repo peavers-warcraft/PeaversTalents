@@ -84,62 +84,77 @@ local function CreateExportDialog()
     -- OnShow handler
     dialog:SetScript("OnShow", function()
         local classID, specID = Utils.GetPlayerClassAndSpec()
+        Utils.Debug("Dialog shown - Loading saved selections")
 
         -- Check if data addon is loaded
         if not CheckDataAddonLoaded() then
             return
         end
 
+        -- Load any saved selection first
+        local savedSource, savedCategory, savedBuildKey = addon.LocalStorage.LoadSelection()
+        Utils.Debug("Loaded saved selection:", savedSource, savedCategory, savedBuildKey)
+
         -- Get all available sources
         local sources = PeaversTalentsData.API.GetSources()
 
-        -- Initialize wowcompare.io dropdowns
-        if Utils.TableContains(sources, "top-players") then
-            local builds = PeaversTalentsData.API.GetBuilds(classID, specID, "top-players")
-            if builds and #builds > 0 then
-                UIDropDownMenu_Initialize(dialog.wowcompare.ioMythicDropdown, addon.DropdownManager.Initializewowcompare.ioMythicDropdown)
-                UIDropDownMenu_Initialize(dialog.wowcompare.ioRaidDropdown, addon.DropdownManager.Initializewowcompare.ioRaidDropdown)
+        -- Initialize dropdowns based on available data
+        for source, tabs in pairs({
+            wowcompare.io = {mythic = "Mythic", raid = "Raid"},
+            most-popular = {mythic = "Mythic", raid = "Raid", misc = "Misc"},
+            ["community"] = {mythic = "Mythic", raid = "Raid", misc = "Misc"},
+            ugg = {mythic = "Mythic", raid = "Raid"}
+        }) do
+            if Utils.TableContains(sources, source) then
+                local builds = PeaversTalentsData.API.GetBuilds(classID, specID, source)
+                if builds and #builds > 0 then
+                    for category, _ in pairs(tabs) do
+                        local dropdownName = source .. category:gsub("^%l", string.upper) .. "Dropdown"
+                        local dropdown = dialog[dropdownName]
+                        if dropdown then
+                            UIDropDownMenu_Initialize(dropdown, addon.DropdownManager["Initialize" .. source:gsub("^%l", string.upper) .. category:gsub("^%l", string.upper) .. "Dropdown"])
+
+                            -- If this is our saved selection, set it
+                            if savedSource == source and savedCategory == category then
+                                Utils.Debug("Found matching dropdown for saved selection:", dropdownName)
+                                for _, build in ipairs(builds) do
+                                    if build.dungeonID == savedBuildKey then
+                                        local editBox = dialog[source .. category:gsub("^%l", string.upper) .. "Edit"]
+                                        if editBox then
+                                            editBox:SetText(build.talentString or "")
+                                            editBox:SetCursorPosition(0)
+                                            UIDropDownMenu_SetText(dropdown, build.label or tostring(savedBuildKey))
+                                        end
+                                        break
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
             end
         end
-
-        -- Initialize most-popular dropdowns
-        if Utils.TableContains(sources, "most-popular") then
-            local builds = PeaversTalentsData.API.GetBuilds(classID, specID, "most-popular")
-            if builds and #builds > 0 then
-                UIDropDownMenu_Initialize(dialog.most-popularMythicDropdown, addon.DropdownManager.Initializemost-popularMythicDropdown)
-                UIDropDownMenu_Initialize(dialog.most-popularRaidDropdown, addon.DropdownManager.Initializemost-popularRaidDropdown)
-                UIDropDownMenu_Initialize(dialog.most-popularMiscDropdown, addon.DropdownManager.Initializemost-popularMiscDropdown)
-            end
-        end
-
-        -- Initialize community dropdowns
-        if Utils.TableContains(sources, "community") then
-            local builds = PeaversTalentsData.API.GetBuilds(classID, specID, "community")
-            if builds and #builds > 0 then
-                UIDropDownMenu_Initialize(dialog.communityMythicDropdown, addon.DropdownManager.InitializecommunityMythicDropdown)
-                UIDropDownMenu_Initialize(dialog.communityRaidDropdown, addon.DropdownManager.InitializecommunityRaidDropdown)
-                UIDropDownMenu_Initialize(dialog.communityMiscDropdown, addon.DropdownManager.InitializecommunityMiscDropdown)
-            end
-        end
-
-		-- Initialize worldwide dropdowns
-		if Utils.TableContains(sources, "worldwide") then
-			local builds = PeaversTalentsData.API.GetBuilds(classID, specID, "worldwide")
-			if builds and #builds > 0 then
-				UIDropDownMenu_Initialize(dialog.uggMythicDropdown, addon.DropdownManager.InitializeUggMythicDropdown)
-				UIDropDownMenu_Initialize(dialog.uggRaidDropdown, addon.DropdownManager.InitializeUggRaidDropdown)
-			end
-		end
 
         -- Handle tab visibility based on available data
         for i, tab in ipairs(dialog.Tabs) do
             local source = i == 1 and "top-players" or i == 2 and "most-popular" or i == 3 and "community" or i == 4 and "worldwide"
             local hasData = Utils.TableContains(sources, source) and
-                           PeaversTalentsData.API.GetBuilds(classID, specID, source) and
-                           #PeaversTalentsData.API.GetBuilds(classID, specID, source) > 0
+                    PeaversTalentsData.API.GetBuilds(classID, specID, source) and
+                    #PeaversTalentsData.API.GetBuilds(classID, specID, source) > 0
 
             if hasData then
                 tab:Show()
+                -- If this was our saved source, show its tab
+                if source == savedSource then
+                    PanelTemplates_SetTab(dialog, i)
+                    for j, content in pairs(dialog.TabContents) do
+                        if j == i then
+                            content:Show()
+                        else
+                            content:Hide()
+                        end
+                    end
+                end
             else
                 tab:Hide()
             end

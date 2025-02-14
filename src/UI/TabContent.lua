@@ -100,16 +100,23 @@ local function CreateSection(dialog, tab, section, prevElement, isFirst)
     dialog[descKey] = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
     dialog[descKey]:SetPoint("TOPLEFT", label, "BOTTOMLEFT", 0, -addon.Config.DIALOG.PADDING.LABEL)
 
+    -- Create the dropdown
     local dropdownName = "TalentExportDialog_" .. section.name:gsub("%+", "") .. "Dropdown"
     local dropdown = CreateFrame("Frame", dropdownName, tab, "UIDropDownMenuTemplate")
     dropdown:SetPoint("TOPLEFT", dialog[descKey], "BOTTOMLEFT", -15, -5)
     UIDropDownMenu_SetWidth(dropdown, 150)
-    UIDropDownMenu_Initialize(dropdown, addon.DropdownManager[section.dropdownInitializer])
     dialog[section.editBoxPrefix .. "Dropdown"] = dropdown
 
+    -- Create the edit box
     local editBox = TabContent.CreateEditBox(tab, dropdownName:gsub("Dropdown", "Edit"))
     editBox:SetPoint("LEFT", dropdown, "RIGHT", 10, 2)
     dialog[section.editBoxPrefix .. "Edit"] = editBox
+
+    -- Set up the dropdown initialization with the edit box reference
+    local initFunc = function(frame, level)
+        addon.DropdownManager[section.dropdownInitializer](frame, level, section.source, section.category, editBox)
+    end
+    UIDropDownMenu_Initialize(dropdown, initFunc)
 
     return editBox
 end

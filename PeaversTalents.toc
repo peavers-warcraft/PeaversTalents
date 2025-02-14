@@ -6,13 +6,18 @@
 ## Dependencies: PeaversTalentsData
 ## X-Curse-Project-ID: 1184820
 ## IconTexture: Interface\AddOns\PeaversTalents\src\Media\Icon.tga
+## SavedVariables: PeaversTalentsDB
 
 src/Core/Config.lua
 src/Core/DataManager.lua
+src/Core/LocalStorage.lua
 src/Core/EventHandler.lua
 src/Core/VersionCheck.lua
+
 src/UI/DropdownManager.lua
 src/UI/UIComponents.lua
 src/UI/TabContent.lua
+
 src/Utils/Utils.lua
+
 src/PeaversTalents.lua
