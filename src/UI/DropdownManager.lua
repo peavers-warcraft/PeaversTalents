@@ -96,8 +96,12 @@ function DropdownManager.Initializewowcompare.ioMythicDropdown(frame, level)
 	InitializeDropdown(frame, level, "top-players", "mythic", addon.exportDialog.wowcompare.ioMythicEdit, addon.exportDialog.wowcompare.ioMythicNewLabel)
 end
 
-function DropdownManager.Initializewowcompare.ioRaidDropdown(frame, level)
-	InitializeDropdown(frame, level, "top-players", "raid", addon.exportDialog.wowcompare.ioRaidEdit, addon.exportDialog.wowcompare.ioRaidNewLabel)
+function DropdownManager.Initializewowcompare.ioHeroicRaidDropdown(frame, level)
+	InitializeDropdown(frame, level, "top-players", "heroic_raid", addon.exportDialog.wowcompare.ioHeroicRaidEdit, addon.exportDialog.wowcompare.ioHeroicRaidNewLabel)
+end
+
+function DropdownManager.Initializewowcompare.ioMythicRaidDropdown(frame, level)
+	InitializeDropdown(frame, level, "top-players", "mythic_raid", addon.exportDialog.wowcompare.ioMythicRaidEdit, addon.exportDialog.wowcompare.ioMythicRaidNewLabel)
 end
 
 function DropdownManager.Initializemost-popularMythicDropdown(frame, level)
