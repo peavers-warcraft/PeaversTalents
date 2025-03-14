@@ -24,11 +24,18 @@ local TAB_CONFIGS = {
 				category = "mythic"
 			},
 			{
-				name = "Raid",
-				dropdownInitializer = "Initializewowcompare.ioRaidDropdown",
-				editBoxPrefix = "wowcompare.ioRaid",
+				name = "Heroic Raid",
+				dropdownInitializer = "Initializewowcompare.ioHeroicRaidDropdown",
+				editBoxPrefix = "wowcompare.ioHeroicRaid",
 				source = "top-players",
-				category = "raid"
+				category = "heroic_raid"
+			},
+			{
+				name = "Mythic Raid",
+				dropdownInitializer = "Initializewowcompare.ioMythicRaidDropdown",
+				editBoxPrefix = "wowcompare.ioMythicRaid",
+				source = "top-players",
+				category = "mythic_raid"
 			}
 		}
 	},

@@ -88,7 +88,7 @@ function DataManager.GetAvailableCategories(source)
 	end
 
 	if source == "top-players" then
-		return { "mythic", "raid" }
+		return { "mythic", "heroic_raid", "mythic_raid" }
 	else
 		return { "mythic", "raid", "misc" }
 	end
