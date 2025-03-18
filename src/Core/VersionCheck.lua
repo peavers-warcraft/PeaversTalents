@@ -12,6 +12,10 @@ local seenVersions = {}
 local lastNotification = 0
 local NOTIFICATION_COOLDOWN = 3600 -- One hour cooldown between notifications
 
+-- Throttle for broadcast attempts
+local lastBroadcastAttempt = 0
+local BROADCAST_THROTTLE = 1 -- Only attempt broadcasts once per second max
+
 local function compareVersions(v1, v2)
 	local v1_major, v1_minor, v1_patch = string.match(v1, "(%d+)%.(%d+)%.(%d+)")
 	local v2_major, v2_minor, v2_patch = string.match(v2, "(%d+)%.(%d+)%.(%d+)")
@@ -72,6 +76,54 @@ local function showUpdateDialog(newVersion)
 	lastNotification = currentTime
 end
 
+-- Ultra-safe function to send addon messages with no error output
+function VersionCheck:SafeSendAddonMessage(prefix, message, distribution, target)
+    -- Silently catch any errors by setting a temporary error handler
+    local originalErrorHandler = geterrorhandler()
+    local success = false
+
+    -- Set a custom error handler that does nothing
+    seterrorhandler(function() end)
+
+    -- Use pcall as an extra layer of safety
+    pcall(function()
+        -- Only try to send if the channel seems valid
+        if distribution == "GUILD" and IsInGuild() then
+            C_ChatInfo.SendAddonMessage(prefix, message, distribution, target)
+            success = true
+        elseif distribution == "RAID" and IsInRaid() then
+            C_ChatInfo.SendAddonMessage(prefix, message, distribution, target)
+            success = true
+        elseif distribution == "PARTY" and IsInGroup() and not IsInRaid() then
+            -- Extra check for party chat
+            local hasPartyMember = false
+            for i = 1, 4 do
+                if UnitExists("party"..i) then
+                    hasPartyMember = true
+                    break
+                end
+            end
+
+            if hasPartyMember then
+                C_ChatInfo.SendAddonMessage(prefix, message, distribution, target)
+                success = true
+            end
+        elseif distribution == "INSTANCE_CHAT" and IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+            -- For instance chat, additional check
+            local inInstance, instanceType = IsInInstance()
+            if inInstance then
+                C_ChatInfo.SendAddonMessage(prefix, message, distribution, target)
+                success = true
+            end
+        end
+    end)
+
+    -- Restore the original error handler
+    seterrorhandler(originalErrorHandler)
+
+    return success
+end
+
 function VersionCheck:Initialize()
 	C_ChatInfo.RegisterAddonMessagePrefix(VERSION_CHECK_PREFIX)
 	Utils.Debug("Version check initialized")
@@ -90,23 +142,27 @@ function VersionCheck:HandleAddonMessage(prefix, message, channel, sender)
 end
 
 function VersionCheck:BroadcastVersion()
-	Utils.Debug("Broadcasting version: " .. self.CURRENT_VERSION)
+    -- Throttle broadcasts to prevent spam
+    local currentTime = GetTime()
+    if currentTime - lastBroadcastAttempt < BROADCAST_THROTTLE then
+        return
+    end
+    lastBroadcastAttempt = currentTime
 
-	-- Broadcast to all available channels
-	if IsInGuild() then
-		C_ChatInfo.SendAddonMessage(VERSION_CHECK_PREFIX, self.CURRENT_VERSION, "GUILD")
-	end
+    Utils.Debug("Broadcasting version: " .. self.CURRENT_VERSION)
 
-	if IsInRaid() then
-		C_ChatInfo.SendAddonMessage(VERSION_CHECK_PREFIX, self.CURRENT_VERSION, "RAID")
-	elseif IsInGroup() then
-		C_ChatInfo.SendAddonMessage(VERSION_CHECK_PREFIX, self.CURRENT_VERSION, "PARTY")
-	end
+    -- Broadcast to all available channels
+    self:SafeSendAddonMessage(VERSION_CHECK_PREFIX, self.CURRENT_VERSION, "GUILD")
 
-	-- Check if in instance (dungeon/battleground)
-	if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
-		C_ChatInfo.SendAddonMessage(VERSION_CHECK_PREFIX, self.CURRENT_VERSION, "INSTANCE_CHAT")
-	end
+    if IsInRaid() then
+        self:SafeSendAddonMessage(VERSION_CHECK_PREFIX, self.CURRENT_VERSION, "RAID")
+    elseif IsInGroup() then
+        self:SafeSendAddonMessage(VERSION_CHECK_PREFIX, self.CURRENT_VERSION, "PARTY")
+    end
+
+    if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+        self:SafeSendAddonMessage(VERSION_CHECK_PREFIX, self.CURRENT_VERSION, "INSTANCE_CHAT")
+    end
 end
 
 return VersionCheck
