@@ -12,34 +12,6 @@ local seenVersions = {}
 local lastNotification = 0
 local NOTIFICATION_COOLDOWN = 3600 -- One hour cooldown between notifications
 
--- Register a chat filter function to catch "You are not in a party" messages
-local function installChatFilter()
-    local filterPatterns = {
-        "You aren't in a party",
-        "You aren't in a raid",
-        "You aren't in a guild",
-        "No player named",
-        ERR_NOT_IN_PARTY,
-        ERR_NOT_IN_GROUP,
-        ERR_NOT_IN_RAID,
-        ERR_NOT_IN_GUILD
-    }
-
-    ChatFrame_AddMessageEventFilter("CHAT_MSG_SYSTEM", function(_, _, message)
-        for _, pattern in ipairs(filterPatterns) do
-            if message:find(pattern) then
-                -- Return true to block the message from displaying
-                return true
-            end
-        end
-
-        -- Return false to allow the message to display
-        return false
-    end)
-
-    Utils.Debug("Chat filter installed to suppress party/raid/guild messages")
-end
-
 local function compareVersions(v1, v2)
 	local v1_major, v1_minor, v1_patch = string.match(v1, "(%d+)%.(%d+)%.(%d+)")
 	local v2_major, v2_minor, v2_patch = string.match(v2, "(%d+)%.(%d+)%.(%d+)")
@@ -102,7 +74,6 @@ end
 
 function VersionCheck:Initialize()
 	C_ChatInfo.RegisterAddonMessagePrefix(VERSION_CHECK_PREFIX)
-	installChatFilter()  -- Install chat filter
 	Utils.Debug("Version check initialized")
 end
 
@@ -118,20 +89,30 @@ function VersionCheck:HandleAddonMessage(prefix, message, channel, sender)
 	end
 end
 
+local function isInDelveOrLFG()
+    -- Check if the player is in a Delve (instance category) or LFG
+    return IsInGroup(LE_PARTY_CATEGORY_INSTANCE) or IsInGroup(LE_PARTY_CATEGORY_LFG)
+end
+
 function VersionCheck:BroadcastVersion()
     Utils.Debug("Broadcasting version: " .. self.CURRENT_VERSION)
 
+    -- Update timestamp for filtering
+    messageAttemptTimestamp = GetTime()
+
+    -- If the player is in a party, raid, or instance (LFG or delve), broadcast
     if IsInGuild() then
         C_ChatInfo.SendAddonMessage(VERSION_CHECK_PREFIX, self.CURRENT_VERSION, "GUILD")
     end
 
     if IsInRaid() then
         C_ChatInfo.SendAddonMessage(VERSION_CHECK_PREFIX, self.CURRENT_VERSION, "RAID")
-    elseif IsInGroup() then
+    elseif IsInGroup() and not isInDelveOrLFG() then
         C_ChatInfo.SendAddonMessage(VERSION_CHECK_PREFIX, self.CURRENT_VERSION, "PARTY")
     end
 
-    if IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
+    -- Also send if in a specific instance chat (LFG/Delve)
+    if isInDelveOrLFG() then
         C_ChatInfo.SendAddonMessage(VERSION_CHECK_PREFIX, self.CURRENT_VERSION, "INSTANCE_CHAT")
     end
 end
