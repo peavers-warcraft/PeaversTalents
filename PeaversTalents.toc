@@ -1,4 +1,4 @@
-## Interface: 110007, 110100
+## Interface: 110100, 110105
 
 ## Title: PeaversTalents
 ## Notes: Pick the latest talent builds from wowcompare.io, most-popular, and community.
