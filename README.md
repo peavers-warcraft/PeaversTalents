@@ -1,47 +1,39 @@
-# Peavers Talents
+# PeaversTalents
 
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/peavers/PeaversTalents)](https://github.com/peavers/PeaversTalents/commits/master) [![Last commit](https://img.shields.io/github/last-commit/peavers/PeaversTalents)](https://github.com/peavers/PeaversTalents/master) [![CurseForge](https://img.shields.io/curseforge/dt/1184820?label=CurseForge&color=F16436)](https://www.curseforge.com/wow/addons/peaverstalents)
 
+**A World of Warcraft addon that provides optimized talent builds directly in-game, sourced from top theorycrafting resources.**
+
 ## Overview
 
-PeaversTalents is a World of Warcraft addon that provides optimized talent builds directly in-game. Leveraging data from
-wowcompare.io, most-popular, and community, this addon ensures that players have access to the latest and most effective talent
-configurations for various PvE encounters.
+PeaversTalents delivers the latest and most effective talent configurations for various PvE encounters. By leveraging data from wowcompare.io, most-popular, and community, this addon ensures players have access to up-to-date builds optimized for both Mythic+ and raid encounters.
 
 ## Features
 
-- **Always Up-to-Date Builds**: PeaversTalents automatically integrates daily updates, ensuring the best talent builds
-  are available for all classes and specializations, specifically optimized for Mythic+ and raid encounters.
-- **Boss-Specific Talent Recommendations**: Access curated talent builds tailored for individual raid bosses and dungeon
-  encounters, based on high-performing players worldwide.
-- **Seamless UI Integration**: The addon features a dedicated "Builds" button within the talent window, enabling quick
-  and easy access to recommended builds.
-- **Effortless Import**: Each build is provided as a preformatted talent import string, allowing for one-click
-  application without manual adjustments.
-- **Performance-Oriented**: Utilizing optimized builds ensures that players are well-prepared to tackle challenging
-  content with efficiency and precision.
+- **Always Up-to-Date Builds**: Automatically integrates daily updates for all classes and specializations
+- **Boss-Specific Talent Recommendations**: Access curated talent builds tailored for individual raid bosses and dungeon encounters
+- **Seamless UI Integration**: Features a dedicated "Builds" button within the talent window for quick access
+- **Effortless Import**: Each build is provided as a preformatted talent import string for one-click application
+- **Performance-Oriented**: Utilizes optimized builds to ensure players are well-prepared for challenging content
 
-## How to Use
+## Installation
 
-1. **Install the Addon**
-	* Download and install PeaversTalents via the CurseClient addon manager or manually place it in the World of Warcraft
-	  `Interface/AddOns` folder.
+1. Download from [CurseForge](https://www.curseforge.com/wow/addons/peaverstalents) or use the CurseForge app
+2. Extract to your `World of Warcraft/Interface/AddOns` folder
+3. Ensure the addon is enabled on the character selection screen
 
-2. **Enable the Addon**
-	* Ensure PeaversTalents is enabled in your addons list on the character selection screen.
+## Usage
 
-3. **Access Talent Suggestions**
-	* Open your in-game talent window.
-	* Click the "Builds" button, conveniently added to your interface.
-	* A dialog box will display import strings for both general and encounter-specific builds.
+1. Open your in-game talent window
+2. Click the "Builds" button added to your interface
+3. Select from general or encounter-specific builds
+4. Use the in-game talent import feature to instantly apply the recommended talents
 
-4. **Apply the Talent Build**
-	* Copy the provided import string.
-	* Use the in-game talent import feature to instantly apply the recommended talents to your character.
+## Configuration
 
-## Feedback and Support
+- No additional configuration is required as the addon automatically provides the most current builds
+- Talent builds are updated daily to reflect the latest theorycrafting and high-performance player strategies
 
-If you encounter any issues or have suggestions for improvements, please submit them
-via [GitHub Issues](https://github.com/peavers/PeaversTalents/issues). Your feedback is valuable in enhancing the addon
-experience for all players.
+## Support & Feedback
 
+If you encounter any issues or have suggestions for improvements, please submit them via [GitHub Issues](https://github.com/peavers/PeaversTalents/issues). Your feedback is valuable in enhancing the addon experience for all players.
