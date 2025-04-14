@@ -35,6 +35,21 @@ end
 
 function EventHandler.OnEvent(self, event, arg1, ...)
     if event == "ADDON_LOADED" then
+        if arg1 == "PeaversTalents" then
+            Utils.Debug("PeaversTalents loaded")
+
+            -- Initialize configuration UI if available
+			if addon.ConfigUI and addon.ConfigUI.Initialize then
+				Utils.Debug("Initializing configuration UI")
+				addon.ConfigUI:Initialize()
+			end
+
+            -- Initialize support UI if available
+			if addon.SupportUI and addon.SupportUI.Initialize then
+				Utils.Debug("Initializing support UI")
+				addon.SupportUI:Initialize()
+			end
+        end
         if arg1 == talentUI then
             Utils.Debug("Talent UI loaded")
             talentFrame = isTWW and PlayerSpellsFrame.TalentsFrame or ClassTalentFrame.TalentsTab
