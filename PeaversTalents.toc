@@ -1,6 +1,6 @@
-## Interface: 110100, 110105
+## Interface: 110105
 
-## Title: PeaversTalents
+## Title: |cff3abdf7Peavers|rTalents
 ## Notes: Pick the latest talent builds from wowcompare.io, most-popular, and community.
 ## IconTexture: Interface\AddOns\PeaversTalents\src\Media\Icon.tga
 
@@ -10,6 +10,8 @@
 
 ## Dependencies: PeaversTalentsData
 ## SavedVariables: PeaversTalentsDB
+
+## Category-enUS: Peavers
 
 src/Core/Config.lua
 src/Core/DataManager.lua
