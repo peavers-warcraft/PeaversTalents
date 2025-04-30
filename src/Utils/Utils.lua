@@ -2,6 +2,9 @@ local _, addon = ...
 local Utils = addon.Utils or {}
 addon.Utils = Utils
 
+-- Access the PeaversCommons library
+local PeaversCommons = _G.PeaversCommons
+
 function Utils.GetPlayerInfo()
 	local playerName, playerRealm = UnitFullName("player")
 	playerRealm = playerRealm or GetRealmName()
@@ -15,13 +18,13 @@ function Utils.GetPlayerInfo()
 end
 
 function Utils.Debug(...)
-	if addon.Config.DEBUG_ENABLED then
-		print("|cFF00FF00[TalentDebug]|r", ...)
+	if addon.Config and addon.Config.DEBUG_ENABLED then
+		PeaversCommons.Utils.Debug(addon, ...)
 	end
 end
 
 function Utils.Print(...)
-    print("|cFF69CCF0[PeaversTalents]|r", ...)
+    PeaversCommons.Utils.Print(addon, ...)
 end
 
 function Utils.GetPlayerClassAndSpec()

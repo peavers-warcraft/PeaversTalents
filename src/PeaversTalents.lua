@@ -1,5 +1,13 @@
-local _, addon = ...
+local addonName, addon = ...
 
+-- Access the PeaversCommons library
+local PeaversCommons = _G.PeaversCommons
+
+-- Initialize addon metadata
+addon.name = addonName
+addon.version = C_AddOns.GetAddOnMetadata(addonName, "Version") or "1.0.0"
+
+-- Module references
 local Utils = addon.Utils or {}
 addon.Utils = Utils
 
@@ -194,5 +202,67 @@ function Utils.TableContains(tbl, value)
     return false
 end
 
--- Initialize events
-EventHandler.Initialize()
+-- Initialize addon using PeaversCommons Events module
+PeaversCommons.Events:Init(addonName, function()
+    -- Initialize configuration
+    if addon.Config and addon.Config.Initialize then
+        addon.Config:Initialize()
+    end
+
+    -- Initialize configuration UI if available
+    if addon.ConfigUI and addon.ConfigUI.Initialize then
+        addon.ConfigUI:Initialize()
+    end
+
+    -- Initialize support UI if available
+    if addon.SupportUI and addon.SupportUI.Initialize then
+        addon.SupportUI:Initialize()
+    end
+
+    -- Register for events
+    PeaversCommons.Events:RegisterEvent("ADDON_LOADED", function(event, arg1)
+        if arg1 == "Blizzard_PlayerSpells" or arg1 == "Blizzard_ClassTalentUI" then
+            Utils.Debug("Talent UI loaded")
+            local isTWW = select(4, GetBuildInfo()) >= 110000
+            local talentFrame = isTWW and PlayerSpellsFrame.TalentsFrame or ClassTalentFrame.TalentsTab
+            EventHandler.CreateExportButton()
+        end
+    end)
+
+    PeaversCommons.Events:RegisterEvent("PLAYER_ENTERING_WORLD", function()
+        Utils.Debug("Player entering world")
+        local isTWW = select(4, GetBuildInfo()) >= 110000
+        local talentUI = isTWW and "Blizzard_PlayerSpells" or "Blizzard_ClassTalentUI"
+
+        if not C_AddOns.IsAddOnLoaded(talentUI) then
+            UIParentLoadAddOn(talentUI)
+        end
+
+        -- Initialize version check
+        if addon.VersionCheck then
+            addon.VersionCheck:Initialize()
+            addon.VersionCheck:BroadcastVersion()
+        end
+    end)
+
+    -- Register for version check events
+    if addon.VersionCheck then
+        PeaversCommons.Events:RegisterEvent("CHAT_MSG_ADDON", function(event, ...)
+            addon.VersionCheck:HandleAddonMessage(...)
+        end)
+
+        PeaversCommons.Events:RegisterEvent("GROUP_ROSTER_UPDATE", function()
+            addon.VersionCheck:BroadcastVersion()
+        end)
+
+        PeaversCommons.Events:RegisterEvent("GROUP_JOINED", function()
+            addon.VersionCheck:BroadcastVersion()
+        end)
+
+        PeaversCommons.Events:RegisterEvent("PLAYER_GUILD_UPDATE", function()
+            addon.VersionCheck:BroadcastVersion()
+        end)
+    end
+end, {
+    announceMessage = ""
+})
