@@ -370,9 +370,7 @@ PeaversCommons.Events:Init(addonName, function()
             addon.directCategory = category
             addon.directPanel = mainPanel
             
-            -- Register settings panel as subcategory
-            local settingsCategory = Settings.RegisterCanvasLayoutSubcategory(category, settingsPanel, settingsPanel.name)
-            addon.directSettingsCategory = settingsCategory
+            -- PeaversTalents doesn't need a Settings subcategory as it has no config options
             
             -- Debug output
             if Utils and Utils.Debug then
