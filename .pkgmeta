@@ -1,6 +1,11 @@
 package-as: PeaversTalents
 
+externals:
+  PeaversCommons: https://github.com/peavers/PeaversCommons
+
 ignore:
+  - .*.sh
+  - .*.ps1
   - .git
   - .github
   - .gitignore
