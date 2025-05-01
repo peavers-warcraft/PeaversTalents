@@ -59,9 +59,18 @@ function SupportUI:InitializeOptions()
     additionalInfo:SetText("Thank you for using Peavers Addons!")
 
     -- Register with the Interface Options
-    local supportCategory = Settings.RegisterCanvasLayoutSubcategory(addon.mainCategory, panel, panel.name)
-    addon.supportCategory = supportCategory
-    addon.supportCategory.ID = panel.name
+    -- Make sure we have a main category before trying to create a subcategory
+    if addon.mainCategory then
+        local supportCategory = Settings.RegisterCanvasLayoutSubcategory(addon.mainCategory, panel, panel.name)
+        addon.supportCategory = supportCategory
+        if supportCategory then
+            addon.supportCategory.ID = panel.name
+        end
+    else
+        -- Just create the panel without registering it yet
+        -- PeaversCommons will handle this later
+        addon.supportPanel = panel
+    end
 
     -- Required callbacks
     panel.OnRefresh = function()
