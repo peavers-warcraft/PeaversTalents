@@ -266,7 +266,7 @@ PeaversCommons.Events:Init(addonName, function()
     
     -- DIRECT REGISTRATION APPROACH
     -- This ensures the addon appears in Options > Addons regardless of PeaversCommons logic
-    C_Timer.After(2, function()
+    C_Timer.After(0.5, function()
         -- Create the main panel (Support UI as landing page)
         local mainPanel = CreateFrame("Frame")
         mainPanel.name = "PeaversTalents"
