@@ -2,7 +2,7 @@ local addonName, addon = ...
 
 local ADDON_NAME = "PeaversTalents"
 local ADDON_ID = "PeaversTalents"
-local ICON_PATH = "Interface\\AddOns\\PeaversTalents\\src\\Media\\Icon"
+local ICON_PATH = "Interface\\AddOns\\PeaversCommons\\src\\Media\\Icon"
 
 -- Initialize SupportUI namespace
 local SupportUI = {}

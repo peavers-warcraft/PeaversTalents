@@ -3,9 +3,10 @@ package-as: PeaversTalents
 externals:
   PeaversCommons: https://github.com/peavers/PeaversCommons
 
+move-folders:
+  PeaversDynamicStats/PeaversCommons: PeaversCommons
+
 ignore:
-  - .*.sh
-  - .*.ps1
   - .git
   - .github
   - .gitignore
@@ -14,3 +15,5 @@ ignore:
   - README.md
   - CHANGELOG.md
   - LICENSE
+  - local_deploy.sh
+  - local_deploy.ps1

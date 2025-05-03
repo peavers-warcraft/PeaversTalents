@@ -8,7 +8,7 @@
 ## Version: 1.1.36
 ## X-Curse-Project-ID: 1184820
 
-## Dependencies: PeaversTalentsData
+## Dependencies: PeaversTalentsData, PeaversCommons
 ## SavedVariables: PeaversTalentsDB
 
 ## Category-enUS: Peavers
