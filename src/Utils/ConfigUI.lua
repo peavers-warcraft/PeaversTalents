@@ -4,121 +4,51 @@ local _, addon = ...
 local ConfigUI = {}
 addon.ConfigUI = ConfigUI
 
+-- Access PeaversCommons utilities
+local PeaversCommons = _G.PeaversCommons
+local ConfigUIUtils = PeaversCommons.ConfigUIUtils
+local FrameUtils = PeaversCommons.FrameUtils
+
 -- Creates and initializes the options panel
 function ConfigUI:InitializeOptions()
-	-- Create the main panel for the addon
-	local panel = CreateFrame("Frame")
-	panel.name = "PeaversTalents"
-
-	panel.layoutIndex = 1  -- Ensures proper ordering
-	panel.OnShow = function(self)
-		-- Any code to execute when the panel is shown
-		return true  -- Signal that the panel was properly displayed
-	end
-
-    local scrollFrame = CreateFrame("ScrollFrame", nil, panel, "UIPanelScrollFrameTemplate")
-    scrollFrame:SetPoint("TOPLEFT", 10, -10)
-    scrollFrame:SetPoint("BOTTOMRIGHT", -30, 10)
-
-    local content = CreateFrame("Frame", nil, scrollFrame)
-    content:SetSize(scrollFrame:GetWidth(), 500)  -- Initial height, will be adjusted
-    scrollFrame:SetScrollChild(content)
-
-    local yPos = 0
-
-    -- Create header and description
-    local title = content:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
-    title:SetPoint("TOPLEFT", 25, yPos)
-    title:SetText("Peavers Talents")
-    title:SetTextColor(1, 0.84, 0)  -- Gold color for main title
-    title:SetFont(title:GetFont(), 24, "OUTLINE")
-    yPos = yPos - 40
-
-    local subtitle = content:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-    subtitle:SetPoint("TOPLEFT", 25, yPos)
-    subtitle:SetText("Pick the latest talent builds from wowcompare.io, most-popular, and community")
-    subtitle:SetFont(subtitle:GetFont(), 14)
-    yPos = yPos - 30
-
-    -- Add separator
-    local separator = content:CreateTexture(nil, "ARTWORK")
-    separator:SetHeight(1)
-    separator:SetPoint("TOPLEFT", 25, yPos)
-    separator:SetPoint("TOPRIGHT", -25, yPos)
-    separator:SetColorTexture(0.3, 0.3, 0.3, 0.9)
-    yPos = yPos - 25
-
-    -- Usage information
-    local usageInfo = content:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-    usageInfo:SetPoint("TOPLEFT", 25, yPos)
-    usageInfo:SetPoint("TOPRIGHT", -25, yPos)
-    usageInfo:SetJustifyH("LEFT")
-    usageInfo:SetText("This addon adds a 'Builds' button to your talent UI that allows you to import talent builds from popular sources.")
-    usageInfo:SetSpacing(2)
-    yPos = yPos - 40
-
-    -- How to use section
-    local howToUseHeader = content:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-    howToUseHeader:SetPoint("TOPLEFT", 25, yPos)
-    howToUseHeader:SetText("How to Use:")
-    yPos = yPos - 25
-
-    -- List of steps
-    local steps = {
-        "Open your talent UI (press 'N' by default)",
-        "Click the 'Builds' button next to the search box",
-        "Select a source (wowcompare.io, most-popular, community, or worldwide)",
-        "Choose a build category (Mythic, Raid, etc.)",
-        "Select a specific build from the dropdown",
-        "Click 'Import' to apply the build to your character"
-    }
-
-    for _, step in ipairs(steps) do
-        local stepText = content:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-        stepText:SetPoint("TOPLEFT", 45, yPos)
-        stepText:SetPoint("TOPRIGHT", -25, yPos)
-        stepText:SetJustifyH("LEFT")
-        stepText:SetText("• " .. step)
-        yPos = yPos - 20
-    end
-
-    -- Features section
-    yPos = yPos - 20
-    local featuresHeader = content:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
-    featuresHeader:SetPoint("TOPLEFT", 25, yPos)
-    featuresHeader:SetText("Features:")
-    yPos = yPos - 25
-
-    -- List of features
-    local features = {
-        "Import talent builds from multiple sources",
-        "Automatically updates with the latest builds",
-        "Works with all classes and specializations",
-        "Remembers your last selected build",
-        "Simple and intuitive interface"
-    }
-
-    for _, feature in ipairs(features) do
-        local featureText = content:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-        featureText:SetPoint("TOPLEFT", 45, yPos)
-        featureText:SetPoint("TOPRIGHT", -25, yPos)
-        featureText:SetJustifyH("LEFT")
-        featureText:SetText("• " .. feature)
-        yPos = yPos - 20
-    end
-
-    -- Update content height based on the last element position
-    content:SetHeight(math.abs(yPos) + 50)
-
-	-- Let PeaversCommons handle category registration
-	-- The panel will be added as the first subcategory automatically
-
-	-- Add these callback functions
-	panel.OnRefresh = function() end
-	panel.OnCommit = function() end
-	panel.OnDefault = function() end
-
-	return panel
+    -- Use the ConfigUIUtils to create a standard settings panel
+    local panel = ConfigUIUtils.CreateSettingsPanel(
+        "Settings",
+        "Import talent builds from popular sources"
+    )
+    
+    local content = panel.content
+    local yPos = panel.yPos
+    local baseSpacing = panel.baseSpacing
+    
+    -- Add information section
+    local infoHeader, newY = FrameUtils.CreateSectionHeader(content, "How to Use", baseSpacing, yPos)
+    yPos = newY - 10
+    
+    -- Create information text
+    local infoText = content:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+    infoText:SetPoint("TOPLEFT", baseSpacing + 15, yPos)
+    infoText:SetWidth(450)
+    infoText:SetJustifyH("LEFT")
+    infoText:SetSpacing(2)
+    infoText:SetText(
+        "This addon adds a 'Builds' button to your talent UI that allows you to import talent builds from popular sources.\n\n" ..
+        "1. Open your talent UI (press 'N' by default)\n" ..
+        "2. Click the 'Builds' button next to the search box\n" ..
+        "3. Select a source (wowcompare.io, most-popular, community, or worldwide)\n" ..
+        "4. Choose a build category (Mythic, Raid, etc.)\n" ..
+        "5. Select a specific build from the dropdown\n" ..
+        "6. Click 'Import' to apply the build to your character"
+    )
+    
+    -- Calculate height of text and update yPos
+    local textHeight = infoText:GetStringHeight() + 20
+    yPos = yPos - textHeight
+    
+    -- Update content height
+    panel:UpdateContentHeight(yPos)
+    
+    return panel
 end
 
 -- Initialize the configuration UI when called

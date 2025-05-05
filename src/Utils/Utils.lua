@@ -4,47 +4,41 @@ addon.Utils = Utils
 
 -- Access the PeaversCommons library
 local PeaversCommons = _G.PeaversCommons
+local CommonUtils = PeaversCommons.Utils
 
+-- Redirect common utility functions to PeaversCommons
 function Utils.GetPlayerInfo()
-	local playerName, playerRealm = UnitFullName("player")
-	playerRealm = playerRealm or GetRealmName()
-	local fullPlayerName = playerName .. "-" .. playerRealm
-	local _, _, playerClassID = UnitClass("player")
-
-	local specIndex = GetSpecialization()
-	local specName = specIndex and select(2, GetSpecializationInfo(specIndex)) or "None"
-
-	return fullPlayerName, nil, playerClassID, specName
+    local playerInfo = CommonUtils.GetPlayerInfo()
+    return playerInfo.fullName, nil, playerInfo.classID, playerInfo.specName
 end
 
 function Utils.Debug(...)
-	if addon.Config and addon.Config.DEBUG_ENABLED then
-		PeaversCommons.Utils.Debug(addon, ...)
-	end
+    if addon.Config and addon.Config.DEBUG_ENABLED then
+        CommonUtils.Debug(addon, ...)
+    end
 end
 
 function Utils.Print(...)
-    PeaversCommons.Utils.Print(addon, ...)
+    CommonUtils.Print(addon, ...)
 end
 
 function Utils.GetPlayerClassAndSpec()
-	local _, _, playerClassID = Utils.GetPlayerInfo()
-	local currentSpecIndex = GetSpecialization()
-	local specID = currentSpecIndex and GetSpecializationInfo(currentSpecIndex)
-	Utils.Debug("Class ID:", playerClassID, "Spec ID:", specID)
-	return playerClassID, specID
+    local playerInfo = CommonUtils.GetPlayerInfo()
+    Utils.Debug("Class ID:", playerInfo.classID, "Spec ID:", playerInfo.specID)
+    return playerInfo.classID, playerInfo.specID
 end
 
+-- Format a local time from a timestamp
 function Utils.GetFormattedLocalTime(timestamp)
-	local year, month, day, hour, min, sec = timestamp:match("(%d+)-(%d+)-(%d+) (%d+):(%d+):(%d+)")
+    local year, month, day, hour, min, sec = timestamp:match("(%d+)-(%d+)-(%d+) (%d+):(%d+):(%d+)")
 
-	local dateStr = FormatShortDate(tonumber(month), tonumber(day), tonumber(year))
-	local timeStr = GameTime_GetFormattedTime(tonumber(hour), tonumber(min), true)
+    local dateStr = FormatShortDate(tonumber(month), tonumber(day), tonumber(year))
+    local timeStr = GameTime_GetFormattedTime(tonumber(hour), tonumber(min), true)
 
-	return string.format("%s %s", dateStr, timeStr)
+    return string.format("%s %s", dateStr, timeStr)
 end
 
--- Format update time from the data API
+-- Format update time from the data API (specific to PeaversTalents)
 function Utils.GetFormattedUpdate(source)
     if not source then return "Unknown" end
 
@@ -66,6 +60,31 @@ function Utils.GetFormattedUpdate(source)
     end
 
     return Utils.GetFormattedLocalTime(latestUpdate)
+end
+
+-- Add more utility functions that redirect to PeaversCommons
+function Utils.TableContains(table, value)
+    return CommonUtils.TableContains(table, value)
+end
+
+function Utils.TableCount(table)
+    return CommonUtils.TableCount(table)
+end
+
+function Utils.Round(value, decimals)
+    return CommonUtils.Round(value, decimals)
+end
+
+function Utils.FormatNumber(number)
+    return CommonUtils.FormatNumber(number)
+end
+
+function Utils.FormatPercent(value, decimals)
+    return CommonUtils.FormatPercent(value, decimals)
+end
+
+function Utils.FormatTime(seconds)
+    return CommonUtils.FormatTime(seconds)
 end
 
 return Utils

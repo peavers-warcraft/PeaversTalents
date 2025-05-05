@@ -217,11 +217,6 @@ PeaversCommons.Events:Init(addonName, function()
     if addon.ConfigUI and addon.ConfigUI.Initialize then
         addon.ConfigUI:Initialize()
     end
-
-    -- Initialize support UI if available
-    if addon.SupportUI and addon.SupportUI.Initialize then
-        addon.SupportUI:Initialize()
-    end
     
     -- Initialize our ButtonFix module to ensure the button appears
     Utils.Debug("Initializing ButtonFix module")

@@ -3,56 +3,58 @@ local Utils = addon.Utils
 local UIComponents = addon.UIComponents or {}
 addon.UIComponents = UIComponents
 
+-- Access PeaversCommons utilities
+local PeaversCommons = _G.PeaversCommons
+local FrameUtils = PeaversCommons.FrameUtils
+
 function UIComponents.CreateTab(dialog, id, text)
-	local tabName = "TalentExportDialogTab" .. id
-	local tab = CreateFrame("Button", tabName, dialog, "PanelTabButtonTemplate")
-	tab:SetText(text)
-	tab:SetID(id)
-
-	if id == 1 then
-		tab:SetPoint("BOTTOMLEFT", dialog, "BOTTOMLEFT", 5, -30)
-	else
-		tab:SetPoint("LEFT", dialog.Tabs[id - 1], "RIGHT", -16, 0)
-	end
-
-	tab:SetScript("OnClick", function()
-		PanelTemplates_SetTab(dialog, id)
-		for _, content in pairs(dialog.TabContents) do
-			content:Hide()
-		end
-		dialog.TabContents[id]:Show()
-	end)
-
-	return tab
+	local tabPrefix = "TalentExportDialogTab"
+	return FrameUtils.CreateTab(dialog, id, text, tabPrefix)
 end
 
 function UIComponents.CreateTabContent(dialog)
-	local content = CreateFrame("Frame", nil, dialog)
-	content:SetPoint("TOPLEFT", dialog, "TOPLEFT", 0, -25)
-	content:SetPoint("BOTTOMRIGHT", dialog, "BOTTOMRIGHT", 0, -30)
-	content:Hide()
-	return content
+	return FrameUtils.CreateTabContent(dialog)
 end
 
 function UIComponents.CreateTitleBackground(dialog)
-	local titleBg = CreateFrame("Frame", nil, dialog)
-	titleBg:SetPoint("TOPLEFT", 0, 0)
-	titleBg:SetPoint("TOPRIGHT", 0, 0)
-	titleBg:SetHeight(addon.Config.DIALOG.TITLE_HEIGHT)
-	titleBg:SetFrameLevel(dialog:GetFrameLevel() + 1)
-	return titleBg
+	return FrameUtils.CreateTitleBackground(dialog, addon.Config.DIALOG.TITLE_HEIGHT)
 end
 
 function UIComponents.CreateCloseButton(dialog)
-	local closeButton = CreateFrame("Button", nil, dialog, "UIPanelCloseButtonNoScripts")
-	closeButton:SetPoint("TOPRIGHT", dialog, "TOPRIGHT", 0, 0)
-	closeButton:SetFrameStrata("DIALOG")
-	closeButton:SetFrameLevel(dialog:GetFrameLevel() + 1000)
-	closeButton:Raise()
-	closeButton:SetScript("OnClick", function()
-		dialog:Hide()
-	end)
-	return closeButton
+	return FrameUtils.CreateCloseButton(dialog)
+end
+
+-- Add more UI component creation functions as needed
+function UIComponents.CreateSectionHeader(parent, text, x, y)
+	return FrameUtils.CreateSectionHeader(parent, text, x, y)
+end
+
+function UIComponents.CreateLabel(parent, text, x, y, fontObject)
+	return FrameUtils.CreateLabel(parent, text, x, y, fontObject)
+end
+
+function UIComponents.CreateButton(parent, name, text, x, y, width, height, onClick)
+	return FrameUtils.CreateButton(parent, name, text, x, y, width, height, onClick)
+end
+
+function UIComponents.CreateCheckbox(parent, name, text, x, y, initialValue, textColor, onClick)
+	return FrameUtils.CreateCheckbox(parent, name, text, x, y, initialValue, textColor, onClick)
+end
+
+function UIComponents.CreateDropdown(parent, name, x, y, width, initialText)
+	return FrameUtils.CreateDropdown(parent, name, x, y, width, initialText)
+end
+
+function UIComponents.CreateSeparator(parent, x, y, width)
+	return FrameUtils.CreateSeparator(parent, x, y, width)
+end
+
+function UIComponents.CreateScrollFrame(parent)
+	return FrameUtils.CreateScrollFrame(parent)
+end
+
+function UIComponents.AddTooltip(frame, title, text)
+	return FrameUtils.AddTooltip(frame, title, text)
 end
 
 return UIComponents
