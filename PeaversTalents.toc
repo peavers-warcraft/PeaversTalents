@@ -26,7 +26,6 @@ src/UI/TabContent.lua
 
 src/Utils/Utils.lua
 src/Utils/ConfigUI.lua
-src/Utils/SupportUI.lua
 src/Utils/Patrons.lua
 
-src/PeaversTalents.lua
+src/Main.lua
