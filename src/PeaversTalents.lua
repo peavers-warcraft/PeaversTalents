@@ -26,6 +26,10 @@ addon.TabContent = TabContent
 local EventHandler = addon.EventHandler or {}
 addon.EventHandler = EventHandler
 
+-- Reference for ButtonFix module that ensures the button appears
+local ButtonFix = addon.ButtonFix or {}
+addon.ButtonFix = ButtonFix
+
 -- Helper function to check if data addon is loaded and accessible
 local function CheckDataAddonLoaded()
     if not PeaversTalentsData then
@@ -218,26 +222,17 @@ PeaversCommons.Events:Init(addonName, function()
     if addon.SupportUI and addon.SupportUI.Initialize then
         addon.SupportUI:Initialize()
     end
-
-    -- Register for events
-    PeaversCommons.Events:RegisterEvent("ADDON_LOADED", function(event, arg1)
-        if arg1 == "Blizzard_PlayerSpells" or arg1 == "Blizzard_ClassTalentUI" then
-            Utils.Debug("Talent UI loaded")
-            local isTWW = select(4, GetBuildInfo()) >= 110000
-            local talentFrame = isTWW and PlayerSpellsFrame.TalentsFrame or ClassTalentFrame.TalentsTab
-            EventHandler.CreateExportButton()
-        end
-    end)
-
+    
+    -- Initialize our ButtonFix module to ensure the button appears
+    Utils.Debug("Initializing ButtonFix module")
+    if addon.ButtonFix and addon.ButtonFix.Initialize then
+        addon.ButtonFix:Initialize()
+    end
+    
+    -- Initialize version check when player enters world
     PeaversCommons.Events:RegisterEvent("PLAYER_ENTERING_WORLD", function()
         Utils.Debug("Player entering world")
-        local isTWW = select(4, GetBuildInfo()) >= 110000
-        local talentUI = isTWW and "Blizzard_PlayerSpells" or "Blizzard_ClassTalentUI"
-
-        if not C_AddOns.IsAddOnLoaded(talentUI) then
-            UIParentLoadAddOn(talentUI)
-        end
-
+        
         -- Initialize version check
         if addon.VersionCheck then
             addon.VersionCheck:Initialize()

@@ -53,7 +53,20 @@ function EventHandler.OnEvent(self, event, arg1, ...)
         if arg1 == talentUI then
             Utils.Debug("Talent UI loaded")
             talentFrame = isTWW and PlayerSpellsFrame.TalentsFrame or ClassTalentFrame.TalentsTab
-            EventHandler.CreateExportButton()
+            
+            -- Wait a moment to ensure the UI is fully loaded
+            C_Timer.After(0.1, function()
+                if talentFrame and talentFrame.SearchBox then
+                    Utils.Debug("Creating export button from EventHandler")
+                    EventHandler.CreateExportButton()
+                else
+                    Utils.Debug("Talent frame not ready yet, trying again in 0.5 seconds")
+                    C_Timer.After(0.5, function()
+                        Utils.Debug("Second attempt to create export button")
+                        EventHandler.CreateExportButton()
+                    end)
+                end
+            end)
         end
         -- Try to initialize version check after any addon loads
         initializeVersionCheck()
@@ -81,12 +94,30 @@ function EventHandler.OnEvent(self, event, arg1, ...)
 end
 
 function EventHandler.CreateExportButton()
+    -- Make sure talent frame is available and properly loaded
+    if not talentFrame then
+        Utils.Debug("Cannot create button: talentFrame is nil")
+        return
+    end
+    
+    -- Make sure SearchBox exists - it's our anchor point
+    if not talentFrame.SearchBox then
+        Utils.Debug("Cannot create button: talentFrame.SearchBox is nil")
+        return
+    end
+    
+    -- Check if button already exists to avoid duplicates
+    if _G["TalentExportButton"] then
+        Utils.Debug("Export button already exists, skipping creation")
+        return
+    end
+    
     local exportButton = CreateFrame("Button", "TalentExportButton", talentFrame, "UIPanelButtonTemplate")
     exportButton:SetSize(addon.Config.DIALOG.IMPORT_BUTTON.WIDTH, addon.Config.DIALOG.IMPORT_BUTTON.HEIGHT)
     exportButton:SetText("Builds")
     exportButton:SetPoint("LEFT", talentFrame.SearchBox, "RIGHT", 10, 0)
     exportButton:SetScript("OnClick", addon.ShowExportDialog)
-    Utils.Debug("Export button created")
+    Utils.Debug("Export button created successfully")
 end
 
 return EventHandler
