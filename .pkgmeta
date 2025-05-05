@@ -4,7 +4,7 @@ externals:
   PeaversCommons: https://github.com/peavers/PeaversCommons
 
 move-folders:
-  PeaversDynamicStats/PeaversCommons: PeaversCommons
+  PeaversTalents/PeaversCommons: PeaversCommons
 
 ignore:
   - .git
