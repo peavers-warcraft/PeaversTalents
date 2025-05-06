@@ -1,10 +1,8 @@
 package-as: PeaversTalents
 
-externals:
-  PeaversCommons: https://github.com/peavers/PeaversCommons
-
-move-folders:
-  PeaversTalents/PeaversCommons: PeaversCommons
+required-dependencies:
+  - peaverscommons
+  - peaverstalentsdata
 
 ignore:
   - .git
