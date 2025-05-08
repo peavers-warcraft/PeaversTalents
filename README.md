@@ -4,6 +4,9 @@
 
 **A World of Warcraft addon that provides optimized talent builds directly in-game, sourced from top theorycrafting resources.**
 
+### New!
+Check out [peavers.io](https://peavers.io) and [bootstrap.peavers.io](https://bootstrap.peavers.io) for all my WoW addons and support.
+
 ## Overview
 
 PeaversTalents delivers the latest and most effective talent configurations for various PvE encounters. By leveraging data from wowcompare.io, most-popular, and community, this addon ensures players have access to up-to-date builds optimized for both Mythic+ and raid encounters.
