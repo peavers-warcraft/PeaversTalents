@@ -6,8 +6,26 @@ addon.ConfigUI = ConfigUI
 
 -- Access PeaversCommons utilities
 local PeaversCommons = _G.PeaversCommons
+-- Ensure PeaversCommons is loaded
+if not PeaversCommons then
+    print("|cffff0000Error:|r PeaversCommons not found. Please ensure it is installed and enabled.")
+    return
+end
+
+-- Access required utilities
 local ConfigUIUtils = PeaversCommons.ConfigUIUtils
 local FrameUtils = PeaversCommons.FrameUtils
+
+-- Verify dependencies are loaded
+if not ConfigUIUtils then
+    print("|cffff0000Error:|r PeaversCommons.ConfigUIUtils not found. Please ensure PeaversCommons is up to date.")
+    return
+end
+
+if not FrameUtils then
+    print("|cffff0000Error:|r PeaversCommons.FrameUtils not found. Please ensure PeaversCommons is up to date.")
+    return
+end
 
 -- Creates and initializes the options panel
 function ConfigUI:InitializeOptions()

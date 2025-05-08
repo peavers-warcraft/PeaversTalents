@@ -1,5 +1,20 @@
 local addonName, addon = ...
+
+-- Check for PeaversCommons
 local PeaversCommons = _G.PeaversCommons
+if not PeaversCommons then
+    print("|cffff0000Error:|r " .. addonName .. " requires PeaversCommons to work properly.")
+    return
+end
+
+-- Check for required PeaversCommons modules
+local requiredModules = {"Events", "ConfigUIUtils", "FrameUtils"}
+for _, module in ipairs(requiredModules) do
+    if not PeaversCommons[module] then
+        print("|cffff0000Error:|r " .. addonName .. " requires PeaversCommons." .. module .. " which is missing.")
+        return
+    end
+end
 
 addon.name = addonName
 addon.version = C_AddOns.GetAddOnMetadata(addonName, "Version") or "1.0.0"
