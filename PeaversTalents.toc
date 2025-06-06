@@ -1,4 +1,4 @@
-## Interface: 110105
+## Interface: 110107
 
 ## Title: |cff3abdf7Peavers|rTalents
 ## Notes: Pick the latest talent builds from wowcompare.io, most-popular, and community.
