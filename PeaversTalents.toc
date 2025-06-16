@@ -17,7 +17,6 @@ src/Core/Config.lua
 src/Core/DataManager.lua
 src/Core/LocalStorage.lua
 src/Core/EventHandler.lua
-src/Core/VersionCheck.lua
 src/Core/ButtonFix.lua
 
 src/UI/DropdownManager.lua

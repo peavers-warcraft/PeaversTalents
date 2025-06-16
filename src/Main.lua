@@ -213,30 +213,7 @@ PeaversCommons.Events:Init(addonName, function()
     
     PeaversCommons.Events:RegisterEvent("PLAYER_ENTERING_WORLD", function()
         Utils.Debug("Player entering world")
-        
-        if addon.VersionCheck then
-            addon.VersionCheck:Initialize()
-            addon.VersionCheck:BroadcastVersion()
-        end
     end)
-
-    if addon.VersionCheck then
-        PeaversCommons.Events:RegisterEvent("CHAT_MSG_ADDON", function(event, ...)
-            addon.VersionCheck:HandleAddonMessage(...)
-        end)
-
-        PeaversCommons.Events:RegisterEvent("GROUP_ROSTER_UPDATE", function()
-            addon.VersionCheck:BroadcastVersion()
-        end)
-
-        PeaversCommons.Events:RegisterEvent("GROUP_JOINED", function()
-            addon.VersionCheck:BroadcastVersion()
-        end)
-
-        PeaversCommons.Events:RegisterEvent("PLAYER_GUILD_UPDATE", function()
-            addon.VersionCheck:BroadcastVersion()
-        end)
-    end
     
     C_Timer.After(0.5, function()
         PeaversCommons.SettingsUI:CreateSettingsPages(
@@ -251,5 +228,5 @@ PeaversCommons.Events:Init(addonName, function()
         )
     end)
 end, {
-    announceMessage = "Use |cff3abdf7/pt config|r to get started"
+    suppressAnnouncement = true
 })
