@@ -211,6 +211,12 @@ PeaversCommons.Events:Init(addonName, function()
         addon.ButtonFix:Initialize()
     end
     
+    SLASH_PEAVERSTALENTS1 = "/peaverstalents"
+    SLASH_PEAVERSTALENTS2 = "/pt"
+    SlashCmdList["PEAVERSTALENTS"] = function()
+        addon.ShowExportDialog()
+    end
+    
     PeaversCommons.Events:RegisterEvent("PLAYER_ENTERING_WORLD", function()
         Utils.Debug("Player entering world")
     end)
