@@ -4,8 +4,8 @@
 
 **A World of Warcraft addon that provides optimized talent builds directly in-game, sourced from top theorycrafting resources.**
 
-### New!
-Check out [peavers.io](https://peavers.io) and [bootstrap.peavers.io](https://bootstrap.peavers.io) for all my WoW addons and support.
+### Now Available!
+Automate your WoW addon backups and settings with [peavers.io](https://peavers.io) and [vault.peavers.io](https://vault.peavers.io).
 
 ## Overview
 
