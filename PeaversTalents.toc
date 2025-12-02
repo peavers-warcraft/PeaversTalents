@@ -2,28 +2,30 @@
 
 ## Title: |cff3abdf7Peavers|rTalents
 ## Notes: Pick the latest talent builds from wowcompare.io, most-popular, and community.
-## IconTexture: Interface\AddOns\PeaversCommons\src\Media\Icon.tga
-
 ## Author: Peavers
 ## Version: 1.1.54
+
+## IconTexture: Interface\AddOns\PeaversCommons\src\Media\Icon.tga
+## Category-enUS: Peavers
+
+## X-Website: https://peavers.io
+## X-Source-Code: https://github.com/peavers-warcraft/PeaversTalents
 ## X-Curse-Project-ID: 1184820
 
 ## Dependencies: PeaversTalentsData, PeaversCommons
 ## SavedVariables: PeaversTalentsDB
 
-## Category-enUS: Peavers
+src\Core\Config.lua
+src\Core\DataManager.lua
+src\Core\LocalStorage.lua
+src\Core\EventHandler.lua
+src\Core\ButtonFix.lua
 
-src/Core/Config.lua
-src/Core/DataManager.lua
-src/Core/LocalStorage.lua
-src/Core/EventHandler.lua
-src/Core/ButtonFix.lua
+src\UI\DropdownManager.lua
+src\UI\UIComponents.lua
+src\UI\TabContent.lua
 
-src/UI/DropdownManager.lua
-src/UI/UIComponents.lua
-src/UI/TabContent.lua
+src\Utils\Utils.lua
+src\Utils\ConfigUI.lua
 
-src/Utils/Utils.lua
-src/Utils/ConfigUI.lua
-
-src/Main.lua
+src\Main.lua
