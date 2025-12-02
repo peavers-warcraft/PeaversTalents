@@ -81,17 +81,13 @@ function DataManager.GetCategoryBuilds(source, classID, specID, category)
 	return DataManager.GetAvailableEntries(source, classID, specID, category)
 end
 
--- Helper function to get available categories for a source
-function DataManager.GetAvailableCategories(source)
+-- Helper function to get available categories
+function DataManager.GetAvailableCategories()
 	if not CheckDataAddonLoaded() then
 		return {}
 	end
 
-	if source == "top-players" then
-		return { "mythic", "heroic_raid", "mythic_raid" }
-	else
-		return { "mythic", "raid", "misc" }
-	end
+	return { "mythic", "heroic_raid", "mythic_raid" }
 end
 
 function DataManager.GetLastUpdate(source, category)

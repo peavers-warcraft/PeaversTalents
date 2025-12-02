@@ -91,7 +91,7 @@ local function InitializeDropdown(frame, level, source, category, editBox, newLa
 	UIDropDownMenu_EnableDropDown(frame)
 end
 
--- Update dropdown initializers with categories
+-- wowcompare.io dropdown initializers
 function DropdownManager.Initializewowcompare.ioMythicDropdown(frame, level)
 	InitializeDropdown(frame, level, "top-players", "mythic", addon.exportDialog.wowcompare.ioMythicEdit, addon.exportDialog.wowcompare.ioMythicNewLabel)
 end
@@ -102,38 +102,6 @@ end
 
 function DropdownManager.Initializewowcompare.ioMythicRaidDropdown(frame, level)
 	InitializeDropdown(frame, level, "top-players", "mythic_raid", addon.exportDialog.wowcompare.ioMythicRaidEdit, addon.exportDialog.wowcompare.ioMythicRaidNewLabel)
-end
-
-function DropdownManager.Initializemost-popularMythicDropdown(frame, level)
-	InitializeDropdown(frame, level, "most-popular", "mythic", addon.exportDialog.most-popularMythicEdit, addon.exportDialog.most-popularMythicNewLabel)
-end
-
-function DropdownManager.Initializemost-popularRaidDropdown(frame, level)
-	InitializeDropdown(frame, level, "most-popular", "raid", addon.exportDialog.most-popularRaidEdit, addon.exportDialog.most-popularRaidNewLabel)
-end
-
-function DropdownManager.Initializemost-popularMiscDropdown(frame, level)
-	InitializeDropdown(frame, level, "most-popular", "misc", addon.exportDialog.most-popularMiscEdit, addon.exportDialog.most-popularMiscNewLabel)
-end
-
-function DropdownManager.InitializecommunityMythicDropdown(frame, level)
-	InitializeDropdown(frame, level, "community", "mythic", addon.exportDialog.communityMythicEdit, addon.exportDialog.communityMythicNewLabel)
-end
-
-function DropdownManager.InitializecommunityRaidDropdown(frame, level)
-	InitializeDropdown(frame, level, "community", "raid", addon.exportDialog.communityRaidEdit, addon.exportDialog.communityRaidNewLabel)
-end
-
-function DropdownManager.InitializecommunityMiscDropdown(frame, level)
-	InitializeDropdown(frame, level, "community", "misc", addon.exportDialog.communityMiscEdit, addon.exportDialog.communityMiscNewLabel)
-end
-
-function DropdownManager.InitializeUggMythicDropdown(frame, level)
-	InitializeDropdown(frame, level, "worldwide", "mythic", addon.exportDialog.uggMythicEdit, addon.exportDialog.uggMythicNewLabel)
-end
-
-function DropdownManager.InitializeUggRaidDropdown(frame, level)
-	InitializeDropdown(frame, level, "worldwide", "raid", addon.exportDialog.uggRaidEdit, addon.exportDialog.uggRaidNewLabel)
 end
 
 return DropdownManager

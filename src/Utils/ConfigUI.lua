@@ -50,13 +50,12 @@ function ConfigUI:InitializeOptions()
     infoText:SetJustifyH("LEFT")
     infoText:SetSpacing(2)
     infoText:SetText(
-        "This addon adds a 'Builds' button to your talent UI that allows you to import talent builds from popular sources.\n\n" ..
+        "This addon adds a 'Builds' button to your talent UI that allows you to import talent builds from wowcompare.io.\n\n" ..
         "1. Open your talent UI (press 'N' by default)\n" ..
         "2. Click the 'Builds' button next to the search box\n" ..
-        "3. Select a source (wowcompare.io, most-popular, community, or worldwide)\n" ..
-        "4. Choose a build category (Mythic, Raid, etc.)\n" ..
-        "5. Select a specific build from the dropdown\n" ..
-        "6. Click 'Import' to apply the build to your character"
+        "3. Choose a build category (Mythic+, Heroic Raid, Mythic Raid)\n" ..
+        "4. Select a specific build from the dropdown\n" ..
+        "5. Click 'Import' to apply the build to your character"
     )
     
     -- Calculate height of text and update yPos

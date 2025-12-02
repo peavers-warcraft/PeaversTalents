@@ -1,6 +1,6 @@
 # PeaversTalents
 
-A World of Warcraft addon that provides optimized talent builds directly in-game, sourced from top theorycrafting resources.
+A World of Warcraft addon that provides optimized talent builds directly in-game, sourced from wowcompare.io.
 
 **Website:** [peavers.io](https://peavers.io) | **Addon Backup:** [vault.peavers.io](https://vault.peavers.io) | **Issues:** [GitHub](https://github.com/peavers-warcraft/PeaversTalents/issues)
 
@@ -10,7 +10,6 @@ A World of Warcraft addon that provides optimized talent builds directly in-game
 - Boss-specific talent recommendations for raids and dungeons
 - Dedicated "Builds" button in the talent window
 - One-click talent import strings
-- Data sourced from wowcompare.io, most-popular, and community
 
 ## Installation
 

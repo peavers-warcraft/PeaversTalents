@@ -60,33 +60,10 @@ local function CreateExportDialog()
     dialog.TitleBg = UIComponents.CreateTitleBackground(dialog)
     dialog.CloseButton = UIComponents.CreateCloseButton(dialog)
 
-    dialog.Tabs = {}
     dialog.TabContents = {}
-
-    dialog.Tabs[1] = UIComponents.CreateTab(dialog, 1, "wowcompare.io")
-    dialog.Tabs[2] = UIComponents.CreateTab(dialog, 2, "most-popular")
-    dialog.Tabs[3] = UIComponents.CreateTab(dialog, 3, "community")
-    dialog.Tabs[4] = UIComponents.CreateTab(dialog, 4, "worldwide")
-
-    PanelTemplates_SetNumTabs(dialog, 4)
-    PanelTemplates_SetTab(dialog, 1)
-
-    for i = 1, 4 do
-        dialog.TabContents[i] = UIComponents.CreateTabContent(dialog)
-    end
-
-    local tab1 = dialog.TabContents[1]
-    tab1:Show()
-    TabContent.Createwowcompare.ioTab(dialog, tab1)
-
-    local tab2 = dialog.TabContents[2]
-    TabContent.Createmost-popularTab(dialog, tab2)
-
-    local tab3 = dialog.TabContents[3]
-    TabContent.CreateIceyVeinsTab(dialog, tab3)
-
-    local tab4 = dialog.TabContents[4]
-    TabContent.CreateUggTab(dialog, tab4)
+    dialog.TabContents[1] = UIComponents.CreateTabContent(dialog)
+    dialog.TabContents[1]:Show()
+    TabContent.Createwowcompare.ioTab(dialog, dialog.TabContents[1])
 
     dialog:SetMovable(true)
     dialog:EnableMouse(true)
@@ -106,63 +83,31 @@ local function CreateExportDialog()
         local savedSource, savedCategory, savedBuildKey = addon.LocalStorage.LoadSelection()
         Utils.Debug("Loaded saved selection:", savedSource, savedCategory, savedBuildKey)
 
-        local sources = PeaversTalentsData.API.GetSources()
+        local builds = PeaversTalentsData.API.GetBuilds(classID, specID, "top-players")
+        if builds and #builds > 0 then
+            for _, category in ipairs({"mythic", "heroic_raid", "mythic_raid"}) do
+                local dropdownName = "top-players" .. category:gsub("_", ""):gsub("^%l", string.upper):gsub("raid", "Raid") .. "Dropdown"
+                local dropdown = dialog[dropdownName]
+                if dropdown then
+                    local initFuncName = "Initializewowcompare.io" .. category:gsub("_", ""):gsub("^%l", string.upper):gsub("raid", "Raid") .. "Dropdown"
+                    UIDropDownMenu_Initialize(dropdown, addon.DropdownManager[initFuncName])
 
-        for source, tabs in pairs({
-            wowcompare.io = {mythic = "Mythic", raid = "Raid"},
-            most-popular = {mythic = "Mythic", raid = "Raid", misc = "Misc"},
-            ["community"] = {mythic = "Mythic", raid = "Raid", misc = "Misc"},
-            ugg = {mythic = "Mythic", raid = "Raid"}
-        }) do
-            if Utils.TableContains(sources, source) then
-                local builds = PeaversTalentsData.API.GetBuilds(classID, specID, source)
-                if builds and #builds > 0 then
-                    for category, _ in pairs(tabs) do
-                        local dropdownName = source .. category:gsub("^%l", string.upper) .. "Dropdown"
-                        local dropdown = dialog[dropdownName]
-                        if dropdown then
-                            UIDropDownMenu_Initialize(dropdown, addon.DropdownManager["Initialize" .. source:gsub("^%l", string.upper) .. category:gsub("^%l", string.upper) .. "Dropdown"])
-
-                            if savedSource == source and savedCategory == category then
-                                Utils.Debug("Found matching dropdown for saved selection:", dropdownName)
-                                for _, build in ipairs(builds) do
-                                    if build.dungeonID == savedBuildKey then
-                                        local editBox = dialog[source .. category:gsub("^%l", string.upper) .. "Edit"]
-                                        if editBox then
-                                            editBox:SetText(build.talentString or "")
-                                            editBox:SetCursorPosition(0)
-                                            UIDropDownMenu_SetText(dropdown, build.label or tostring(savedBuildKey))
-                                        end
-                                        break
-                                    end
+                    if savedSource == "top-players" and savedCategory == category then
+                        Utils.Debug("Found matching dropdown for saved selection:", dropdownName)
+                        for _, build in ipairs(builds) do
+                            if build.dungeonID == savedBuildKey then
+                                local editBoxName = "top-players" .. category:gsub("_", ""):gsub("^%l", string.upper):gsub("raid", "Raid") .. "Edit"
+                                local editBox = dialog[editBoxName]
+                                if editBox then
+                                    editBox:SetText(build.talentString or "")
+                                    editBox:SetCursorPosition(0)
+                                    UIDropDownMenu_SetText(dropdown, build.label or tostring(savedBuildKey))
                                 end
+                                break
                             end
                         end
                     end
                 end
-            end
-        end
-
-        for i, tab in ipairs(dialog.Tabs) do
-            local source = i == 1 and "top-players" or i == 2 and "most-popular" or i == 3 and "community" or i == 4 and "worldwide"
-            local hasData = Utils.TableContains(sources, source) and
-                    PeaversTalentsData.API.GetBuilds(classID, specID, source) and
-                    #PeaversTalentsData.API.GetBuilds(classID, specID, source) > 0
-
-            if hasData then
-                tab:Show()
-                if source == savedSource then
-                    PanelTemplates_SetTab(dialog, i)
-                    for j, content in pairs(dialog.TabContents) do
-                        if j == i then
-                            content:Show()
-                        else
-                            content:Hide()
-                        end
-                    end
-                end
-            else
-                tab:Hide()
             end
         end
 
