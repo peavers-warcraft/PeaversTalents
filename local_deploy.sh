@@ -18,7 +18,7 @@ echo -e "${GREEN}Deploying addon: ${YELLOW}$ADDON_NAME${NC}"
 WOW_PATHS=(
     "/Applications/World of Warcraft"
     "/Applications/World of Warcraft/_retail_"
-    "/Applications/World of Warcraft/beta"
+    "/Applications/World of Warcraft/_beta_"
     "/Applications/World of Warcraft/_classic_"
     "/Applications/Blizzard/World of Warcraft"
     "$HOME/Applications/World of Warcraft"
@@ -32,29 +32,29 @@ deploy_to_path() {
     local wow_path="$1"
     local interface_path="$wow_path/Interface/AddOns"
     local target_path="$interface_path/$ADDON_NAME"
-    
+
     if [ ! -d "$interface_path" ]; then
         return 1
     fi
-    
+
     echo -e "${GREEN}Found WoW installation at: ${YELLOW}$wow_path${NC}"
-    
+
     # Remove existing addon if present
     if [ -d "$target_path" ]; then
         echo -e "${YELLOW}Removing existing addon...${NC}"
         rm -rf "$target_path"
     fi
-    
+
     # Copy addon files
     echo -e "${YELLOW}Copying addon files...${NC}"
     cp -r . "$target_path"
-    
+
     # Remove deployment scripts and git files from target
     rm -f "$target_path/local_deploy.sh"
     rm -f "$target_path/local_deploy.ps1"
     rm -rf "$target_path/.git"
     rm -f "$target_path/.gitignore"
-    
+
     echo -e "${GREEN}✓ Deployed to: ${YELLOW}$target_path${NC}"
     return 0
 }
