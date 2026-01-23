@@ -3,7 +3,7 @@
 ## Title: |cff3abdf7Peavers|rTalents
 ## Notes: Pick the latest talent builds from Archon.
 ## Author: Peavers
-## Version: 1.1.60
+## Version: 1.1.61
 
 ## IconTexture: Interface\AddOns\PeaversCommons\src\Media\Icon.tga
 ## Category-enUS: Peavers
