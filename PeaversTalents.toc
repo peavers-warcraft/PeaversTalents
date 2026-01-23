@@ -1,4 +1,4 @@
-## Interface: 120000
+## Interface: 120000, 120001
 
 ## Title: |cff3abdf7Peavers|rTalents
 ## Notes: Pick the latest talent builds from Archon.
