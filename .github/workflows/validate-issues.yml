@@ -1,0 +1,16 @@
+# Example caller workflow - copy this to your addon repository
+# Save as: .github/workflows/validate-issues.yml
+
+name: Validate Issues
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  validate:
+    uses: peavers-warcraft/workflow-templates/.github/workflows/validate-issues.yml@main
+    secrets: inherit
