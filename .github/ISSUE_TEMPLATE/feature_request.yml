@@ -1,0 +1,71 @@
+name: Feature Request
+description: Suggest a new feature or enhancement
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! Please describe what you'd like to see added.
+
+  - type: checkboxes
+    id: search
+    attributes:
+      label: Pre-submission checklist
+      options:
+        - label: I have searched existing issues and this feature has not been requested before
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Use Case
+      description: What problem does this feature solve? Why do you need it?
+      placeholder: |
+        I'm always frustrated when...
+        I often need to...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe what you'd like the addon to do
+      placeholder: |
+        The addon should...
+        When I click X, it should Y...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered (Optional)
+      description: Have you considered any alternative solutions or workarounds?
+      placeholder: |
+        I tried using X addon but...
+        A workaround could be...
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to you?
+      options:
+        - Nice to have
+        - Would improve my experience
+        - Important for my use case
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Mockups or Examples (Optional)
+      description: Add any mockups, screenshots, or examples that help illustrate your idea
+    validations:
+      required: false
+

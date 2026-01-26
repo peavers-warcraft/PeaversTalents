@@ -1,0 +1,107 @@
+name: Bug Report
+description: Report a bug or issue with the addon
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! Please fill out the information below to help us fix it quickly.
+
+  - type: checkboxes
+    id: search
+    attributes:
+      label: Pre-submission checklist
+      options:
+        - label: I have searched existing issues and this bug has not been reported before
+          required: true
+
+  - type: dropdown
+    id: wow-version
+    attributes:
+      label: WoW Version
+      description: Which version of World of Warcraft are you playing?
+      options:
+        - Retail
+        - Retail PTR/Beta
+        - Classic Era
+        - Classic Era Hardcore
+        - Season of Discovery
+        - Cataclysm Classic
+        - Classic PTR/Beta
+    validations:
+      required: true
+
+  - type: input
+    id: addon-version
+    attributes:
+      label: Addon Version
+      description: The addon version (found in the .toc file or addon list, e.g., 1.2.3)
+      placeholder: "1.0.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear description of what the bug is
+      placeholder: Describe what happened...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this bug?
+      placeholder: |
+        1. Open the addon settings
+        2. Click on '...'
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: Describe what should have happened...
+    validations:
+      required: true
+
+  - type: textarea
+    id: error-text
+    attributes:
+      label: Lua Error Text
+      description: |
+        If you see a Lua error, paste it here. You can get error text from addons like BugSack or BugGrabber.
+        If no error appeared, write "No error displayed"
+      placeholder: |
+        [string "@Interface/AddOns/..."] in function '...'
+        ...
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: other-addons
+    attributes:
+      label: Other Addons (Optional)
+      description: List any other addons that might be related or could cause conflicts
+      placeholder: |
+        - ElvUI
+        - WeakAuras
+        - Details
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots (Optional)
+      description: Add screenshots to help explain your problem (drag and drop images here)
+    validations:
+      required: false
+
