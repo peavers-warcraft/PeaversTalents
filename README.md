@@ -14,7 +14,8 @@ A World of Warcraft addon that provides optimized talent builds directly in-game
 ## Installation
 
 1. Download from [CurseForge](https://www.curseforge.com/wow/addons/peaverstalents)
-2. Enable the addon on the character selection screen
+2. Ensure PeaversCommons and PeaversTalentsData are also installed
+3. Enable the addon on the character selection screen
 
 ## Usage
 
@@ -26,3 +27,8 @@ A World of Warcraft addon that provides optimized talent builds directly in-game
 ## Configuration
 
 No configuration required. Talent builds are automatically updated daily.
+
+## Dependencies
+
+- PeaversCommons (required)
+- PeaversTalentsData (required)
