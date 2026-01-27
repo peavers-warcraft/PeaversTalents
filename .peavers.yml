@@ -1,0 +1,18 @@
+# .peavers.yml - Addon metadata for peavers.io website
+
+# Icon to display on website
+iconType: TalentRuneIcon
+
+# CurseForge project ID for download statistics
+curseForgeProjectId: 1184820
+
+# Tags for filtering and categorization
+tags:
+  - talents
+
+# Primary hero image for the addon card
+primaryImage: /addons/PeaversTalents/01.png
+
+# Gallery images
+galleryImages:
+  - /addons/PeaversTalents/02.png
