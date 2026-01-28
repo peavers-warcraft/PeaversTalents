@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   release:
-    uses: peavers-warcraft/workflow-templates/.github/workflows/release-on-push.yml@main
+    uses: peavers-warcraft/workflow-templates/.github/workflows/release-on-push.yml@master
     with:
       toc_file: PeaversTalents.toc
       addon_name: PeaversTalents
