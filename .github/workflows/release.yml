@@ -1,4 +1,5 @@
-name: Update Version and Tag
+name: Release
+
 on:
   push:
     branches:
@@ -10,8 +11,11 @@ permissions:
 
 jobs:
   release:
-    uses: peavers-warcraft/workflow-templates/.github/workflows/release-on-push.yml@master
+    uses: peavers-warcraft/workflow-templates/.github/workflows/release.yml@master
     with:
       toc_file: PeaversTalents.toc
       addon_name: PeaversTalents
+      git_user_name: Chris Turner
+      git_user_email: peavers@gmail.com
+      use_self_hosted: false
     secrets: inherit
