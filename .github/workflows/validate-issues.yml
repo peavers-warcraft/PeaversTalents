@@ -12,5 +12,5 @@ permissions:
 
 jobs:
   validate:
-    uses: peavers-warcraft/workflow-templates/.github/workflows/validate-issues.yml@main
+    uses: peavers-warcraft/workflow-templates/.github/workflows/validate-issues.yml@master
     secrets: inherit
