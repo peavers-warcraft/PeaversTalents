@@ -92,6 +92,16 @@ end
 
 -- Create the Archon tab content
 function TabContent.CreateArchonTab(dialog, tab)
+	-- Check maintenance mode first
+	if addon.Config.MAINTENANCE_MODE then
+		local messageText = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+		messageText:SetPoint("CENTER", tab, "CENTER", 0, 20)
+		messageText:SetText(addon.Config.MAINTENANCE_MESSAGE)
+		messageText:SetJustifyH("CENTER")
+		messageText:SetWidth(addon.Config.DIALOG.WIDTH - 60)
+		return
+	end
+
 	local prevElement = nil
 	for i, section in ipairs(TAB_CONFIG.sections) do
 		prevElement = CreateSection(dialog, tab, section, prevElement, i == 1)
