@@ -104,7 +104,7 @@ function LocalStorage.LoadSelection(source, category)
 	end
 
 	Utils.Debug("Loaded selection:", savedSelection.source, savedSelection.category, savedSelection.buildKey, savedSelection.talentString)
-	return savedSelection.source, savedSelection.category, savedSelection.buildKey, savedSelection.talentString
+	return savedSelection.source, savedSelection.category, savedSelection.buildKey, savedSelection.talentString, savedSelection.hasBeenSeen
 end
 
 function LocalStorage.MarkAsSeen(source, category)

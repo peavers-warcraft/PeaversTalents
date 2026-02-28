@@ -34,9 +34,6 @@ addon.UIComponents = UIComponents
 local TabContent = addon.TabContent or {}
 addon.TabContent = TabContent
 
-local EventHandler = addon.EventHandler or {}
-addon.EventHandler = EventHandler
-
 local ButtonFix = addon.ButtonFix or {}
 addon.ButtonFix = ButtonFix
 
@@ -131,15 +128,6 @@ function addon.ShowExportDialog()
     Utils.Debug("Showing export dialog")
     local dialog = addon.exportDialog or CreateExportDialog()
     dialog:Show()
-end
-
-function Utils.TableContains(tbl, value)
-    for _, v in pairs(tbl) do
-        if v == value then
-            return true
-        end
-    end
-    return false
 end
 
 PeaversCommons.Events:Init(addonName, function()
