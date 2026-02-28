@@ -62,29 +62,4 @@ function Utils.GetFormattedUpdate(source)
     return Utils.GetFormattedLocalTime(latestUpdate)
 end
 
--- Add more utility functions that redirect to PeaversCommons
-function Utils.TableContains(table, value)
-    return CommonUtils.TableContains(table, value)
-end
-
-function Utils.TableCount(table)
-    return CommonUtils.TableCount(table)
-end
-
-function Utils.Round(value, decimals)
-    return CommonUtils.Round(value, decimals)
-end
-
-function Utils.FormatNumber(number)
-    return CommonUtils.FormatNumber(number)
-end
-
-function Utils.FormatPercent(value, decimals)
-    return CommonUtils.FormatPercent(value, decimals)
-end
-
-function Utils.FormatTime(seconds)
-    return CommonUtils.FormatTime(seconds)
-end
-
 return Utils

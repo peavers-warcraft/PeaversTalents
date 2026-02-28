@@ -33,7 +33,7 @@ local function InitializeDropdown(frame, level, source, category, editBox, newLa
 	end
 
 	-- Load saved selection for this source/category
-	local savedSource, savedCategory, savedBuildKey, savedTalentString = addon.LocalStorage.LoadSelection(source, category)
+	local savedSource, savedCategory, savedBuildKey, savedTalentString, savedHasBeenSeen = addon.LocalStorage.LoadSelection(source, category)
 	Utils.Debug("Loaded selection:", savedSource, savedCategory, savedBuildKey)
 
 	-- If we have a saved selection, find and apply it
@@ -49,7 +49,7 @@ local function InitializeDropdown(frame, level, source, category, editBox, newLa
 				-- Only show New label if talent strings are different and hasn't been seen
 				if savedTalentString and entry.data.talentString and
 					savedTalentString ~= entry.data.talentString and
-					not (savedSelection and savedSelection.hasBeenSeen) then
+					not savedHasBeenSeen then
 					Utils.Debug("Talent strings different and not seen - showing New label")
 					if newLabel then newLabel:Show() end
 				end
