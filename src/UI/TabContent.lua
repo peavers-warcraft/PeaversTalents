@@ -12,29 +12,56 @@ function TabContent.CreateEditBox(parent, name)
 	return editBox
 end
 
--- Configuration for Archon tab sections
-local TAB_CONFIG = {
-	sections = {
-		{
-			name = "Mythic+",
-			dropdownInitializer = "InitializeArchonMythicDropdown",
-			editBoxPrefix = "archonMythic",
-			source = "archon",
-			category = "mythic"
-		},
-		{
-			name = "Heroic Raid",
-			dropdownInitializer = "InitializeArchonHeroicRaidDropdown",
-			editBoxPrefix = "archonHeroicRaid",
-			source = "archon",
-			category = "heroic_raid"
-		},
-		{
-			name = "Mythic Raid",
-			dropdownInitializer = "InitializeArchonMythicRaidDropdown",
-			editBoxPrefix = "archonMythicRaid",
-			source = "archon",
-			category = "mythic_raid"
+-- Configuration for different tab types
+local TAB_CONFIGS = {
+	archon = {
+		sections = {
+			{
+				name = "Mythic+",
+				dropdownInitializer = "InitializeArchonMythicDropdown",
+				editBoxPrefix = "archonMythic",
+				source = "archon",
+				category = "mythic"
+			},
+			{
+				name = "Heroic Raid",
+				dropdownInitializer = "InitializeArchonHeroicRaidDropdown",
+				editBoxPrefix = "archonHeroicRaid",
+				source = "archon",
+				category = "heroic_raid"
+			},
+			{
+				name = "Mythic Raid",
+				dropdownInitializer = "InitializeArchonMythicRaidDropdown",
+				editBoxPrefix = "archonMythicRaid",
+				source = "archon",
+				category = "mythic_raid"
+			}
+		}
+	},
+	wowhead = {
+		sections = {
+			{
+				name = "Mythic+",
+				dropdownInitializer = "InitializeWowheadMythicDropdown",
+				editBoxPrefix = "wowheadMythic",
+				source = "wowhead",
+				category = "mythic"
+			},
+			{
+				name = "Raid",
+				dropdownInitializer = "InitializeWowheadRaidDropdown",
+				editBoxPrefix = "wowheadRaid",
+				source = "wowhead",
+				category = "raid"
+			},
+			{
+				name = "Misc",
+				dropdownInitializer = "InitializeWowheadMiscDropdown",
+				editBoxPrefix = "wowheadMisc",
+				source = "wowhead",
+				category = "misc"
+			}
 		}
 	}
 }
@@ -90,9 +117,26 @@ local function CreateSection(dialog, tab, section, prevElement, isFirst)
 	return editBox
 end
 
--- Create the Archon tab content
+-- Generic function to create any type of tab
+local function CreateTab(dialog, tab, tabType)
+	local config = TAB_CONFIGS[tabType]
+	if not config then
+		error("Unknown tab type: " .. tostring(tabType))
+		return
+	end
+
+	local prevElement = nil
+	for i, section in ipairs(config.sections) do
+		prevElement = CreateSection(dialog, tab, section, prevElement, i == 1)
+	end
+
+	local instructionsText = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+	instructionsText:SetPoint("BOTTOM", tab, "BOTTOM", 0, 55)
+	instructionsText:SetText("Updated " .. Utils.GetFormattedUpdate(config.sections[1].source))
+	instructionsText:SetJustifyH("CENTER")
+end
+
 function TabContent.CreateArchonTab(dialog, tab)
-	-- Check maintenance mode first
 	if addon.Config.MAINTENANCE_MODE then
 		local messageText = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
 		messageText:SetPoint("CENTER", tab, "CENTER", 0, 20)
@@ -102,15 +146,11 @@ function TabContent.CreateArchonTab(dialog, tab)
 		return
 	end
 
-	local prevElement = nil
-	for i, section in ipairs(TAB_CONFIG.sections) do
-		prevElement = CreateSection(dialog, tab, section, prevElement, i == 1)
-	end
+	CreateTab(dialog, tab, "archon")
+end
 
-	local instructionsText = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-	instructionsText:SetPoint("BOTTOM", tab, "BOTTOM", 0, 55)
-	instructionsText:SetText("Updated " .. Utils.GetFormattedUpdate("archon"))
-	instructionsText:SetJustifyH("CENTER")
+function TabContent.CreateWowheadTab(dialog, tab)
+	CreateTab(dialog, tab, "wowhead")
 end
 
 return TabContent

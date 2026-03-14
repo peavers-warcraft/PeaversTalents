@@ -50,10 +50,10 @@ function ConfigUI:InitializeOptions()
     infoText:SetJustifyH("LEFT")
     infoText:SetSpacing(2)
     infoText:SetText(
-        "This addon adds a 'Builds' button to your talent UI that allows you to import talent builds from Archon.\n\n" ..
+        "This addon adds a 'Builds' button to your talent UI that allows you to import talent builds from Archon and Wowhead.\n\n" ..
         "1. Open your talent UI (press 'N' by default)\n" ..
         "2. Click the 'Builds' button next to the search box\n" ..
-        "3. Choose a build category (Mythic+, Heroic Raid, Mythic Raid)\n" ..
+        "3. Switch between sources using the tabs at the bottom\n" ..
         "4. Select a specific build from the dropdown\n" ..
         "5. Click 'Import' to apply the build to your character"
     )

@@ -104,4 +104,17 @@ function DropdownManager.InitializeArchonMythicRaidDropdown(frame, level)
 	InitializeDropdown(frame, level, "archon", "mythic_raid", addon.exportDialog.archonMythicRaidEdit, addon.exportDialog.archonMythicRaidNewLabel)
 end
 
+-- Wowhead dropdown initializers
+function DropdownManager.InitializeWowheadMythicDropdown(frame, level)
+	InitializeDropdown(frame, level, "wowhead", "mythic", addon.exportDialog.wowheadMythicEdit, addon.exportDialog.wowheadMythicNewLabel)
+end
+
+function DropdownManager.InitializeWowheadRaidDropdown(frame, level)
+	InitializeDropdown(frame, level, "wowhead", "raid", addon.exportDialog.wowheadRaidEdit, addon.exportDialog.wowheadRaidNewLabel)
+end
+
+function DropdownManager.InitializeWowheadMiscDropdown(frame, level)
+	InitializeDropdown(frame, level, "wowhead", "misc", addon.exportDialog.wowheadMiscEdit, addon.exportDialog.wowheadMiscNewLabel)
+end
+
 return DropdownManager
