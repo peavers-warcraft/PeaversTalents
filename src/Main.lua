@@ -37,12 +37,41 @@ addon.TabContent = TabContent
 local ButtonFix = addon.ButtonFix or {}
 addon.ButtonFix = ButtonFix
 
+-- Tab configuration: index -> source name and tab creator
+local TAB_SOURCES = {
+    [1] = { source = "archon",  label = "Archon",  creator = "CreateArchonTab" },
+    [2] = { source = "wowhead", label = "Wowhead", creator = "CreateWowheadTab" },
+}
+
+-- Source -> categories and their dropdown/editbox naming conventions
+local SOURCE_CATEGORIES = {
+    archon = {
+        { category = "mythic",      prefix = "archonMythic",     initFunc = "InitializeArchonMythicDropdown" },
+        { category = "heroic_raid", prefix = "archonHeroicRaid", initFunc = "InitializeArchonHeroicRaidDropdown" },
+        { category = "mythic_raid", prefix = "archonMythicRaid", initFunc = "InitializeArchonMythicRaidDropdown" },
+    },
+    wowhead = {
+        { category = "mythic", prefix = "wowheadMythic", initFunc = "InitializeWowheadMythicDropdown" },
+        { category = "raid",   prefix = "wowheadRaid",   initFunc = "InitializeWowheadRaidDropdown" },
+        { category = "misc",   prefix = "wowheadMisc",   initFunc = "InitializeWowheadMiscDropdown" },
+    },
+}
+
 local function CheckDataAddonLoaded()
     if not PeaversTalentsData then
         Utils.Debug("PeaversTalentsData addon not found!")
         return false
     end
     return true
+end
+
+local function TableContains(tbl, value)
+    for _, v in pairs(tbl) do
+        if v == value then
+            return true
+        end
+    end
+    return false
 end
 
 local function CreateExportDialog()
@@ -57,10 +86,26 @@ local function CreateExportDialog()
     dialog.TitleBg = UIComponents.CreateTitleBackground(dialog)
     dialog.CloseButton = UIComponents.CreateCloseButton(dialog)
 
+    -- Create tabs
+    dialog.Tabs = {}
     dialog.TabContents = {}
-    dialog.TabContents[1] = UIComponents.CreateTabContent(dialog)
+
+    for i, tabInfo in ipairs(TAB_SOURCES) do
+        dialog.Tabs[i] = UIComponents.CreateTab(dialog, i, tabInfo.label)
+        dialog.TabContents[i] = UIComponents.CreateTabContent(dialog)
+    end
+
+    PanelTemplates_SetNumTabs(dialog, #TAB_SOURCES)
+    PanelTemplates_SetTab(dialog, 1)
+
+    -- Show first tab, create content for all tabs
     dialog.TabContents[1]:Show()
-    TabContent.CreateArchonTab(dialog, dialog.TabContents[1])
+    for i, tabInfo in ipairs(TAB_SOURCES) do
+        TabContent[tabInfo.creator](dialog, dialog.TabContents[i])
+        if i > 1 then
+            dialog.TabContents[i]:Hide()
+        end
+    end
 
     dialog:SetMovable(true)
     dialog:EnableMouse(true)
@@ -80,31 +125,58 @@ local function CreateExportDialog()
         local savedSource, savedCategory, savedBuildKey = addon.LocalStorage.LoadSelection()
         Utils.Debug("Loaded saved selection:", savedSource, savedCategory, savedBuildKey)
 
-        local builds = PeaversTalentsData.API.GetBuilds(classID, specID, "archon")
-        if builds and #builds > 0 then
-            for _, category in ipairs({"mythic", "heroic_raid", "mythic_raid"}) do
-                local dropdownName = "archon" .. category:gsub("_", ""):gsub("^%l", string.upper):gsub("raid", "Raid") .. "Dropdown"
-                local dropdown = dialog[dropdownName]
-                if dropdown then
-                    local initFuncName = "InitializeArchon" .. category:gsub("_", ""):gsub("^%l", string.upper):gsub("raid", "Raid") .. "Dropdown"
-                    UIDropDownMenu_Initialize(dropdown, addon.DropdownManager[initFuncName])
+        local sources = PeaversTalentsData.API.GetSources()
 
-                    if savedSource == "archon" and savedCategory == category then
-                        Utils.Debug("Found matching dropdown for saved selection:", dropdownName)
-                        for _, build in ipairs(builds) do
-                            if build.dungeonID == savedBuildKey then
-                                local editBoxName = "archon" .. category:gsub("_", ""):gsub("^%l", string.upper):gsub("raid", "Raid") .. "Edit"
-                                local editBox = dialog[editBoxName]
-                                if editBox then
-                                    editBox:SetText(build.talentString or "")
-                                    editBox:SetCursorPosition(0)
-                                    UIDropDownMenu_SetText(dropdown, build.label or tostring(savedBuildKey))
+        -- Initialize dropdowns for all sources that have data
+        for sourceName, categories in pairs(SOURCE_CATEGORIES) do
+            if TableContains(sources, sourceName) then
+                local builds = PeaversTalentsData.API.GetBuilds(classID, specID, sourceName)
+                if builds and #builds > 0 then
+                    for _, cat in ipairs(categories) do
+                        local dropdown = dialog[cat.prefix .. "Dropdown"]
+                        if dropdown and addon.DropdownManager[cat.initFunc] then
+                            UIDropDownMenu_Initialize(dropdown, addon.DropdownManager[cat.initFunc])
+
+                            -- Restore saved selection if it matches
+                            if savedSource == sourceName and savedCategory == cat.category then
+                                for _, build in ipairs(builds) do
+                                    if build.dungeonID == savedBuildKey then
+                                        local editBox = dialog[cat.prefix .. "Edit"]
+                                        if editBox then
+                                            editBox:SetText(build.talentString or "")
+                                            editBox:SetCursorPosition(0)
+                                            UIDropDownMenu_SetText(dropdown, build.label or tostring(savedBuildKey))
+                                        end
+                                        break
+                                    end
                                 end
-                                break
                             end
                         end
                     end
                 end
+            end
+        end
+
+        -- Show/hide tabs based on data availability, select saved source tab
+        for i, tabInfo in ipairs(TAB_SOURCES) do
+            local hasData = TableContains(sources, tabInfo.source) and
+                    PeaversTalentsData.API.GetBuilds(classID, specID, tabInfo.source) and
+                    #PeaversTalentsData.API.GetBuilds(classID, specID, tabInfo.source) > 0
+
+            if hasData then
+                dialog.Tabs[i]:Show()
+                if tabInfo.source == savedSource then
+                    PanelTemplates_SetTab(dialog, i)
+                    for j, content in pairs(dialog.TabContents) do
+                        if j == i then
+                            content:Show()
+                        else
+                            content:Hide()
+                        end
+                    end
+                end
+            else
+                dialog.Tabs[i]:Hide()
             end
         end
 
@@ -138,22 +210,22 @@ PeaversCommons.Events:Init(addonName, function()
     if addon.ConfigUI and addon.ConfigUI.Initialize then
         addon.ConfigUI:Initialize()
     end
-    
+
     Utils.Debug("Initializing ButtonFix module")
     if addon.ButtonFix and addon.ButtonFix.Initialize then
         addon.ButtonFix:Initialize()
     end
-    
+
     SLASH_PEAVERSTALENTS1 = "/peaverstalents"
     SLASH_PEAVERSTALENTS2 = "/pt"
     SlashCmdList["PEAVERSTALENTS"] = function()
         addon.ShowExportDialog()
     end
-    
+
     PeaversCommons.Events:RegisterEvent("PLAYER_ENTERING_WORLD", function()
         Utils.Debug("Player entering world")
     end)
-    
+
     C_Timer.After(0.5, function()
         PeaversCommons.SettingsUI:CreateSettingsPages(
             addon,
