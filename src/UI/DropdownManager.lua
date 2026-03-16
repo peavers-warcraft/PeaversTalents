@@ -91,17 +91,50 @@ local function InitializeDropdown(frame, level, source, category, editBox, newLa
 	UIDropDownMenu_EnableDropDown(frame)
 end
 
+-- Helper to safely get dialog elements
+local function GetDialogElement(key)
+	if addon.exportDialog then
+		return addon.exportDialog[key]
+	end
+	return nil
+end
+
 -- wowcompare.io dropdown initializers
-function DropdownManager.Initializewowcompare.ioMythicDropdown(frame, level)
-	InitializeDropdown(frame, level, "top-players", "mythic", addon.exportDialog.wowcompare.ioMythicEdit, addon.exportDialog.wowcompare.ioMythicNewLabel)
+function DropdownManager.Initializewowcompare.ioMythicDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("wowcompare.ioMythicEdit")
+	local newLabel = newLabelOverride or GetDialogElement("wowcompare.ioMythicNewLabel")
+	InitializeDropdown(frame, level, "top-players", "mythic", editBox, newLabel)
 end
 
-function DropdownManager.Initializewowcompare.ioHeroicRaidDropdown(frame, level)
-	InitializeDropdown(frame, level, "top-players", "heroic_raid", addon.exportDialog.wowcompare.ioHeroicRaidEdit, addon.exportDialog.wowcompare.ioHeroicRaidNewLabel)
+function DropdownManager.Initializewowcompare.ioHeroicRaidDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("wowcompare.ioHeroicRaidEdit")
+	local newLabel = newLabelOverride or GetDialogElement("wowcompare.ioHeroicRaidNewLabel")
+	InitializeDropdown(frame, level, "top-players", "heroic_raid", editBox, newLabel)
 end
 
-function DropdownManager.Initializewowcompare.ioMythicRaidDropdown(frame, level)
-	InitializeDropdown(frame, level, "top-players", "mythic_raid", addon.exportDialog.wowcompare.ioMythicRaidEdit, addon.exportDialog.wowcompare.ioMythicRaidNewLabel)
+function DropdownManager.Initializewowcompare.ioMythicRaidDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("wowcompare.ioMythicRaidEdit")
+	local newLabel = newLabelOverride or GetDialogElement("wowcompare.ioMythicRaidNewLabel")
+	InitializeDropdown(frame, level, "top-players", "mythic_raid", editBox, newLabel)
+end
+
+-- most-popular dropdown initializers
+function DropdownManager.Initializemost-popularMythicDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("most-popularMythicEdit")
+	local newLabel = newLabelOverride or GetDialogElement("most-popularMythicNewLabel")
+	InitializeDropdown(frame, level, "most-popular", "mythic", editBox, newLabel)
+end
+
+function DropdownManager.Initializemost-popularRaidDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("most-popularRaidEdit")
+	local newLabel = newLabelOverride or GetDialogElement("most-popularRaidNewLabel")
+	InitializeDropdown(frame, level, "most-popular", "raid", editBox, newLabel)
+end
+
+function DropdownManager.Initializemost-popularMiscDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("most-popularMiscEdit")
+	local newLabel = newLabelOverride or GetDialogElement("most-popularMiscNewLabel")
+	InitializeDropdown(frame, level, "most-popular", "misc", editBox, newLabel)
 end
 
 -- most-popular dropdown initializers

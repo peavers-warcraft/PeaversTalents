@@ -12,56 +12,56 @@ function TabContent.CreateEditBox(parent, name)
 	return editBox
 end
 
--- Configuration for different tab types
-local TAB_CONFIGS = {
-	wowcompare.io = {
-		sections = {
-			{
-				name = "Mythic+",
-				dropdownInitializer = "Initializewowcompare.ioMythicDropdown",
-				editBoxPrefix = "wowcompare.ioMythic",
-				source = "top-players",
-				category = "mythic"
-			},
-			{
-				name = "Heroic Raid",
-				dropdownInitializer = "Initializewowcompare.ioHeroicRaidDropdown",
-				editBoxPrefix = "wowcompare.ioHeroicRaid",
-				source = "top-players",
-				category = "heroic_raid"
-			},
-			{
-				name = "Mythic Raid",
-				dropdownInitializer = "Initializewowcompare.ioMythicRaidDropdown",
-				editBoxPrefix = "wowcompare.ioMythicRaid",
-				source = "top-players",
-				category = "mythic_raid"
-			}
+-- Configuration for wowcompare.io tab sections
+local wowcompare.io_TAB_CONFIG = {
+	sections = {
+		{
+			name = "Mythic+",
+			dropdownInitializer = "Initializewowcompare.ioMythicDropdown",
+			editBoxPrefix = "wowcompare.ioMythic",
+			source = "top-players",
+			category = "mythic"
+		},
+		{
+			name = "Heroic Raid",
+			dropdownInitializer = "Initializewowcompare.ioHeroicRaidDropdown",
+			editBoxPrefix = "wowcompare.ioHeroicRaid",
+			source = "top-players",
+			category = "heroic_raid"
+		},
+		{
+			name = "Mythic Raid",
+			dropdownInitializer = "Initializewowcompare.ioMythicRaidDropdown",
+			editBoxPrefix = "wowcompare.ioMythicRaid",
+			source = "top-players",
+			category = "mythic_raid"
 		}
-	},
-	most-popular = {
-		sections = {
-			{
-				name = "Mythic+",
-				dropdownInitializer = "Initializemost-popularMythicDropdown",
-				editBoxPrefix = "most-popularMythic",
-				source = "most-popular",
-				category = "mythic"
-			},
-			{
-				name = "Raid",
-				dropdownInitializer = "Initializemost-popularRaidDropdown",
-				editBoxPrefix = "most-popularRaid",
-				source = "most-popular",
-				category = "raid"
-			},
-			{
-				name = "Misc",
-				dropdownInitializer = "Initializemost-popularMiscDropdown",
-				editBoxPrefix = "most-popularMisc",
-				source = "most-popular",
-				category = "misc"
-			}
+	}
+}
+
+-- Configuration for most-popular tab sections
+local most-popular_TAB_CONFIG = {
+	sections = {
+		{
+			name = "Mythic+",
+			dropdownInitializer = "Initializemost-popularMythicDropdown",
+			editBoxPrefix = "most-popularMythic",
+			source = "most-popular",
+			category = "mythic"
+		},
+		{
+			name = "Raid",
+			dropdownInitializer = "Initializemost-popularRaidDropdown",
+			editBoxPrefix = "most-popularRaid",
+			source = "most-popular",
+			category = "raid"
+		},
+		{
+			name = "Misc",
+			dropdownInitializer = "Initializemost-popularMiscDropdown",
+			editBoxPrefix = "most-popularMisc",
+			source = "most-popular",
+			category = "misc"
 		}
 	}
 }
@@ -80,8 +80,8 @@ local function CreateSection(dialog, tab, section, prevElement, isFirst)
 	dialog[descKey] = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 	dialog[descKey]:SetPoint("TOPLEFT", label, "BOTTOMLEFT", 0, -addon.Config.DIALOG.PADDING.LABEL)
 
-	-- Create the dropdown
-	local dropdownName = "TalentExportDialog_" .. section.name:gsub("%+", "") .. "Dropdown"
+	-- Create the dropdown (use editBoxPrefix for unique frame names across tabs)
+	local dropdownName = "TalentExportDialog_" .. section.editBoxPrefix .. "Dropdown"
 	local dropdown = CreateFrame("Frame", dropdownName, tab, "UIDropDownMenuTemplate")
 	dropdown:SetPoint("TOPLEFT", dialog[descKey], "BOTTOMLEFT", -15, -5)
 	UIDropDownMenu_SetWidth(dropdown, 150)
@@ -117,11 +117,14 @@ local function CreateSection(dialog, tab, section, prevElement, isFirst)
 	return editBox
 end
 
--- Generic function to create any type of tab
-local function CreateTab(dialog, tab, tabType)
-	local config = TAB_CONFIGS[tabType]
-	if not config then
-		error("Unknown tab type: " .. tostring(tabType))
+-- Generic function to create a source tab
+local function CreateSourceTab(dialog, tab, config, source)
+	if addon.Config.MAINTENANCE_MODE then
+		local messageText = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+		messageText:SetPoint("CENTER", tab, "CENTER", 0, 20)
+		messageText:SetText(addon.Config.MAINTENANCE_MESSAGE)
+		messageText:SetJustifyH("CENTER")
+		messageText:SetWidth(addon.Config.DIALOG.WIDTH - 60)
 		return
 	end
 
@@ -132,25 +135,16 @@ local function CreateTab(dialog, tab, tabType)
 
 	local instructionsText = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
 	instructionsText:SetPoint("BOTTOM", tab, "BOTTOM", 0, 55)
-	instructionsText:SetText("Updated " .. Utils.GetFormattedUpdate(config.sections[1].source))
+	instructionsText:SetText("Updated " .. Utils.GetFormattedUpdate(source))
 	instructionsText:SetJustifyH("CENTER")
 end
 
 function TabContent.Createwowcompare.ioTab(dialog, tab)
-	if addon.Config.MAINTENANCE_MODE then
-		local messageText = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-		messageText:SetPoint("CENTER", tab, "CENTER", 0, 20)
-		messageText:SetText(addon.Config.MAINTENANCE_MESSAGE)
-		messageText:SetJustifyH("CENTER")
-		messageText:SetWidth(addon.Config.DIALOG.WIDTH - 60)
-		return
-	end
-
-	CreateTab(dialog, tab, "top-players")
+	CreateSourceTab(dialog, tab, wowcompare.io_TAB_CONFIG, "top-players")
 end
 
 function TabContent.Createmost-popularTab(dialog, tab)
-	CreateTab(dialog, tab, "most-popular")
+	CreateSourceTab(dialog, tab, most-popular_TAB_CONFIG, "most-popular")
 end
 
 return TabContent
