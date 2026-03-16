@@ -91,17 +91,50 @@ local function InitializeDropdown(frame, level, source, category, editBox, newLa
 	UIDropDownMenu_EnableDropDown(frame)
 end
 
+-- Helper to safely get dialog elements
+local function GetDialogElement(key)
+	if addon.exportDialog then
+		return addon.exportDialog[key]
+	end
+	return nil
+end
+
 -- Archon dropdown initializers
-function DropdownManager.InitializeArchonMythicDropdown(frame, level)
-	InitializeDropdown(frame, level, "archon", "mythic", addon.exportDialog.archonMythicEdit, addon.exportDialog.archonMythicNewLabel)
+function DropdownManager.InitializeArchonMythicDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("archonMythicEdit")
+	local newLabel = newLabelOverride or GetDialogElement("archonMythicNewLabel")
+	InitializeDropdown(frame, level, "archon", "mythic", editBox, newLabel)
 end
 
-function DropdownManager.InitializeArchonHeroicRaidDropdown(frame, level)
-	InitializeDropdown(frame, level, "archon", "heroic_raid", addon.exportDialog.archonHeroicRaidEdit, addon.exportDialog.archonHeroicRaidNewLabel)
+function DropdownManager.InitializeArchonHeroicRaidDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("archonHeroicRaidEdit")
+	local newLabel = newLabelOverride or GetDialogElement("archonHeroicRaidNewLabel")
+	InitializeDropdown(frame, level, "archon", "heroic_raid", editBox, newLabel)
 end
 
-function DropdownManager.InitializeArchonMythicRaidDropdown(frame, level)
-	InitializeDropdown(frame, level, "archon", "mythic_raid", addon.exportDialog.archonMythicRaidEdit, addon.exportDialog.archonMythicRaidNewLabel)
+function DropdownManager.InitializeArchonMythicRaidDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("archonMythicRaidEdit")
+	local newLabel = newLabelOverride or GetDialogElement("archonMythicRaidNewLabel")
+	InitializeDropdown(frame, level, "archon", "mythic_raid", editBox, newLabel)
+end
+
+-- Wowhead dropdown initializers
+function DropdownManager.InitializeWowheadMythicDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("wowheadMythicEdit")
+	local newLabel = newLabelOverride or GetDialogElement("wowheadMythicNewLabel")
+	InitializeDropdown(frame, level, "wowhead", "mythic", editBox, newLabel)
+end
+
+function DropdownManager.InitializeWowheadRaidDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("wowheadRaidEdit")
+	local newLabel = newLabelOverride or GetDialogElement("wowheadRaidNewLabel")
+	InitializeDropdown(frame, level, "wowhead", "raid", editBox, newLabel)
+end
+
+function DropdownManager.InitializeWowheadMiscDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("wowheadMiscEdit")
+	local newLabel = newLabelOverride or GetDialogElement("wowheadMiscNewLabel")
+	InitializeDropdown(frame, level, "wowhead", "misc", editBox, newLabel)
 end
 
 -- Wowhead dropdown initializers

@@ -19,4 +19,8 @@ function UIComponents.CreateCloseButton(dialog)
 	return FrameUtils.CreateCloseButton(dialog)
 end
 
+function UIComponents.CreateTab(dialog, id, text, tabPrefix)
+	return FrameUtils.CreateTab(dialog, id, text, tabPrefix)
+end
+
 return UIComponents
