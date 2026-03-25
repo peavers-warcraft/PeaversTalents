@@ -106,6 +106,12 @@ function DropdownManager.Initializewowcompare.ioMythicDropdown(frame, level, _, 
 	InitializeDropdown(frame, level, "top-players", "mythic", editBox, newLabel)
 end
 
+function DropdownManager.Initializewowcompare.ioNormalRaidDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("wowcompare.ioNormalRaidEdit")
+	local newLabel = newLabelOverride or GetDialogElement("wowcompare.ioNormalRaidNewLabel")
+	InitializeDropdown(frame, level, "top-players", "normal_raid", editBox, newLabel)
+end
+
 function DropdownManager.Initializewowcompare.ioHeroicRaidDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
 	local editBox = editBoxOverride or GetDialogElement("wowcompare.ioHeroicRaidEdit")
 	local newLabel = newLabelOverride or GetDialogElement("wowcompare.ioHeroicRaidNewLabel")

@@ -53,6 +53,7 @@ local TAB_SOURCES = {
         creator = "Createwowcompare.ioTab",
         categories = {
             { category = "mythic", prefix = "wowcompare.ioMythic", initFunc = "Initializewowcompare.ioMythicDropdown" },
+            { category = "normal_raid", prefix = "wowcompare.ioNormalRaid", initFunc = "Initializewowcompare.ioNormalRaidDropdown" },
             { category = "heroic_raid", prefix = "wowcompare.ioHeroicRaid", initFunc = "Initializewowcompare.ioHeroicRaidDropdown" },
             { category = "mythic_raid", prefix = "wowcompare.ioMythicRaid", initFunc = "Initializewowcompare.ioMythicRaidDropdown" },
         }

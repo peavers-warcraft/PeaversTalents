@@ -23,6 +23,13 @@ local wowcompare.io_TAB_CONFIG = {
 			category = "mythic"
 		},
 		{
+			name = "Normal Raid",
+			dropdownInitializer = "Initializewowcompare.ioNormalRaidDropdown",
+			editBoxPrefix = "wowcompare.ioNormalRaid",
+			source = "top-players",
+			category = "normal_raid"
+		},
+		{
 			name = "Heroic Raid",
 			dropdownInitializer = "Initializewowcompare.ioHeroicRaidDropdown",
 			editBoxPrefix = "wowcompare.ioHeroicRaid",
