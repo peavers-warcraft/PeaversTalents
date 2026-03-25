@@ -106,6 +106,12 @@ function DropdownManager.InitializeArchonMythicDropdown(frame, level, _, _, edit
 	InitializeDropdown(frame, level, "archon", "mythic", editBox, newLabel)
 end
 
+function DropdownManager.InitializeArchonNormalRaidDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("archonNormalRaidEdit")
+	local newLabel = newLabelOverride or GetDialogElement("archonNormalRaidNewLabel")
+	InitializeDropdown(frame, level, "archon", "normal_raid", editBox, newLabel)
+end
+
 function DropdownManager.InitializeArchonHeroicRaidDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
 	local editBox = editBoxOverride or GetDialogElement("archonHeroicRaidEdit")
 	local newLabel = newLabelOverride or GetDialogElement("archonHeroicRaidNewLabel")

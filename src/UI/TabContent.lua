@@ -23,6 +23,13 @@ local ARCHON_TAB_CONFIG = {
 			category = "mythic"
 		},
 		{
+			name = "Normal Raid",
+			dropdownInitializer = "InitializeArchonNormalRaidDropdown",
+			editBoxPrefix = "archonNormalRaid",
+			source = "archon",
+			category = "normal_raid"
+		},
+		{
 			name = "Heroic Raid",
 			dropdownInitializer = "InitializeArchonHeroicRaidDropdown",
 			editBoxPrefix = "archonHeroicRaid",

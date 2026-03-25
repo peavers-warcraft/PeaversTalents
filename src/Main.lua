@@ -53,6 +53,7 @@ local TAB_SOURCES = {
         creator = "CreateArchonTab",
         categories = {
             { category = "mythic", prefix = "archonMythic", initFunc = "InitializeArchonMythicDropdown" },
+            { category = "normal_raid", prefix = "archonNormalRaid", initFunc = "InitializeArchonNormalRaidDropdown" },
             { category = "heroic_raid", prefix = "archonHeroicRaid", initFunc = "InitializeArchonHeroicRaidDropdown" },
             { category = "mythic_raid", prefix = "archonMythicRaid", initFunc = "InitializeArchonMythicRaidDropdown" },
         }
