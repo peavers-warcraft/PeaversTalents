@@ -209,6 +209,18 @@ PeaversCommons.Events:Init(addonName, function()
             }
         )
     end)
+
+    -- Register with PeaversConfig registry
+    if PeaversCommons.ConfigRegistry then
+        PeaversCommons.ConfigRegistry:Register({
+            name = "PeaversTalents",
+            displayName = "Talents",
+            description = "Talent build import/export from popular sources",
+            addonRef = addon,
+            pages = addon.ConfigUI:GetPages(),
+            order = 12,
+        })
+    end
 end, {
     suppressAnnouncement = true
 })
