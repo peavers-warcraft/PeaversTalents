@@ -15,6 +15,8 @@
 ## Dependencies: PeaversTalentsData, PeaversCommons
 ## SavedVariables: PeaversTalentsDB
 
+Changelog.lua
+
 src\Core\Config.lua
 src\Core\DataManager.lua
 src\Core\LocalStorage.lua
