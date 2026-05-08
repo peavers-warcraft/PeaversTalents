@@ -12,7 +12,7 @@
 ## X-Source-Code: https://github.com/peavers-warcraft/PeaversTalents
 ## X-Curse-Project-ID: 1184820
 
-## Dependencies: PeaversTalentsData, PeaversCommons
+## Dependencies: PeaversTalentsData, PeaversCommons, PeaversConfig
 ## SavedVariables: PeaversTalentsDB
 
 Changelog.lua
