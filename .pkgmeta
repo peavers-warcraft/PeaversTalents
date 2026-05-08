@@ -2,6 +2,7 @@ package-as: PeaversTalents
 
 required-dependencies:
   - peaverscommons
+  - peaversconfig
   - peaverstalentsdata
 
 ignore:
