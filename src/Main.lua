@@ -198,17 +198,20 @@ PeaversCommons.Events:Init(addonName, function()
     end)
     
     C_Timer.After(0.5, function()
-        PeaversCommons.SettingsUI:CreateSettingsPages(
-            addon,
-            "PeaversTalents",
-            "Peavers Talents",
-            "Import and export talent builds from popular sources.",
-            {
-                "This addon provides talent build import/export functionality.",
-                "Access it through the talent UI in-game."
-            }
-        )
+        PeaversCommons.SettingsUI:CreateRedirectPage(addon, "PeaversTalents", "Peavers Talents")
     end)
+
+    -- Register with PeaversConfig registry
+    if PeaversCommons.ConfigRegistry then
+        PeaversCommons.ConfigRegistry:Register({
+            name = "PeaversTalents",
+            displayName = "Talents",
+            description = "Talent build import/export from popular sources",
+            addonRef = addon,
+            pages = addon.ConfigUI:GetPages(),
+            order = 12,
+        })
+    end
 end, {
     suppressAnnouncement = true
 })
