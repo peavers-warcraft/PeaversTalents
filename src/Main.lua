@@ -70,6 +70,28 @@ local TAB_SOURCES = {
     },
 }
 
+-- Re-initializes every dropdown in the export dialog using the current
+-- class/spec. Called on dialog show, on spec change, and on entering world.
+-- Always re-runs InitializeDropdown for each dropdown so empty specs show
+-- "No data found" instead of stale entries from the previous spec.
+function addon.RefreshDialogDropdowns()
+    local dialog = addon.exportDialog
+    if not dialog then return end
+    if not CheckDataAddonLoaded() then return end
+
+    local classID, specID = Utils.GetPlayerClassAndSpec()
+    Utils.Debug("Refreshing dropdowns for classID:", classID, "specID:", specID)
+
+    for _, sourceInfo in ipairs(TAB_SOURCES) do
+        for _, catInfo in ipairs(sourceInfo.categories) do
+            local dropdown = dialog[catInfo.prefix .. "Dropdown"]
+            if dropdown then
+                UIDropDownMenu_Initialize(dropdown, addon.DropdownManager[catInfo.initFunc])
+            end
+        end
+    end
+end
+
 local function CreateExportDialog()
     local dialog = CreateFrame("Frame", "TalentExportDialog", UIParent, "DefaultPanelTemplate")
     addon.exportDialog = dialog
@@ -104,25 +126,8 @@ local function CreateExportDialog()
     tinsert(UISpecialFrames, dialog:GetName())
 
     dialog:SetScript("OnShow", function()
-        local classID, specID = Utils.GetPlayerClassAndSpec()
         Utils.Debug("Dialog shown - Loading saved selections")
-
-        if not CheckDataAddonLoaded() then
-            return
-        end
-
-        -- Reinitialize dropdowns for all sources
-        for _, sourceInfo in ipairs(TAB_SOURCES) do
-            local builds = PeaversTalentsData.API.GetBuilds(classID, specID, sourceInfo.source)
-            if builds and #builds > 0 then
-                for _, catInfo in ipairs(sourceInfo.categories) do
-                    local dropdown = dialog[catInfo.prefix .. "Dropdown"]
-                    if dropdown then
-                        UIDropDownMenu_Initialize(dropdown, addon.DropdownManager[catInfo.initFunc])
-                    end
-                end
-            end
-        end
+        addon.RefreshDialogDropdowns()
 
         if not dialog.hideHooked then
             local isTWW = select(4, GetBuildInfo()) >= 110000
@@ -195,6 +200,20 @@ PeaversCommons.Events:Init(addonName, function()
     
     PeaversCommons.Events:RegisterEvent("PLAYER_ENTERING_WORLD", function()
         Utils.Debug("Player entering world")
+        -- Refresh dropdowns once the spec API is reliable (safety net for the
+        -- ADDON_LOADED race where GetSpecialization may return 0/nil).
+        if addon.exportDialog and addon.exportDialog:IsShown() then
+            addon.RefreshDialogDropdowns()
+        end
+    end)
+
+    -- Re-initialize dropdowns when the player changes spec, so an already-open
+    -- export dialog shows builds for the new spec instead of stale entries.
+    PeaversCommons.Events:RegisterEvent("PLAYER_SPECIALIZATION_CHANGED", function()
+        Utils.Debug("Player specialization changed")
+        if addon.exportDialog and addon.exportDialog:IsShown() then
+            addon.RefreshDialogDropdowns()
+        end
     end)
     
     C_Timer.After(0.5, function()
