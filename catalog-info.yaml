@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: PeaversTalents
+  description: "A World of Warcraft addon that provides optimized talent builds directly in-game, sourced from wowcompare.io."
+  annotations:
+    github.com/project-slug: peavers-warcraft/PeaversTalents
+spec:
+  type: library
+  lifecycle: production
+  owner: peavers-warcraft
