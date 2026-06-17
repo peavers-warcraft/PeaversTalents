@@ -1,0 +1,35 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+
+  "//": "Shared Lua Language Server base for Peavers WoW addons. Per-addon .luarc.json",
+  "//2": "files mirror this, adjusting workspace.library paths to the consumed wow-api dir.",
+  "//3": "WoW runs Lua 5.1. The library is the HYBRID API surface: Ketho community",
+  "//4": "annotations (rich signatures) + the build-exact /papidump defs (existence +",
+  "//5": "private globals). Diagnostics tuned for WoW realities (see README Limitations).",
+
+  "runtime.version": "Lua 5.1",
+  "runtime.nonstandardSymbol": ["!", "!=", "&&", "||", "//", "/**/", "continue"],
+
+  "workspace.library": [
+    "../wow-api/vendor/ketho/Annotations/Core",
+    "../wow-api/build/120007/luals",
+    "../wow-api/config/curated-globals.lua",
+    "../wow-api/peavers-commons.lua"
+  ],
+  "workspace.ignoreDir": [
+    "Libs",
+    "libs",
+    "tools",
+    ".release"
+  ],
+  "workspace.checkThirdParty": false,
+
+  "diagnostics.globals": ["CombatLogGetCurrentEventInfo"],
+  "diagnostics.disable": [
+    "missing-parameter",
+    "redundant-parameter",
+    "undefined-field"
+  ],
+  "diagnostics.libraryFiles": "Disable",
+  "diagnostics.workspaceDelay": 3000
+}
