@@ -24,7 +24,7 @@
   ],
   "workspace.checkThirdParty": false,
 
-  "diagnostics.globals": ["CombatLogGetCurrentEventInfo"],
+  "diagnostics.globals": ["CombatLogGetCurrentEventInfo", "PeaversTalentsData"],
   "diagnostics.disable": [
     "missing-parameter",
     "redundant-parameter",

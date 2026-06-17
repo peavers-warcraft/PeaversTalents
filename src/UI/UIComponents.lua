@@ -1,5 +1,4 @@
 local _, addon = ...
-local Utils = addon.Utils
 local UIComponents = addon.UIComponents or {}
 addon.UIComponents = UIComponents
 

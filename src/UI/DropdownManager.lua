@@ -125,25 +125,6 @@ function DropdownManager.Initializewowcompare.ioMythicRaidDropdown(frame, level,
 end
 
 -- most-popular dropdown initializers
-function DropdownManager.Initializemost-popularMythicDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
-	local editBox = editBoxOverride or GetDialogElement("most-popularMythicEdit")
-	local newLabel = newLabelOverride or GetDialogElement("most-popularMythicNewLabel")
-	InitializeDropdown(frame, level, "most-popular", "mythic", editBox, newLabel)
-end
-
-function DropdownManager.Initializemost-popularRaidDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
-	local editBox = editBoxOverride or GetDialogElement("most-popularRaidEdit")
-	local newLabel = newLabelOverride or GetDialogElement("most-popularRaidNewLabel")
-	InitializeDropdown(frame, level, "most-popular", "raid", editBox, newLabel)
-end
-
-function DropdownManager.Initializemost-popularMiscDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
-	local editBox = editBoxOverride or GetDialogElement("most-popularMiscEdit")
-	local newLabel = newLabelOverride or GetDialogElement("most-popularMiscNewLabel")
-	InitializeDropdown(frame, level, "most-popular", "misc", editBox, newLabel)
-end
-
--- most-popular dropdown initializers
 function DropdownManager.Initializemost-popularMythicDropdown(frame, level)
 	InitializeDropdown(frame, level, "most-popular", "mythic", addon.exportDialog.most-popularMythicEdit, addon.exportDialog.most-popularMythicNewLabel)
 end

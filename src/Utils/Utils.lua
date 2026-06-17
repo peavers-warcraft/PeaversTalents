@@ -30,9 +30,9 @@ end
 
 -- Format a local time from a timestamp
 function Utils.GetFormattedLocalTime(timestamp)
-    local year, month, day, hour, min, sec = timestamp:match("(%d+)-(%d+)-(%d+) (%d+):(%d+):(%d+)")
+    local year, month, day, hour, min = timestamp:match("(%d+)-(%d+)-(%d+) (%d+):(%d+):(%d+)")
 
-    local dateStr = FormatShortDate(tonumber(month), tonumber(day), tonumber(year))
+    local dateStr = FormatShortDate(tonumber(month) --[[@as number]], tonumber(day) --[[@as number]], tonumber(year) --[[@as number]])
     local timeStr = GameTime_GetFormattedTime(tonumber(hour), tonumber(min), true)
 
     return string.format("%s %s", dateStr, timeStr)
