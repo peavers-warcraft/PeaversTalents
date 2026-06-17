@@ -14,7 +14,7 @@ function ButtonFix:Initialize()
     fixFrame:RegisterEvent("ADDON_LOADED")
     fixFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 
-    fixFrame:SetScript("OnEvent", function(self, event, arg1)
+    fixFrame:SetScript("OnEvent", function(_, event, arg1)
         if event == "ADDON_LOADED" then
             if arg1 == "Blizzard_PlayerSpells" or arg1 == "Blizzard_ClassTalentUI" then
                 Utils.Debug("ButtonFix detected talent UI loading: " .. arg1)
