@@ -12,7 +12,7 @@
 
   "workspace.library": [
     "../wow-api/vendor/ketho/Annotations/Core",
-    "../wow-api/build/120007/luals",
+    "../wow-api/build/mainline/120007/luals",
     "../wow-api/config/curated-globals.lua",
     "../wow-api/peavers-commons.lua"
   ],
