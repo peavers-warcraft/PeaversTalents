@@ -42,6 +42,27 @@ local wowcompare.io_TAB_CONFIG = {
 			editBoxPrefix = "wowcompare.ioMythicRaid",
 			source = "top-players",
 			category = "mythic_raid"
+		},
+		{
+			name = "Sporefall Normal",
+			dropdownInitializer = "InitializeTopPlayersSporefallNormalDropdown",
+			editBoxPrefix = "wowcompare.ioSporefallNormal",
+			source = "top-players",
+			category = "sporefall_normal"
+		},
+		{
+			name = "Sporefall Heroic",
+			dropdownInitializer = "InitializeTopPlayersSporefallHeroicDropdown",
+			editBoxPrefix = "wowcompare.ioSporefallHeroic",
+			source = "top-players",
+			category = "sporefall_heroic"
+		},
+		{
+			name = "Sporefall Mythic",
+			dropdownInitializer = "InitializeTopPlayersSporefallMythicDropdown",
+			editBoxPrefix = "wowcompare.ioSporefallMythic",
+			source = "top-players",
+			category = "sporefall_mythic"
 		}
 	}
 }

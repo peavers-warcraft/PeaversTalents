@@ -7,7 +7,9 @@ addon.Config = {
 
 	DIALOG = {
 		WIDTH = 600,
-		HEIGHT = 325,
+		-- Sized to fit the wowcompare.io tab's stacked sections (M+, 3 raid difficulties,
+		-- 3 Sporefall difficulties). ~69px per section plus the footer instructions.
+		HEIGHT = 545,
 		TITLE_HEIGHT = 24,
 		IMPORT_BUTTON = {
 			WIDTH = 100,

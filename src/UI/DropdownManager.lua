@@ -124,6 +124,24 @@ function DropdownManager.Initializewowcompare.ioMythicRaidDropdown(frame, level,
 	InitializeDropdown(frame, level, "top-players", "mythic_raid", editBox, newLabel)
 end
 
+function DropdownManager.InitializeTopPlayersSporefallNormalDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("wowcompare.ioSporefallNormalEdit")
+	local newLabel = newLabelOverride or GetDialogElement("wowcompare.ioSporefallNormalNewLabel")
+	InitializeDropdown(frame, level, "top-players", "sporefall_normal", editBox, newLabel)
+end
+
+function DropdownManager.InitializeTopPlayersSporefallHeroicDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("wowcompare.ioSporefallHeroicEdit")
+	local newLabel = newLabelOverride or GetDialogElement("wowcompare.ioSporefallHeroicNewLabel")
+	InitializeDropdown(frame, level, "top-players", "sporefall_heroic", editBox, newLabel)
+end
+
+function DropdownManager.InitializeTopPlayersSporefallMythicDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("wowcompare.ioSporefallMythicEdit")
+	local newLabel = newLabelOverride or GetDialogElement("wowcompare.ioSporefallMythicNewLabel")
+	InitializeDropdown(frame, level, "top-players", "sporefall_mythic", editBox, newLabel)
+end
+
 -- most-popular dropdown initializers
 function DropdownManager.Initializemost-popularMythicDropdown(frame, level)
 	InitializeDropdown(frame, level, "most-popular", "mythic", addon.exportDialog.most-popularMythicEdit, addon.exportDialog.most-popularMythicNewLabel)
