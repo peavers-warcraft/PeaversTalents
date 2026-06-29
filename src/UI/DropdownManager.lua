@@ -124,6 +124,24 @@ function DropdownManager.InitializeArchonMythicRaidDropdown(frame, level, _, _, 
 	InitializeDropdown(frame, level, "archon", "mythic_raid", editBox, newLabel)
 end
 
+function DropdownManager.InitializeArchonSporefallNormalDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("archonSporefallNormalEdit")
+	local newLabel = newLabelOverride or GetDialogElement("archonSporefallNormalNewLabel")
+	InitializeDropdown(frame, level, "archon", "sporefall_normal", editBox, newLabel)
+end
+
+function DropdownManager.InitializeArchonSporefallHeroicDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("archonSporefallHeroicEdit")
+	local newLabel = newLabelOverride or GetDialogElement("archonSporefallHeroicNewLabel")
+	InitializeDropdown(frame, level, "archon", "sporefall_heroic", editBox, newLabel)
+end
+
+function DropdownManager.InitializeArchonSporefallMythicDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("archonSporefallMythicEdit")
+	local newLabel = newLabelOverride or GetDialogElement("archonSporefallMythicNewLabel")
+	InitializeDropdown(frame, level, "archon", "sporefall_mythic", editBox, newLabel)
+end
+
 -- Wowhead dropdown initializers
 function DropdownManager.InitializeWowheadMythicDropdown(frame, level)
 	InitializeDropdown(frame, level, "wowhead", "mythic", addon.exportDialog.wowheadMythicEdit, addon.exportDialog.wowheadMythicNewLabel)

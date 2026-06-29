@@ -42,6 +42,27 @@ local ARCHON_TAB_CONFIG = {
 			editBoxPrefix = "archonMythicRaid",
 			source = "archon",
 			category = "mythic_raid"
+		},
+		{
+			name = "Sporefall Normal",
+			dropdownInitializer = "InitializeArchonSporefallNormalDropdown",
+			editBoxPrefix = "archonSporefallNormal",
+			source = "archon",
+			category = "sporefall_normal"
+		},
+		{
+			name = "Sporefall Heroic",
+			dropdownInitializer = "InitializeArchonSporefallHeroicDropdown",
+			editBoxPrefix = "archonSporefallHeroic",
+			source = "archon",
+			category = "sporefall_heroic"
+		},
+		{
+			name = "Sporefall Mythic",
+			dropdownInitializer = "InitializeArchonSporefallMythicDropdown",
+			editBoxPrefix = "archonSporefallMythic",
+			source = "archon",
+			category = "sporefall_mythic"
 		}
 	}
 }
