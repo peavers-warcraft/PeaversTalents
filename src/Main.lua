@@ -56,9 +56,7 @@ local TAB_SOURCES = {
             { category = "normal_raid", prefix = "archonNormalRaid", initFunc = "InitializeArchonNormalRaidDropdown" },
             { category = "heroic_raid", prefix = "archonHeroicRaid", initFunc = "InitializeArchonHeroicRaidDropdown" },
             { category = "mythic_raid", prefix = "archonMythicRaid", initFunc = "InitializeArchonMythicRaidDropdown" },
-            { category = "sporefall_normal", prefix = "archonSporefallNormal", initFunc = "InitializeArchonSporefallNormalDropdown" },
-            { category = "sporefall_heroic", prefix = "archonSporefallHeroic", initFunc = "InitializeArchonSporefallHeroicDropdown" },
-            { category = "sporefall_mythic", prefix = "archonSporefallMythic", initFunc = "InitializeArchonSporefallMythicDropdown" },
+            { category = "sporefall", prefix = "archonSporefall", initFunc = "InitializeArchonSporefallDropdown" },
         }
     },
     {

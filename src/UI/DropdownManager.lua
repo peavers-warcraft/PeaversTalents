@@ -6,17 +6,16 @@ local DataManager = addon.DataManager
 local DropdownManager = addon.DropdownManager or {}
 addon.DropdownManager = DropdownManager
 
-local function InitializeDropdown(frame, level, source, category, editBox, newLabel)
-	Utils.Debug("Initializing dropdown for source:", source, "category:", category)
-
+-- Renders a dropdown from a pre-built entries list. `category` is used only for
+-- persistence (LoadSelection/SaveSelection), so a caller that merges several data
+-- categories into one dropdown can pass a single synthetic category here.
+local function RenderDropdown(frame, level, source, category, entries, editBox, newLabel)
 	if not editBox then
 		Utils.Debug("No editBox provided for dropdown")
 		return
 	end
 
 	local info = UIDropDownMenu_CreateInfo()
-	local classID, specID = Utils.GetPlayerClassAndSpec()
-	local entries = DataManager.GetAvailableEntries(source, classID, specID, category)
 
 	-- Hide new label by default
 	if newLabel then newLabel:Hide() end
@@ -91,6 +90,14 @@ local function InitializeDropdown(frame, level, source, category, editBox, newLa
 	UIDropDownMenu_EnableDropDown(frame)
 end
 
+-- Standard single-category dropdown: pulls entries for one source/category.
+local function InitializeDropdown(frame, level, source, category, editBox, newLabel)
+	Utils.Debug("Initializing dropdown for source:", source, "category:", category)
+	local classID, specID = Utils.GetPlayerClassAndSpec()
+	local entries = DataManager.GetAvailableEntries(source, classID, specID, category)
+	RenderDropdown(frame, level, source, category, entries, editBox, newLabel)
+end
+
 -- Helper to safely get dialog elements
 local function GetDialogElement(key)
 	if addon.exportDialog then
@@ -124,22 +131,43 @@ function DropdownManager.InitializeArchonMythicRaidDropdown(frame, level, _, _, 
 	InitializeDropdown(frame, level, "archon", "mythic_raid", editBox, newLabel)
 end
 
-function DropdownManager.InitializeArchonSporefallNormalDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
-	local editBox = editBoxOverride or GetDialogElement("archonSporefallNormalEdit")
-	local newLabel = newLabelOverride or GetDialogElement("archonSporefallNormalNewLabel")
-	InitializeDropdown(frame, level, "archon", "sporefall_normal", editBox, newLabel)
-end
+-- Sporefall is a one-off raid with a single boss, so its three difficulties are
+-- merged into one dropdown labelled by difficulty rather than three separate rows.
+local SPOREFALL_DIFFICULTIES = {
+	{ category = "sporefall_normal", label = "Normal" },
+	{ category = "sporefall_heroic", label = "Heroic" },
+	{ category = "sporefall_mythic", label = "Mythic" },
+}
 
-function DropdownManager.InitializeArchonSporefallHeroicDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
-	local editBox = editBoxOverride or GetDialogElement("archonSporefallHeroicEdit")
-	local newLabel = newLabelOverride or GetDialogElement("archonSporefallHeroicNewLabel")
-	InitializeDropdown(frame, level, "archon", "sporefall_heroic", editBox, newLabel)
-end
+function DropdownManager.InitializeArchonSporefallDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
+	local editBox = editBoxOverride or GetDialogElement("archonSporefallEdit")
+	local newLabel = newLabelOverride or GetDialogElement("archonSporefallNewLabel")
 
-function DropdownManager.InitializeArchonSporefallMythicDropdown(frame, level, _, _, editBoxOverride, newLabelOverride)
-	local editBox = editBoxOverride or GetDialogElement("archonSporefallMythicEdit")
-	local newLabel = newLabelOverride or GetDialogElement("archonSporefallMythicNewLabel")
-	InitializeDropdown(frame, level, "archon", "sporefall_mythic", editBox, newLabel)
+	local classID, specID = Utils.GetPlayerClassAndSpec()
+
+	local entries = {}
+	for _, diff in ipairs(SPOREFALL_DIFFICULTIES) do
+		local diffEntries = DataManager.GetAvailableEntries("archon", classID, specID, diff.category)
+		for _, entry in ipairs(diffEntries) do
+			-- One boss per difficulty today; if Sporefall ever gains more, keep the
+			-- difficulty grouping but disambiguate by boss name.
+			local label = diff.label
+			if #diffEntries > 1 then
+				label = diff.label .. " - " .. (entry.data.label or tostring(entry.key))
+			end
+			table.insert(entries, {
+				key = diff.category .. ":" .. tostring(entry.key),
+				data = {
+					label = label,
+					talentString = entry.data.talentString,
+					category = "sporefall",
+				},
+			})
+		end
+	end
+
+	-- Persist under a single synthetic "sporefall" category (see RenderDropdown).
+	RenderDropdown(frame, level, "archon", "sporefall", entries, editBox, newLabel)
 end
 
 -- Wowhead dropdown initializers
