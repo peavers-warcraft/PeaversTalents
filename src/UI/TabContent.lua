@@ -44,25 +44,13 @@ local wowcompare.io_TAB_CONFIG = {
 			category = "mythic_raid"
 		},
 		{
-			name = "Sporefall Normal",
-			dropdownInitializer = "InitializeTopPlayersSporefallNormalDropdown",
-			editBoxPrefix = "wowcompare.ioSporefallNormal",
+			-- One-off raid: single dropdown with Normal/Heroic/Mythic, set apart by a divider.
+			name = "Sporefall",
+			dropdownInitializer = "InitializeTopPlayersSporefallDropdown",
+			editBoxPrefix = "wowcompare.ioSporefall",
 			source = "top-players",
-			category = "sporefall_normal"
-		},
-		{
-			name = "Sporefall Heroic",
-			dropdownInitializer = "InitializeTopPlayersSporefallHeroicDropdown",
-			editBoxPrefix = "wowcompare.ioSporefallHeroic",
-			source = "top-players",
-			category = "sporefall_heroic"
-		},
-		{
-			name = "Sporefall Mythic",
-			dropdownInitializer = "InitializeTopPlayersSporefallMythicDropdown",
-			editBoxPrefix = "wowcompare.ioSporefallMythic",
-			source = "top-players",
-			category = "sporefall_mythic"
+			category = "sporefall",
+			divider = true
 		}
 	}
 }
@@ -99,6 +87,16 @@ local function CreateSection(dialog, tab, section, prevElement, isFirst)
 	local label = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
 	if isFirst then
 		label:SetPoint("TOPLEFT", addon.Config.DIALOG.PADDING.SIDE, -10)
+	elseif section.divider then
+		-- Extra gap to set this section apart, with a hairline divider drawn in the gap.
+		local EXTRA_GAP = 16
+		label:SetPoint("TOPLEFT", prevElement, "BOTTOMLEFT", -195, -(addon.Config.DIALOG.SECTION_SPACING + EXTRA_GAP))
+
+		local line = tab:CreateTexture(nil, "ARTWORK")
+		line:SetColorTexture(1, 1, 1, 0.12)
+		line:SetHeight(1)
+		line:SetPoint("TOPLEFT", label, "TOPLEFT", 0, EXTRA_GAP / 2 + 4)
+		line:SetPoint("RIGHT", tab, "RIGHT", -addon.Config.DIALOG.PADDING.SIDE, 0)
 	else
 		label:SetPoint("TOPLEFT", prevElement, "BOTTOMLEFT", -195, -addon.Config.DIALOG.SECTION_SPACING)
 	end

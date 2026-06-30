@@ -56,9 +56,7 @@ local TAB_SOURCES = {
             { category = "normal_raid", prefix = "wowcompare.ioNormalRaid", initFunc = "Initializewowcompare.ioNormalRaidDropdown" },
             { category = "heroic_raid", prefix = "wowcompare.ioHeroicRaid", initFunc = "Initializewowcompare.ioHeroicRaidDropdown" },
             { category = "mythic_raid", prefix = "wowcompare.ioMythicRaid", initFunc = "Initializewowcompare.ioMythicRaidDropdown" },
-            { category = "sporefall_normal", prefix = "wowcompare.ioSporefallNormal", initFunc = "InitializeTopPlayersSporefallNormalDropdown" },
-            { category = "sporefall_heroic", prefix = "wowcompare.ioSporefallHeroic", initFunc = "InitializeTopPlayersSporefallHeroicDropdown" },
-            { category = "sporefall_mythic", prefix = "wowcompare.ioSporefallMythic", initFunc = "InitializeTopPlayersSporefallMythicDropdown" },
+            { category = "sporefall", prefix = "wowcompare.ioSporefall", initFunc = "InitializeTopPlayersSporefallDropdown" },
         }
     },
     {
