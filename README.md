@@ -26,6 +26,7 @@ A World of Warcraft addon that provides optimized talent builds directly in-game
 No configuration required. Talent builds are automatically updated daily.
 <!-- /peavers:configuration -->
 
+
 ## Installation
 
 ### Recommended: PeaversUpdater
