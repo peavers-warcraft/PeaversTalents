@@ -1,6 +1,6 @@
 # PeaversTalents
 
-[![AddonSentry](https://api.addonsentry.io/api/public/repos/peavers-warcraft/PeaversTalents/badge.svg)](https://addonsentry.io/dashboard/peavers-warcraft/PeaversTalents)
+[![AddonSentry](https://addonsentry.io/api/public/repos/peavers-warcraft/PeaversTalents/badge.svg)](https://addonsentry.io/dashboard/peavers-warcraft/PeaversTalents)
 
 A World of Warcraft addon that provides optimized talent builds directly in-game, sourced from wowcompare.io.
 
