@@ -193,8 +193,8 @@ PeaversCommons.Events:Init(addonName, function()
         addon.ButtonFix:Initialize()
     end
     
-    SLASH_PEAVERSTALENTS1 = "/peaverstalents"
-    SLASH_PEAVERSTALENTS2 = "/pt"
+    _G.SLASH_PEAVERSTALENTS1 = "/peaverstalents"
+    _G.SLASH_PEAVERSTALENTS2 = "/pt"
     SlashCmdList["PEAVERSTALENTS"] = function()
         addon.ShowExportDialog()
     end
