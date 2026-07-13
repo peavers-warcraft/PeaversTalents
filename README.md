@@ -9,17 +9,22 @@ A World of Warcraft addon that provides optimized talent builds directly in-game
 <!-- peavers:features -->
 - Daily updated builds for all classes and specializations
 - Boss-specific talent recommendations for raids and dungeons
-- Dedicated "Builds" button in the talent window
-- One-click talent import strings
+- One-click apply: load any build straight into a talent loadout, no copy/paste
+- Pick a raid boss and difficulty from a single row
+- Import strings still available if you'd rather copy them yourself
 <!-- /peavers:features -->
 
 ## Usage
 
 <!-- peavers:usage -->
 1. Open your in-game talent window
-2. Click the "Builds" button
+2. Click the "Peavers Builds" button
 3. Select from general or encounter-specific builds
-4. Use the import feature to apply the recommended talents
+4. Click the arrow next to the build and choose **Apply Loadout**
+
+Applying creates a saved loadout named after the build and switches you to it. The
+same slot is reused each time, so applying builds never fills up your loadout list.
+Prefer to copy the string yourself? The arrow menu also has **Copy Import String**.
 <!-- /peavers:usage -->
 
 ## Configuration
