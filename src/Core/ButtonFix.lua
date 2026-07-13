@@ -62,10 +62,28 @@ function ButtonFix:CheckAndCreateButton()
 
     Utils.Debug("ButtonFix: Creating export button")
     local exportButton = CreateFrame("Button", "TalentExportButton", talentFrame, "UIPanelButtonTemplate")
-    exportButton:SetSize(addon.Config.DIALOG.IMPORT_BUTTON.WIDTH, addon.Config.DIALOG.IMPORT_BUTTON.HEIGHT)
-    exportButton:SetText("Builds")
+    exportButton:SetText(addon.Config.BUTTON_LABEL)
     exportButton:SetPoint("LEFT", talentFrame.SearchBox, "RIGHT", 10, 0)
     exportButton:SetScript("OnClick", addon.ShowExportDialog)
+
+    -- Grow past the configured width if the label needs it, so renaming the button
+    -- can't silently clip its own text.
+    local buttonConfig = addon.Config.DIALOG.IMPORT_BUTTON
+    local label = exportButton:GetFontString()
+    local needed = label and (label:GetStringWidth() + buttonConfig.TEXT_PADDING) or 0
+    exportButton:SetSize(math.max(buttonConfig.WIDTH, needed), buttonConfig.HEIGHT)
+
+    -- The label names the brand rather than the feature, so the tooltip is what
+    -- tells a first-time user what the button opens -- and where the URL lives.
+    exportButton:SetScript("OnEnter", function(frame)
+        GameTooltip:SetOwner(frame, "ANCHOR_RIGHT")
+        GameTooltip:SetText("peavers.io", 0.23, 0.74, 0.97)
+        GameTooltip:AddLine("Daily talent builds from wowcompare.io.", 1, 1, 1, true)
+        GameTooltip:AddLine("Pick a build and apply it in one click.", 1, 1, 1, true)
+        GameTooltip:Show()
+    end)
+    exportButton:SetScript("OnLeave", GameTooltip_Hide)
+
     exportButton:Show()
 
     Utils.Debug("ButtonFix: Export button created successfully")

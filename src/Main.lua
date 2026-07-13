@@ -105,6 +105,12 @@ local function CreateExportDialog()
     dialog.TitleBg = UIComponents.CreateTitleBackground(dialog)
     dialog.CloseButton = UIComponents.CreateCloseButton(dialog)
 
+    -- DefaultPanelTemplate ships a title bar that nothing was filling in, so the
+    -- window opened nameless. Brand it to match the button that opens it.
+    if dialog.SetTitle then
+        dialog:SetTitle(addon.Config.BUTTON_LABEL)
+    end
+
     -- Create tabs and tab content for each source
     dialog.Tabs = {}
     dialog.TabContents = {}
