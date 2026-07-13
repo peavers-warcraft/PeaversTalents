@@ -28,6 +28,7 @@ local function RenderDropdown(frame, level, source, category, entries, editBox, 
 		UIDropDownMenu_AddButton(info, level)
 		UIDropDownMenu_SetText(frame, "No data found")
 		UIDropDownMenu_DisableDropDown(frame)
+		editBox:SetText("")
 		return
 	end
 
@@ -36,11 +37,13 @@ local function RenderDropdown(frame, level, source, category, entries, editBox, 
 	Utils.Debug("Loaded selection:", savedSource, savedCategory, savedBuildKey)
 
 	-- If we have a saved selection, find and apply it
+	local matched = false
 	if savedBuildKey then
 		Utils.Debug("Looking for saved build:", savedBuildKey)
 		for _, entry in ipairs(entries) do
 			if entry.key == savedBuildKey then
 				Utils.Debug("Found saved build:", entry.data.label)
+				matched = true
 				editBox:SetText(entry.data.talentString or "")
 				editBox:SetCursorPosition(0)
 				UIDropDownMenu_SetText(frame, entry.data.label or tostring(savedBuildKey))
@@ -55,7 +58,12 @@ local function RenderDropdown(frame, level, source, category, entries, editBox, 
 				break
 			end
 		end
-	else
+	end
+
+	-- The previous spec's selection doesn't exist for this one, so clear the box
+	-- rather than leaving a build string that belongs to a different spec in it.
+	if not matched then
+		editBox:SetText("")
 		UIDropDownMenu_SetText(frame, "Select...")
 	end
 
