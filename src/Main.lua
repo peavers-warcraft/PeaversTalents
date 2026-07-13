@@ -45,51 +45,19 @@ local function CheckDataAddonLoaded()
     return true
 end
 
--- Tab source definitions
-local TAB_SOURCES = {
-    {
-        label = "wowcompare.io",
-        source = "top-players",
-        creator = "Createwowcompare.ioTab",
-        categories = {
-            { category = "mythic", prefix = "wowcompare.ioMythic", initFunc = "Initializewowcompare.ioMythicDropdown" },
-            { category = "normal_raid", prefix = "wowcompare.ioNormalRaid", initFunc = "Initializewowcompare.ioNormalRaidDropdown" },
-            { category = "heroic_raid", prefix = "wowcompare.ioHeroicRaid", initFunc = "Initializewowcompare.ioHeroicRaidDropdown" },
-            { category = "mythic_raid", prefix = "wowcompare.ioMythicRaid", initFunc = "Initializewowcompare.ioMythicRaidDropdown" },
-            { category = "sporefall", prefix = "wowcompare.ioSporefall", initFunc = "InitializeTopPlayersSporefallDropdown" },
-        }
-    },
-    {
-        label = "most-popular",
-        source = "most-popular",
-        creator = "Createmost-popularTab",
-        categories = {
-            { category = "mythic", prefix = "most-popularMythic", initFunc = "Initializemost-popularMythicDropdown" },
-            { category = "raid", prefix = "most-popularRaid", initFunc = "Initializemost-popularRaidDropdown" },
-            { category = "misc", prefix = "most-popularMisc", initFunc = "Initializemost-popularMiscDropdown" },
-        }
-    },
-}
-
--- Re-initializes every dropdown in the export dialog using the current
--- class/spec. Called on dialog show, on spec change, and on entering world.
--- Always re-runs InitializeDropdown for each dropdown so empty specs show
--- "No data found" instead of stale entries from the previous spec.
+-- Re-reads every row in the export dialog for the current class/spec. Called on
+-- dialog show, on spec change, and on entering world. Rows re-render from scratch
+-- so a spec with no builds shows "No data found" rather than the last spec's.
 function addon.RefreshDialogDropdowns()
     local dialog = addon.exportDialog
-    if not dialog then return end
+    if not dialog or not dialog.selectors then return end
     if not CheckDataAddonLoaded() then return end
 
     local classID, specID = Utils.GetPlayerClassAndSpec()
     Utils.Debug("Refreshing dropdowns for classID:", classID, "specID:", specID)
 
-    for _, sourceInfo in ipairs(TAB_SOURCES) do
-        for _, catInfo in ipairs(sourceInfo.categories) do
-            local dropdown = dialog[catInfo.prefix .. "Dropdown"]
-            if dropdown then
-                UIDropDownMenu_Initialize(dropdown, addon.DropdownManager[catInfo.initFunc])
-            end
-        end
+    for _, selector in pairs(dialog.selectors) do
+        addon.DropdownManager.Restore(selector)
     end
 end
 
@@ -112,16 +80,18 @@ local function CreateExportDialog()
     end
 
     -- Create tabs and tab content for each source
+    local tabs = addon.TabConfig.TABS
     dialog.Tabs = {}
     dialog.TabContents = {}
+    dialog.selectors = {}
 
-    for i, tabInfo in ipairs(TAB_SOURCES) do
+    for i, tabInfo in ipairs(tabs) do
         dialog.TabContents[i] = UIComponents.CreateTabContent(dialog)
         dialog.Tabs[i] = UIComponents.CreateTab(dialog, i, tabInfo.label, "TalentExportDialogTab")
-        TabContent[tabInfo.creator](dialog, dialog.TabContents[i])
+        TabContent.CreateTab(dialog, dialog.TabContents[i], tabInfo)
     end
 
-    PanelTemplates_SetNumTabs(dialog, #TAB_SOURCES)
+    PanelTemplates_SetNumTabs(dialog, #tabs)
     PanelTemplates_SetTab(dialog, 1)
     dialog.TabContents[1]:Show()
 

@@ -13,9 +13,11 @@ addon.Config = {
 
 	DIALOG = {
 		WIDTH = 600,
-		-- Sized to fit the wowcompare.io tab's sections (M+, 3 raid difficulties, and the
-		-- single Sporefall row) plus its divider gap and the footer instructions.
-		HEIGHT = 410,
+		-- Both tabs are three rows now that raid difficulty is a dropdown rather than
+		-- a row per difficulty (wowcompare.io: M+, Raid, Sporefall / most-popular: M+, Raid, Misc).
+		-- Sized so the footer sits just under the last row; see TabContent's vertical
+		-- layout constants, which this has to stay in step with.
+		HEIGHT = 260,
 		TITLE_HEIGHT = 24,
 		IMPORT_BUTTON = {
 			WIDTH = 100,
@@ -24,9 +26,7 @@ addon.Config = {
 			TEXT_PADDING = 24
 		},
 		PADDING = {
-			LABEL = 2,
 			SIDE = 15
-		},
-		SECTION_SPACING = 20
+		}
 	}
 }
