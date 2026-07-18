@@ -9,10 +9,3 @@ curseForgeProjectId: 1184820
 # Tags for filtering and categorization
 tags:
   - talents
-
-# Primary hero image for the addon card
-primaryImage: /addons/PeaversTalents/01.png
-
-# Gallery images
-galleryImages:
-  - /addons/PeaversTalents/02.png
