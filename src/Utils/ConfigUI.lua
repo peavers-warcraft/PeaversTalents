@@ -55,8 +55,31 @@ function ConfigUI:BuildGeneralPage(parentFrame)
     parentFrame:SetHeight(math.abs(y) + 30)
 end
 
+function ConfigUI:BuildInfoPage(parentFrame)
+    PeaversCommons.ConfigUIUtils.BuildInfoPage(parentFrame, "Talents", {
+        "Puts optimized talent builds from wowcompare.io directly in your talent " ..
+            "window - general builds plus boss-specific recommendations for " ..
+            "raids and dungeons, updated daily.",
+        { command = "/pt", desc = "open the configuration panel" },
+
+        { header = "Applying a build" },
+        "Open your talent window and click the Peavers Builds button. Pick a " ..
+            "general or encounter-specific build, then choose Apply Loadout " ..
+            "from the arrow menu - no copy and paste needed.",
+        "Applying creates a saved loadout named after the build and switches " ..
+            "you to it. The same slot is reused every time, so applying builds " ..
+            "never fills up your loadout list.",
+        "Prefer the string? The arrow menu also offers Copy Import String.",
+
+        { header = "Where the data comes from" },
+        "Builds ship in the PeaversTalentsData companion addon, which is " ..
+            "updated daily from wowcompare.io's rankings - no manual imports needed.",
+    })
+end
+
 function ConfigUI:GetPages()
     return {
+        { key = "info", label = "Information", builder = function(f) ConfigUI:BuildInfoPage(f) end },
         { key = "general", label = "General", builder = function(f) ConfigUI:BuildGeneralPage(f) end },
     }
 end
