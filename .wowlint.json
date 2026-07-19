@@ -1,0 +1,8 @@
+{
+  "_comment": "Frames whose global name is required. Everything else should be anonymous: naming a templated frame also creates a global per named child the template defines.",
+  "namedFrames": {
+    "PeaversTalentsExportDialog": "registered in UISpecialFrames, which resolves the frame via _G[name] on ESC (registered via dialog:GetName())",
+    "PeaversTalentsApplyMenu": "UIDropDownMenuTemplate addresses its button/text children by global name",
+    "PeaversTalentsExportButton": "ButtonFix re-runs when the talent frame is rebuilt and uses _G[name] to avoid creating a second button"
+  }
+}
