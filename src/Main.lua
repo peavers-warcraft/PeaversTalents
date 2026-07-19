@@ -62,7 +62,7 @@ function addon.RefreshDialogDropdowns()
 end
 
 local function CreateExportDialog()
-    local dialog = CreateFrame("Frame", "TalentExportDialog", UIParent, "DefaultPanelTemplate")
+    local dialog = CreateFrame("Frame", "PeaversTalentsExportDialog", UIParent, "DefaultPanelTemplate")
     addon.exportDialog = dialog
 
     dialog:SetSize(addon.Config.DIALOG.WIDTH, addon.Config.DIALOG.HEIGHT + 30)
@@ -87,7 +87,7 @@ local function CreateExportDialog()
 
     for i, tabInfo in ipairs(tabs) do
         dialog.TabContents[i] = UIComponents.CreateTabContent(dialog)
-        dialog.Tabs[i] = UIComponents.CreateTab(dialog, i, tabInfo.label, "TalentExportDialogTab")
+        dialog.Tabs[i] = UIComponents.CreateTab(dialog, i, tabInfo.label, "PeaversTalentsExportDialogTab")
         TabContent.CreateTab(dialog, dialog.TabContents[i], tabInfo)
     end
 

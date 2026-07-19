@@ -42,8 +42,8 @@ function ButtonFix:Initialize()
 end
 
 function ButtonFix:CheckAndCreateButton()
-    if _G["TalentExportButton"] then
-        Utils.Debug("ButtonFix: TalentExportButton already exists")
+    if _G["PeaversTalentsExportButton"] then
+        Utils.Debug("ButtonFix: PeaversTalentsExportButton already exists")
         return
     end
 
@@ -61,7 +61,7 @@ function ButtonFix:CheckAndCreateButton()
     end
 
     Utils.Debug("ButtonFix: Creating export button")
-    local exportButton = CreateFrame("Button", "TalentExportButton", talentFrame, "UIPanelButtonTemplate")
+    local exportButton = CreateFrame("Button", "PeaversTalentsExportButton", talentFrame, "UIPanelButtonTemplate")
     exportButton:SetText(addon.Config.BUTTON_LABEL)
     exportButton:SetPoint("LEFT", talentFrame.SearchBox, "RIGHT", 10, 0)
     exportButton:SetScript("OnClick", addon.ShowExportDialog)

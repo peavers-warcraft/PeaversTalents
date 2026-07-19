@@ -109,7 +109,7 @@ end
 ---@return number nextY
 local function CreateSection(dialog, tab, tabInfo, section, y)
 	local prefix = TabConfig.GetPrefix(tabInfo, section)
-	local frameName = "TalentExportDialog_" .. tabInfo.source .. section.key
+	local frameName = "PeaversTalentsExportDialog_" .. tabInfo.source .. section.key
 
 	local label = tab:CreateFontString(nil, "OVERLAY", "GameFontNormalMed2")
 	label:SetPoint("TOPLEFT", tab, "TOPLEFT", SIDE, y)
