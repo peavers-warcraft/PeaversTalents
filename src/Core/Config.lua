@@ -14,7 +14,7 @@ addon.Config = {
 	DIALOG = {
 		WIDTH = 600,
 		-- Both tabs are three rows now that raid difficulty is a dropdown rather than
-		-- a row per difficulty (wowcompare.io: M+, Raid, Sporefall / most-popular: M+, Raid, Misc).
+		-- a row per difficulty (Top Players: M+, Raid, Sporefall / Most Popular: M+, Raid, Misc).
 		-- Sized so the footer sits just under the last row; see TabContent's vertical
 		-- layout constants, which this has to stay in step with.
 		HEIGHT = 260,

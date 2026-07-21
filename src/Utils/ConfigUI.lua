@@ -26,7 +26,7 @@ function ConfigUI:BuildGeneralPage(parentFrame)
     infoText:SetSpacing(2)
     infoText:SetTextColor(C.textSec[1], C.textSec[2], C.textSec[3])
     infoText:SetText(
-        "This addon adds a 'Builds' button to your talent UI that allows you to import talent builds from wowcompare.io and most-popular.\n\n" ..
+        "This addon adds a 'Builds' button to your talent UI that allows you to import talent builds from wowcompare.io.\n\n" ..
         "1. Open your talent UI (press 'N' by default)\n" ..
         "2. Click the 'Builds' button next to the search box\n" ..
         "3. Switch between sources using the tabs at the bottom\n" ..

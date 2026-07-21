@@ -212,7 +212,7 @@ end
 -- Loadout bookkeeping
 --=============================================================================
 
--- most-popular labels run long ("Conduit Of The Celestials | Raid - Single Target"), so
+-- Build labels run long ("Conduit Of The Celestials | Raid - Single Target"), so
 -- most names need eliding. Only the tail is lost: the prefix that marks the loadout
 -- as ours always survives, so FindOwnedConfig keeps working on a truncated name.
 local function BuildLoadoutName(buildLabel)
@@ -495,7 +495,7 @@ function TalentImporter.Apply(talentString, buildLabel)
 		return false, "That build is for a different specialization."
 	end
 
-	-- wowcompare.io and most-popular export with a zeroed hash; Blizzard treats that as an
+	-- Sourced builds export with a zeroed hash; Blizzard treats that as an
 	-- explicit opt-out of hash validation, so only check a hash that's actually set.
 	if not IsHashEmpty(treeHash) and not HashEquals(treeHash, C_Traits.GetTreeHash(treeID)) then
 		return false, "That build is out of date with the current talent tree."

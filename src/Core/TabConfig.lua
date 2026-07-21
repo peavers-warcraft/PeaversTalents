@@ -6,7 +6,7 @@ local _, addon = ...
 --
 -- A row is one build picker. Rows with a `difficulties` list get a second dropdown
 -- and pull their builds from whichever difficulty is selected; rows with a plain
--- `category` (Mythic+, most-popular) have no difficulty axis and get one dropdown.
+-- `category` (Mythic+, Most Popular) have no difficulty axis and get one dropdown.
 local TabConfig = {}
 addon.TabConfig = TabConfig
 
@@ -27,7 +27,7 @@ local DEFAULT_DIFFICULTY = 2
 
 TabConfig.TABS = {
 	{
-		label = "wowcompare.io",
+		label = "Top Players",
 		source = "top-players",
 		sections = {
 			{
@@ -52,7 +52,7 @@ TabConfig.TABS = {
 		},
 	},
 	{
-		label = "most-popular",
+		label = "Most Popular",
 		source = "most-popular",
 		sections = {
 			{ key = "mythic", name = "Mythic+", category = "mythic" },
