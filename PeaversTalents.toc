@@ -3,7 +3,7 @@
 ## Title: |cff3abdf7Peavers|rTalents
 ## Notes: Pick the latest talent builds from wowcompare.io.
 ## Author: Peavers
-## Version: 1.1.91
+## Version: 1.1.92
 
 ## IconTexture: Interface\AddOns\PeaversCommons\src\Media\Icon.tga
 ## Category-enUS: Peavers
