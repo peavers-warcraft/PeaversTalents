@@ -36,16 +36,19 @@ No configuration required. Talent builds are automatically updated daily.
 
 ## Installation
 
+PeaversTalents is released exclusively through [addons.peavers.io](https://addons.peavers.io) and is no longer published to CurseForge.
+
 ### Recommended: PeaversUpdater
 
-Download and install [PeaversUpdater](https://github.com/peavers-warcraft/PeaversUpdater/releases/latest), the desktop updater for the whole Peavers collection. It installs PeaversTalents together with its required dependencies and delivers updates before they reach CurseForge.
+Download and install [PeaversUpdater](https://github.com/peavers-warcraft/PeaversUpdater/releases/latest), the desktop updater for the whole Peavers collection. It installs PeaversTalents together with its required dependencies and keeps everything up to date automatically.
 
-### Alternative: CurseForge
+### Alternative: manual install
 
-1. Download from [CurseForge](https://www.curseforge.com/wow/addons/peaverstalents)
-2. Ensure [PeaversCommons](https://www.curseforge.com/wow/addons/peaverscommons) is also installed
-3. Ensure [PeaversConfig](https://www.curseforge.com/wow/addons/peaversconfig) is also installed
-4. Enable the addon on the character selection screen
+1. Download the latest zip from [Releases](https://github.com/peavers-warcraft/PeaversTalents/releases/latest)
+2. Extract it into `World of Warcraft/_retail_/Interface/AddOns/`
+3. Ensure [PeaversCommons](https://github.com/peavers-warcraft/PeaversCommons) is also installed
+4. Ensure [PeaversConfig](https://github.com/peavers-warcraft/PeaversConfig) is also installed
+5. Enable the addon on the character selection screen
 
 ---
 
