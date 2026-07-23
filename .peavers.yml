@@ -6,6 +6,12 @@ iconType: TalentRuneIcon
 # CurseForge project ID for download statistics
 curseForgeProjectId: 1184820
 
+# Distributed exclusively through addons.peavers.io and the Peavers Updater.
+# Hides the CurseForge button on the site and shows the exclusive badge; the
+# release workflow skips the CurseForge upload (publish_curseforge: false).
+# The project ID above is kept so the pre-exclusive download count still shows.
+exclusive: true
+
 # Tags for filtering and categorization
 tags:
   - talents
