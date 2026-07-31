@@ -4,63 +4,87 @@ local _, addon = ...
 -- places (TabContent's per-tab configs and Main's TAB_SOURCES), which is why adding
 -- Sporefall meant hand-wiring the same raid in three files.
 --
+-- That complaint has been answered from the other end: builds now carry the raid
+-- they came from, so a raid is never wired here at all.
+--
 -- A row is one build picker. Rows with a `difficulties` list get a second dropdown
 -- and pull their builds from whichever difficulty is selected; rows with a plain
--- `category` (Mythic+, Most Popular) have no difficulty axis and get one dropdown.
+-- `category` (Mythic+) have no difficulty axis and get one dropdown.
 local TabConfig = {}
 addon.TabConfig = TabConfig
 
+-- Difficulties, in the order a raider climbs them. LFR is here because it is
+-- where the field currently is: it carries more specs than any other difficulty,
+-- and leaving it out would throw away the best-covered data we have.
 local RAID_DIFFICULTIES = {
+	{ label = "LFR", category = "lfr_raid" },
 	{ label = "Normal", category = "normal_raid" },
 	{ label = "Heroic", category = "heroic_raid" },
 	{ label = "Mythic", category = "mythic_raid" },
 }
 
-local SPOREFALL_DIFFICULTIES = {
-	{ label = "Normal", category = "sporefall_normal" },
-	{ label = "Heroic", category = "sporefall_heroic" },
-	{ label = "Mythic", category = "sporefall_mythic" },
-}
+-- Heroic is where most raiders live, so open on it rather than LFR.
+local DEFAULT_DIFFICULTY = 3
 
--- Heroic is where most raiders actually live, so open on it rather than Normal.
-local DEFAULT_DIFFICULTY = 2
+--[[
+	One tab, because there is one source.
 
+	This used to be two -- "Top Players" from Archon and "Most Popular" from
+	Wowhead -- with a per-raid section under each. Archon asked that we stop
+	using their data and Wowhead went with them, so the source axis has nothing
+	left to distinguish and the tab bar would be a single tab labelled after a
+	website.
+
+	The per-raid sections are gone for a different reason. They existed because
+	the old data arrived one file per raid, so Sporefall needed its own section,
+	its own databases and its own scrapers -- the comment that used to sit here
+	complained about wiring the same raid in three files. Builds now carry the
+	raid they came from, so a difficulty holds every raid being run and the rows
+	group themselves. A new raid needs nothing here.
+]]
 TabConfig.TABS = {
 	{
-		label = "Top Players",
-		source = "top-players",
+		label = "Raid",
+		source = "parses",
 		sections = {
 			{
-				-- Mythic+ has a single difficulty, so it stays a plain dungeon picker.
-				key = "mythic",
-				name = "Mythic+",
-				category = "mythic",
-			},
-			{
-				-- The data carries boss names but no raid name, so don't invent one.
 				key = "raid",
 				name = "Raid",
 				difficulties = RAID_DIFFICULTIES,
 				defaultDifficulty = DEFAULT_DIFFICULTY,
 			},
-			{
-				key = "sporefall",
-				name = "Sporefall",
-				difficulties = SPOREFALL_DIFFICULTIES,
-				defaultDifficulty = DEFAULT_DIFFICULTY,
-			},
 		},
 	},
 	{
-		label = "Most Popular",
-		source = "most-popular",
+		label = "Mythic+",
+		source = "parses",
 		sections = {
+			-- Empty until parses.gg indexes keystone runs. The tab is here so
+			-- the shape is settled and the day it starts working needs no
+			-- change; until then the panel explains itself rather than looking
+			-- broken. See EMPTY_CATEGORY_MESSAGE below.
 			{ key = "mythic", name = "Mythic+", category = "mythic" },
-			{ key = "raid", name = "Raid", category = "raid" },
-			{ key = "misc", name = "Misc", category = "misc" },
 		},
 	},
 }
+
+---What to say when a category has nothing in it.
+---
+---Two different silences, and telling them apart is the whole point. Mythic+ is
+---empty because the platform does not index keys yet, which is a fact about the
+---source and will not change by waiting. A raid difficulty is empty because
+---nobody has uploaded that spec at that difficulty, which changes the moment
+---somebody does.
+---@param category string
+---@return string
+function TabConfig.EmptyMessage(category)
+	if category == "mythic" then
+		return "parses.gg does not index Mythic+ runs yet, so there are no key builds to show. "
+			.. "This will fill in on its own once it does."
+	end
+	return "No builds for this spec at this difficulty yet. Builds come from parses.gg uploads, "
+		.. "so this fills in as people log the fight."
+end
 
 ---The build category a row is currently reading from, which for a raid row depends
 ---on the difficulty the player has selected.

@@ -56,9 +56,24 @@ end
 -- UIDropDownMenu_Initialize calls UIDropDownMenu_ClearAll first, which blanks the
 -- text -- so anything we set from outside gets wiped the next time the dropdown is
 -- initialized, and the row renders empty until the player clicks it.
+-- Why a category is empty, in the dropdown's own width.
+--
+-- The full sentence goes in the tooltip; a dropdown is far too narrow for it and
+-- truncating would leave "parses.gg does not ind...". But the two silences are
+-- genuinely different -- keys are not indexed at all, where a raid difficulty is
+-- simply waiting on an upload -- and a reader who cannot tell them apart will
+-- read both as the addon being broken.
+local function EmptyText(selector)
+	local category = TabConfig.GetCategory(selector.section, selector.difficultyIndex)
+	if category == "mythic" then
+		return "Not indexed yet"
+	end
+	return "No builds yet"
+end
+
 local function SetBossText(selector, entries)
 	if #entries == 0 then
-		UIDropDownMenu_SetText(selector.bossDropdown, "No data found")
+		UIDropDownMenu_SetText(selector.bossDropdown, EmptyText(selector))
 		UIDropDownMenu_DisableDropDown(selector.bossDropdown)
 		return
 	end
@@ -170,7 +185,7 @@ function DropdownManager.InitBossDropdown(selector, level)
 
 	if #entries == 0 then
 		local info = UIDropDownMenu_CreateInfo()
-		info.text = "No data found"
+		info.text = TabConfig.EmptyMessage(TabConfig.GetCategory(selector.section, selector.difficultyIndex))
 		info.disabled = true
 		info.notClickable = true
 		info.notCheckable = true

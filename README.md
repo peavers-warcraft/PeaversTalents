@@ -2,15 +2,15 @@
 
 [![AddonSentry](https://addonsentry.io/api/public/repos/peavers-warcraft/PeaversTalents/badge.svg)](https://addonsentry.io/dashboard/peavers-warcraft/PeaversTalents)
 
-A World of Warcraft addon that provides optimized talent builds directly in-game, sourced from wowcompare.io.
+A World of Warcraft addon that puts real, logged talent builds in your talent window, sourced from [parses.gg](https://parses.gg).
 
 ## Features
 
 <!-- peavers:features -->
-- Daily updated builds for all classes and specializations
-- Boss-specific talent recommendations for raids and dungeons
+- Builds taken from real logged pulls, not assembled pick by pick
+- Boss-specific builds, or the whole difficulty at once
 - One-click apply: load any build straight into a talent loadout, no copy/paste
-- Pick a raid boss and difficulty from a single row
+- Pick a boss and difficulty from a single row -- LFR through Mythic
 - Import strings still available if you'd rather copy them yourself
 <!-- /peavers:features -->
 
@@ -26,6 +26,24 @@ Applying creates a saved loadout named after the build and switches you to it. T
 same slot is reused each time, so applying builds never fills up your loadout list.
 Prefer to copy the string yourself? The arrow menu also has **Copy Import String**.
 <!-- /peavers:usage -->
+
+## Where the builds come from
+
+[parses.gg](https://parses.gg), and nothing else. Archon and Wowhead were both
+retired as sources -- Archon at their request that we stop using their data.
+
+Every build is a loadout somebody actually ran on that fight. That matters: a
+"consensus" build assembled by taking the most popular pick at each node
+independently can spend more points than the game allows, and is a build nobody
+played. These are whole loadouts, counted as loadouts.
+
+The pool is smaller than it used to be, and the addon tells you when it has
+nothing rather than pretending otherwise. A spec with no logged pulls at a
+difficulty shows **No builds yet**; coverage fills in as people log fights.
+
+**Mythic+ is empty for now.** parses.gg does not index keystone runs yet, so the
+tab says **Not indexed yet** rather than showing stale builds from somewhere
+else. It will fill in on its own when keys are indexed -- nothing to update.
 
 ## Configuration
 
