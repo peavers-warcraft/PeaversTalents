@@ -32,10 +32,16 @@ function ButtonFix:Initialize()
 
             if not C_AddOns.IsAddOnLoaded(talentUI) then
                 Utils.Debug("ButtonFix attempting to load talent UI")
-                UIParentLoadAddOn(talentUI)
-                C_Timer.After(1, function()
-                    ButtonFix:CheckAndCreateButton()
-                end)
+                -- UIParentLoadAddOn was removed in 12.1.0; C_AddOns.LoadAddOn is the
+                -- remaining way to pull in a load-on-demand Blizzard addon.
+                local loaded, reason = C_AddOns.LoadAddOn(talentUI)
+                if loaded then
+                    C_Timer.After(1, function()
+                        ButtonFix:CheckAndCreateButton()
+                    end)
+                else
+                    Utils.Debug("ButtonFix failed to load talent UI: " .. tostring(reason))
+                end
             end
         end
     end)
