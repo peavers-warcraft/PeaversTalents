@@ -37,12 +37,10 @@ addon.TabContent = TabContent
 local ButtonFix = addon.ButtonFix or {}
 addon.ButtonFix = ButtonFix
 
+-- Both the presence of the data addon and its API version; see
+-- DataManager.CheckDataAddon. Loaded before this file by the TOC.
 local function CheckDataAddonLoaded()
-    if not PeaversTalentsData then
-        Utils.Debug("PeaversTalentsData addon not found!")
-        return false
-    end
-    return true
+    return addon.DataManager.CheckDataAddon()
 end
 
 -- Re-reads every row in the export dialog for the current class/spec. Called on
