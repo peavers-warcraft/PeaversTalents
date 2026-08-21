@@ -151,10 +151,63 @@ local function SaveAndRender(selector)
 	end
 end
 
+--[[
+	Which difficulty to open a raid row on, when the player has no saved choice.
+
+	The configured default is Heroic, because that is where most raiders are, and
+	that is still the answer whenever Heroic has anything in it.
+
+	It stops being the answer early in a season. Builds are scoped to the
+	season's own content, so a difficulty nobody has reached yet is legitimately
+	empty -- on release day Heroic and Mythic both were, while Normal had 345
+	builds. Opening on the configured default then shows every reader "No builds
+	yet" on a spec with plenty one difficulty down, which reads as the addon
+	being broken rather than as the tier being new.
+
+	So: the configured default when it has builds, otherwise the hardest
+	difficulty that does. Falling back to the configured default keeps the empty
+	message naming a sensible difficulty when nothing has any.
+
+	This is deliberately per-spec rather than global. Coverage is uneven early --
+	a spec can have Normal builds while another has only LFR -- and the reader
+	cares about their own.
+]]
+local function DefaultDifficultyFor(selector)
+	local section = selector.section
+	local difficulties = section.difficulties
+	if not difficulties then
+		return nil
+	end
+
+	local classID, specID = Utils.GetPlayerClassAndSpec()
+	local function hasBuilds(index)
+		local difficulty = difficulties[index]
+		if not difficulty then
+			return false
+		end
+		local entries = DataManager.GetAvailableEntries(
+			selector.source, classID, specID, difficulty.category)
+		return entries ~= nil and #entries > 0
+	end
+
+	local preferred = section.defaultDifficulty
+	if hasBuilds(preferred) then
+		return preferred
+	end
+
+	for index = #difficulties, 1, -1 do
+		if hasBuilds(index) then
+			return index
+		end
+	end
+
+	return preferred
+end
+
 ---Restores the row's last selection from storage, then renders it.
 function DropdownManager.Restore(selector)
 	local section = selector.section
-	selector.difficultyIndex = selector.difficultyIndex or section.defaultDifficulty
+	selector.difficultyIndex = selector.difficultyIndex or DefaultDifficultyFor(selector)
 
 	local _, _, savedBuildKey = addon.LocalStorage.LoadSelection(selector.source, section.key)
 	local savedCategory, savedBoss = DecodeKey(savedBuildKey)
