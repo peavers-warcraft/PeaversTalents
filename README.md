@@ -45,6 +45,20 @@ difficulty shows **No builds yet**; coverage fills in as people log fights.
 bands, so a build is what people ran across a band rather than at one exact
 level, and a dungeon is data on the row the same way a raid is.
 
+## Why Heroic and Mythic are empty right now
+
+They are showing the truth. Builds are scoped to the season's own content, and
+nobody has logged The Venomous Abyss at Heroic or Mythic yet -- so there is
+nothing honest to put there. They fill in as people log the fights.
+
+They are empty rather than full for a reason worth knowing. A WoW season opens
+on a server-side switch rather than a client patch, so "this patch" and "this
+season" are different questions and the pre-season week never ages out of the
+pool. Left unscoped, the Mythic tab offered a build derived from 85 logged
+clears of Liberation of Undermine -- a raid from the expansion before last,
+farmed the week before the season opened -- and presented it as the Mythic meta.
+An empty tab is more use than that.
+
 ## Configuration
 
 <!-- peavers:configuration -->
