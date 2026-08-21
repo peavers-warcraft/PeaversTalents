@@ -32,10 +32,16 @@ function ButtonFix:Initialize()
 
             if not C_AddOns.IsAddOnLoaded(talentUI) then
                 Utils.Debug("ButtonFix attempting to load talent UI")
-                UIParentLoadAddOn(talentUI)
-                C_Timer.After(1, function()
-                    ButtonFix:CheckAndCreateButton()
-                end)
+                -- UIParentLoadAddOn was removed in 12.1.0; C_AddOns.LoadAddOn is the
+                -- remaining way to pull in a load-on-demand Blizzard addon.
+                local loaded, reason = C_AddOns.LoadAddOn(talentUI)
+                if loaded then
+                    C_Timer.After(1, function()
+                        ButtonFix:CheckAndCreateButton()
+                    end)
+                else
+                    Utils.Debug("ButtonFix failed to load talent UI: " .. tostring(reason))
+                end
             end
         end
     end)
@@ -78,7 +84,7 @@ function ButtonFix:CheckAndCreateButton()
     exportButton:SetScript("OnEnter", function(frame)
         GameTooltip:SetOwner(frame, "ANCHOR_RIGHT")
         GameTooltip:SetText("peavers.io", 0.23, 0.74, 0.97)
-        GameTooltip:AddLine("Daily talent builds from wowcompare.io.", 1, 1, 1, true)
+        GameTooltip:AddLine("Daily talent builds from parses.gg.", 1, 1, 1, true)
         GameTooltip:AddLine("Pick a build and apply it in one click.", 1, 1, 1, true)
         GameTooltip:Show()
     end)

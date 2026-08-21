@@ -59,10 +59,8 @@ TabConfig.TABS = {
 		label = "Mythic+",
 		source = "parses",
 		sections = {
-			-- Empty until parses.gg indexes keystone runs. The tab is here so
-			-- the shape is settled and the day it starts working needs no
-			-- change; until then the panel explains itself rather than looking
-			-- broken. See EMPTY_CATEGORY_MESSAGE below.
+			-- Keys are addressed by band rather than by level, and a band is
+			-- data on a row like a raid is, so this needs no entry per band.
 			{ key = "mythic", name = "Mythic+", category = "mythic" },
 		},
 	},
@@ -70,20 +68,21 @@ TabConfig.TABS = {
 
 ---What to say when a category has nothing in it.
 ---
----Two different silences, and telling them apart is the whole point. Mythic+ is
----empty because the platform does not index keys yet, which is a fact about the
----source and will not change by waiting. A raid difficulty is empty because
----nobody has uploaded that spec at that difficulty, which changes the moment
----somebody does.
----@param category string
+---One message, where there used to be two. Mythic+ had its own -- "parses.gg
+---does not index keystone runs yet" -- which was true when it was written and
+---stopped being true on 2026-08-20, when the coverage read that had been
+---silently failing since 2026-08-03 was fixed and keys turned out to have been
+---there the whole time.
+---
+---There is nothing left for a second message to say. An empty Mythic+ now means
+---exactly what an empty raid difficulty means: nobody has logged that spec at
+---that band yet, and it fills in when somebody does. Keeping the distinction
+---would mean keeping a sentence about the platform that only the platform can
+---make false again.
 ---@return string
-function TabConfig.EmptyMessage(category)
-	if category == "mythic" then
-		return "parses.gg does not index Mythic+ runs yet, so there are no key builds to show. "
-			.. "This will fill in on its own once it does."
-	end
-	return "No builds for this spec at this difficulty yet. Builds come from parses.gg uploads, "
-		.. "so this fills in as people log the fight."
+function TabConfig.EmptyMessage()
+	return "No builds for this spec here yet. Builds come from parses.gg uploads, "
+		.. "so this fills in as people log runs."
 end
 
 ---The build category a row is currently reading from, which for a raid row depends

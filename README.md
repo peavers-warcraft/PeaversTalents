@@ -41,9 +41,9 @@ The pool is smaller than it used to be, and the addon tells you when it has
 nothing rather than pretending otherwise. A spec with no logged pulls at a
 difficulty shows **No builds yet**; coverage fills in as people log fights.
 
-**Mythic+ is empty for now.** parses.gg does not index keystone runs yet, so the
-tab says **Not indexed yet** rather than showing stale builds from somewhere
-else. It will fill in on its own when keys are indexed -- nothing to update.
+**Mythic+ is keystone bands, not keystone levels.** parses.gg pools keys into
+bands, so a build is what people ran across a band rather than at one exact
+level, and a dungeon is data on the row the same way a raid is.
 
 ## Configuration
 

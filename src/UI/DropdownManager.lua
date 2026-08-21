@@ -58,22 +58,17 @@ end
 -- initialized, and the row renders empty until the player clicks it.
 -- Why a category is empty, in the dropdown's own width.
 --
--- The full sentence goes in the tooltip; a dropdown is far too narrow for it and
--- truncating would leave "parses.gg does not ind...". But the two silences are
--- genuinely different -- keys are not indexed at all, where a raid difficulty is
--- simply waiting on an upload -- and a reader who cannot tell them apart will
--- read both as the addon being broken.
-local function EmptyText(selector)
-	local category = TabConfig.GetCategory(selector.section, selector.difficultyIndex)
-	if category == "mythic" then
-		return "Not indexed yet"
-	end
+-- The full sentence goes in the tooltip; a dropdown is far too narrow for it.
+-- Mythic+ used to say "Not indexed yet" here because keys genuinely were not
+-- indexed; they are, so there is one silence left and one thing to call it. See
+-- TabConfig.EmptyMessage.
+local function EmptyText()
 	return "No builds yet"
 end
 
 local function SetBossText(selector, entries)
 	if #entries == 0 then
-		UIDropDownMenu_SetText(selector.bossDropdown, EmptyText(selector))
+		UIDropDownMenu_SetText(selector.bossDropdown, EmptyText())
 		UIDropDownMenu_DisableDropDown(selector.bossDropdown)
 		return
 	end
@@ -185,7 +180,7 @@ function DropdownManager.InitBossDropdown(selector, level)
 
 	if #entries == 0 then
 		local info = UIDropDownMenu_CreateInfo()
-		info.text = TabConfig.EmptyMessage(TabConfig.GetCategory(selector.section, selector.difficultyIndex))
+		info.text = TabConfig.EmptyMessage()
 		info.disabled = true
 		info.notClickable = true
 		info.notCheckable = true

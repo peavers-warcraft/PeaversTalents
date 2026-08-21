@@ -26,10 +26,13 @@ function ConfigUI:BuildGeneralPage(parentFrame)
     infoText:SetSpacing(2)
     infoText:SetTextColor(C.textSec[1], C.textSec[2], C.textSec[3])
     infoText:SetText(
-        "This addon adds a 'Builds' button to your talent UI that allows you to import talent builds from wowcompare.io.\n\n" ..
+        "This addon adds a 'Builds' button to your talent UI that allows you to import talent builds from parses.gg.\n\n" ..
         "1. Open your talent UI (press 'N' by default)\n" ..
         "2. Click the 'Builds' button next to the search box\n" ..
-        "3. Switch between sources using the tabs at the bottom\n" ..
+        -- The tabs were one per source when there were two sources. They are
+        -- one per kind of content now, so naming them is more use than
+        -- telling a reader to switch between things that no longer differ.
+        "3. Switch between Raid and Mythic+ using the tabs at the bottom\n" ..
         "4. Select a specific build from the dropdown\n" ..
         "5. Click 'Import' to apply the build to your character"
     )
@@ -57,9 +60,10 @@ end
 
 function ConfigUI:BuildInfoPage(parentFrame)
     PeaversCommons.ConfigUIUtils.BuildInfoPage(parentFrame, "Talents", {
-        "Puts optimized talent builds from wowcompare.io directly in your talent " ..
-            "window - general builds plus boss-specific recommendations for " ..
-            "raids and dungeons, updated daily.",
+        "Puts talent builds from parses.gg directly in your talent window - " ..
+            "general builds plus boss-specific ones for raids and dungeons, " ..
+            "updated daily. Every build is a loadout somebody actually ran, " ..
+            "taken from logged pulls rather than assembled pick by pick.",
         { command = "/pt", desc = "open the configuration panel" },
 
         { header = "Applying a build" },
@@ -73,7 +77,7 @@ function ConfigUI:BuildInfoPage(parentFrame)
 
         { header = "Where the data comes from" },
         "Builds ship in the PeaversTalentsData companion addon, which is " ..
-            "updated daily from wowcompare.io's rankings - no manual imports needed.",
+            "updated daily from parses.gg - no manual imports needed.",
     })
 end
 

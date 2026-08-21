@@ -3,7 +3,7 @@ local _, addon = ...
 addon.Config = {
 	DEBUG_ENABLED = false,
 	MAINTENANCE_MODE = false,
-	MAINTENANCE_MESSAGE = "wowcompare.io has not updated with new talent strings.\n\nThis will be back up and working shortly.",
+	MAINTENANCE_MESSAGE = "parses.gg has not updated with new talent strings.\n\nThis will be back up and working shortly.",
 
 	-- The button sitting in Blizzard's talent window. Left uncoloured on purpose:
 	-- UIPanelButtonTemplate draws its own gold font and dims it for disabled and
