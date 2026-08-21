@@ -4,63 +4,86 @@ local _, addon = ...
 -- places (TabContent's per-tab configs and Main's TAB_SOURCES), which is why adding
 -- Sporefall meant hand-wiring the same raid in three files.
 --
+-- That complaint has been answered from the other end: builds now carry the raid
+-- they came from, so a raid is never wired here at all.
+--
 -- A row is one build picker. Rows with a `difficulties` list get a second dropdown
 -- and pull their builds from whichever difficulty is selected; rows with a plain
--- `category` (Mythic+, Most Popular) have no difficulty axis and get one dropdown.
+-- `category` (Mythic+) have no difficulty axis and get one dropdown.
 local TabConfig = {}
 addon.TabConfig = TabConfig
 
+-- Difficulties, in the order a raider climbs them. LFR is here because it is
+-- where the field currently is: it carries more specs than any other difficulty,
+-- and leaving it out would throw away the best-covered data we have.
 local RAID_DIFFICULTIES = {
+	{ label = "LFR", category = "lfr_raid" },
 	{ label = "Normal", category = "normal_raid" },
 	{ label = "Heroic", category = "heroic_raid" },
 	{ label = "Mythic", category = "mythic_raid" },
 }
 
-local SPOREFALL_DIFFICULTIES = {
-	{ label = "Normal", category = "sporefall_normal" },
-	{ label = "Heroic", category = "sporefall_heroic" },
-	{ label = "Mythic", category = "sporefall_mythic" },
-}
+-- Heroic is where most raiders live, so open on it rather than LFR.
+local DEFAULT_DIFFICULTY = 3
 
--- Heroic is where most raiders actually live, so open on it rather than Normal.
-local DEFAULT_DIFFICULTY = 2
+--[[
+	One tab, because there is one source.
 
+	This used to be two -- "Top Players" from Archon and "Most Popular" from
+	Wowhead -- with a per-raid section under each. Archon asked that we stop
+	using their data and Wowhead went with them, so the source axis has nothing
+	left to distinguish and the tab bar would be a single tab labelled after a
+	website.
+
+	The per-raid sections are gone for a different reason. They existed because
+	the old data arrived one file per raid, so Sporefall needed its own section,
+	its own databases and its own scrapers -- the comment that used to sit here
+	complained about wiring the same raid in three files. Builds now carry the
+	raid they came from, so a difficulty holds every raid being run and the rows
+	group themselves. A new raid needs nothing here.
+]]
 TabConfig.TABS = {
 	{
-		label = "Top Players",
-		source = "top-players",
+		label = "Raid",
+		source = "parses",
 		sections = {
 			{
-				-- Mythic+ has a single difficulty, so it stays a plain dungeon picker.
-				key = "mythic",
-				name = "Mythic+",
-				category = "mythic",
-			},
-			{
-				-- The data carries boss names but no raid name, so don't invent one.
 				key = "raid",
 				name = "Raid",
 				difficulties = RAID_DIFFICULTIES,
 				defaultDifficulty = DEFAULT_DIFFICULTY,
 			},
-			{
-				key = "sporefall",
-				name = "Sporefall",
-				difficulties = SPOREFALL_DIFFICULTIES,
-				defaultDifficulty = DEFAULT_DIFFICULTY,
-			},
 		},
 	},
 	{
-		label = "Most Popular",
-		source = "most-popular",
+		label = "Mythic+",
+		source = "parses",
 		sections = {
+			-- Keys are addressed by band rather than by level, and a band is
+			-- data on a row like a raid is, so this needs no entry per band.
 			{ key = "mythic", name = "Mythic+", category = "mythic" },
-			{ key = "raid", name = "Raid", category = "raid" },
-			{ key = "misc", name = "Misc", category = "misc" },
 		},
 	},
 }
+
+---What to say when a category has nothing in it.
+---
+---One message, where there used to be two. Mythic+ had its own -- "parses.gg
+---does not index keystone runs yet" -- which was true when it was written and
+---stopped being true on 2026-08-20, when the coverage read that had been
+---silently failing since 2026-08-03 was fixed and keys turned out to have been
+---there the whole time.
+---
+---There is nothing left for a second message to say. An empty Mythic+ now means
+---exactly what an empty raid difficulty means: nobody has logged that spec at
+---that band yet, and it fills in when somebody does. Keeping the distinction
+---would mean keeping a sentence about the platform that only the platform can
+---make false again.
+---@return string
+function TabConfig.EmptyMessage()
+	return "No builds for this spec here yet. Builds come from parses.gg uploads, "
+		.. "so this fills in as people log runs."
+end
 
 ---The build category a row is currently reading from, which for a raid row depends
 ---on the difficulty the player has selected.

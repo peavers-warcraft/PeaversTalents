@@ -2,15 +2,15 @@
 
 [![AddonSentry](https://addonsentry.io/api/public/repos/peavers-warcraft/PeaversTalents/badge.svg)](https://addonsentry.io/dashboard/peavers-warcraft/PeaversTalents)
 
-A World of Warcraft addon that provides optimized talent builds directly in-game, sourced from wowcompare.io.
+A World of Warcraft addon that puts real, logged talent builds in your talent window, sourced from [parses.gg](https://parses.gg).
 
 ## Features
 
 <!-- peavers:features -->
-- Daily updated builds for all classes and specializations
-- Boss-specific talent recommendations for raids and dungeons
+- Builds taken from real logged pulls, not assembled pick by pick
+- Boss-specific builds, or the whole difficulty at once
 - One-click apply: load any build straight into a talent loadout, no copy/paste
-- Pick a raid boss and difficulty from a single row
+- Pick a boss and difficulty from a single row -- LFR through Mythic
 - Import strings still available if you'd rather copy them yourself
 <!-- /peavers:features -->
 
@@ -26,6 +26,38 @@ Applying creates a saved loadout named after the build and switches you to it. T
 same slot is reused each time, so applying builds never fills up your loadout list.
 Prefer to copy the string yourself? The arrow menu also has **Copy Import String**.
 <!-- /peavers:usage -->
+
+## Where the builds come from
+
+[parses.gg](https://parses.gg), and nothing else. Archon and Wowhead were both
+retired as sources -- Archon at their request that we stop using their data.
+
+Every build is a loadout somebody actually ran on that fight. That matters: a
+"consensus" build assembled by taking the most popular pick at each node
+independently can spend more points than the game allows, and is a build nobody
+played. These are whole loadouts, counted as loadouts.
+
+The pool is smaller than it used to be, and the addon tells you when it has
+nothing rather than pretending otherwise. A spec with no logged pulls at a
+difficulty shows **No builds yet**; coverage fills in as people log fights.
+
+**Mythic+ is keystone bands, not keystone levels.** parses.gg pools keys into
+bands, so a build is what people ran across a band rather than at one exact
+level, and a dungeon is data on the row the same way a raid is.
+
+## Why Heroic and Mythic are empty right now
+
+They are showing the truth. Builds are scoped to the season's own content, and
+nobody has logged The Venomous Abyss at Heroic or Mythic yet -- so there is
+nothing honest to put there. They fill in as people log the fights.
+
+They are empty rather than full for a reason worth knowing. A WoW season opens
+on a server-side switch rather than a client patch, so "this patch" and "this
+season" are different questions and the pre-season week never ages out of the
+pool. Left unscoped, the Mythic tab offered a build derived from 85 logged
+clears of Liberation of Undermine -- a raid from the expansion before last,
+farmed the week before the season opened -- and presented it as the Mythic meta.
+An empty tab is more use than that.
 
 ## Configuration
 
