@@ -49,8 +49,7 @@ function ConfigUI:BuildGeneralPage(parentFrame)
     -- the 40 that used to sit here - a guess at the button's height plus some
     -- air - is gone. The label and paragraph above advance by their own measured
     -- heights and were never coupled to the widget metrics.
-    local openBtn
-    openBtn, y = W:CreateButton(parentFrame, "Open Talents Dialog", {
+    _, y = W:CreateButton(parentFrame, "Open Talents Dialog", {
         variant = "primary",
         width = 160,
         x = indent, y = y,
