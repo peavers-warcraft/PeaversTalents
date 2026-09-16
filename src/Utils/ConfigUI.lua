@@ -45,15 +45,19 @@ function ConfigUI:BuildGeneralPage(parentFrame)
     hint:SetPoint("TOPLEFT", indent, y)
     y = y - 30
 
-    local openBtn = W:CreateButton(parentFrame, "Open Talents Dialog", {
-        style = "primary",
+    -- The button anchors itself and reports where the next control would go, so
+    -- the 40 that used to sit here - a guess at the button's height plus some
+    -- air - is gone. The label and paragraph above advance by their own measured
+    -- heights and were never coupled to the widget metrics.
+    local openBtn
+    openBtn, y = W:CreateButton(parentFrame, "Open Talents Dialog", {
+        variant = "primary",
         width = 160,
+        x = indent, y = y,
         onClick = function()
             addon.ShowExportDialog()
         end,
     })
-    openBtn:SetPoint("TOPLEFT", indent, y)
-    y = y - 40
 
     parentFrame:SetHeight(math.abs(y) + 30)
 end
